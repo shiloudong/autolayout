@@ -224,19 +224,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim pointIndex As Integer
-Dim pointsX() As Double
-Dim pointsY() As Double
-Dim angles() As Double
-Dim pointsCount As Integer
 
-'Æô¶¯Excel
-Private Function CreateExcel(path As String) As Object
-    Dim excelApp As Object
-    Set excelApp = CreateObject("excel.application")
-    excelApp.Workbooks.Open (path)
-    Set CreateExcel = excelApp
-End Function
+Dim pointIndex As Integer
+Dim tempPoint(0 To 1) As Double
+Dim bl As Double
+
+
 
 Private Sub ClearCmd_Click()
 Picture1.Cls
@@ -244,109 +237,51 @@ End Sub
 
 Private Sub Form_Activate()
     Call DrawPoints
-    Call DrawAngleLines
     pointIndex = 0
 End Sub
 
 Private Sub Form_Load()
     Picture1.AutoRedraw = True
-    Call ReadAngles
+    pointIndex = 0
+    Call GetExcelData(Form1.TextPath.Text)
+    bl = GetScale(Picture1.width, Picture1.height)
 End Sub
-Private Sub ReadAngles()
-    Dim corow As Long
-    Set excelApp = CreateExcel(Form1.TextPath.Text)
-    Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
-    corow = excelsheet.usedrange.Rows.count
-    
-    pointsCount = corow - 5
-    ReDim Preserve angles(0 To pointsCount - 1) As Double
-    
-    For i = 6 To corow
-        angles(i - 6) = excelsheet.cells(i, 8).value
-    Next i
-    Call excelApp.Workbooks.Close
-End Sub
+
 Private Sub DrawAngleLines()
     For i = 0 To (pointsCount - 1)
         If pointsX(i) <> 0 And pointsY(i) <> 0 Then
-            Call drawPointLine(pointsX(i), pointsY(i), angles(i))
+            Call drawPointLine(pointsX(i), pointsY(i), Angles(i))
         End If
     Next i
 End Sub
 
 Private Sub DrawPoints()
-    Picture1.DrawWidth = 2
-    Dim corow As Long
-    Set excelApp = CreateExcel(Form1.TextPath.Text)
-    Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
-    corow = excelsheet.usedrange.Rows.count
-    'set points array
-    pointsCount = corow - 5
-    ReDim Preserve pointsX(0 To pointsCount - 1) As Double
-    ReDim Preserve pointsY(0 To pointsCount - 1) As Double
-
-    
-    'get the center point of source points
-    Dim minX, maxX, minY, maxY As Double
-    minX = maxX = excelsheet.cells(6, 2).value
-    minY = maxY = excelsheet.cells(6, 3).value
-    For i = 7 To corow
-        x = excelsheet.cells(i, 2).value
-        y = excelsheet.cells(i, 3).value
-        If x > maxX Then
-            maxX = x
-        ElseIf x < minX Then
-            minX = x
-        End If
-        
-        If y > maxY Then
-            maxY = y
-        ElseIf y < minY Then
-            minY = y
-        End If
-    Next i
-    
-    'source center points
-    Dim sX, sY As Double
-    Dim c As Double
-    Dim a As Double
-    Dim b As Double
-    a = maxX - minX
-    b = maxY - minY
-    If a > b Then
-    c = a / 1000
-    Else
-    c = b / 1000
-    End If
-        
-    Dim blscale As Double
-    blscale = Picture1.Width * 0.8 / c
-    sX = (maxX + minX) / 2000
-    sY = (maxY + minY) / 2000
-    
-    'destination center points
-    Dim dX, dY As Double
-    dX = Picture1.Width / 2
-    dY = Picture1.Height / 2
+    Dim point(0 To 1) As Double
     
     'draw points in picuture
-    For i = 6 To corow
-        x = excelsheet.cells(i, 2).value / 1000
-        y = excelsheet.cells(i, 3).value / 1000
-        Dim x1, y1 As Double
-        x1 = (x - sX) * blscale + dX
-        y1 = (y - sY) * blscale + dY
-        If i = 6 Then
-            Picture1.PSet (x1, y1), RGB(255, 0, 0)
+    Dim i As Integer
+    For i = 0 To rowCount - 1
+        Call GetPoint(i)
+        Picture1.DrawWidth = 5
+        If i = 0 Then
+            Picture1.PSet (tempPoint(0), tempPoint(1)), RGB(255, 0, 0)
         Else
-            Picture1.PSet (x1, y1), RGB(0, 255, 0)
+            Picture1.PSet (tempPoint(0), tempPoint(1)), RGB(0, 255, 0)
         End If
-        pointsX(i - 6) = x1
-        pointsY(i - 6) = y1
+        Call drawPointLine(tempPoint, Angles(i))
     Next i
 
-    Call excelApp.Workbooks.Close
 End Sub
+Private Function GetPoint(index As Integer) As Boolean
+    If index < rowCount Then
+        tempPoint(0) = (pointsX(index) - CenterPoint(0)) * bl + Picture1.width / 2
+        tempPoint(1) = (pointsY(index) - CenterPoint(1)) * bl + Picture1.height / 2
+        GetPoint = True
+    Else
+        GetPoint = False
+    End If
+End Function
+
 Private Sub DownCmd_Click()
     drawLine (90)
 End Sub
@@ -354,7 +289,7 @@ Private Sub LeftCmd_Click()
     drawLine (180)
 End Sub
 Private Sub RightCmd_Click()
-    drawLine (0)
+    drawLine (360)
 End Sub
 
 Private Sub saveCmd_Click()
@@ -364,7 +299,7 @@ Private Sub saveCmd_Click()
     corow = excelsheet.usedrange.Rows.count
     
     For i = 6 To corow
-        excelsheet.cells(i, 8).value = angles(i - 6)
+        excelsheet.cells(i, 8).value = Angles(i - 6)
     Next i
     Call excelApp.Workbooks.Close
 End Sub
@@ -384,20 +319,70 @@ End Sub
 Private Sub CCmd_Click()
     drawLine (45)
 End Sub
-Private Sub drawLine(angle As Integer)
-    Dim x, y, x1, y1 As Double
-    x = pointsX(pointIndex)
-    y = pointsY(pointIndex)
-    x1 = x + 20 * Cos(3.1415926 * angle / 180)
-    y1 = y + 20 * Sin(3.1415926 * angle / 180)
-    Picture1.Line (x, y)-(x1, y1), RGB(255, 0, 0)
-    angles(pointIndex) = angle
-    pointIndex = pointIndex + 1
+Private Sub drawLine(angle As Double)
+    If pointIndex < rowCount Then
+        Call Redraw(pointIndex)
+        Dim point(0 To 1) As Double
+        Dim correct As Boolean
+        
+        'x = pointsX(pointIndex)
+        'y = pointsY(pointIndex)
+        'x1 = x + 20 * Cos(3.1415926 * angle / 180)
+        'y1 = y + 20 * Sin(3.1415926 * angle / 180)
+        'Picture1.Line (x, y)-(x1, y1), RGB(255, 0, 0)
+        Angles(pointIndex) = angle
+        
+        correct = GetPoint(pointIndex)
+        If correct = True Then
+            Call drawPointLine(tempPoint, angle)
+        End If
+        
+        pointIndex = pointIndex + 1
+        'go to the first point if went to the end
+    
+        
+        correct = GetPoint(pointIndex)
+        If correct = True Then
+            Call DrawPoint(tempPoint(0), tempPoint(1), RGB(255, 0, 0))
+        End If
+    End If
+
 End Sub
-Private Sub drawPointLine(x As Double, y As Double, angle As Double)
+
+Private Sub drawPointLine(point() As Double, angle As Double)
+    Picture1.DrawWidth = 1
     Dim x1, y1 As Double
-    x1 = x + 20 * Cos(3.1415926 * angle / 180)
-    y1 = y + 20 * Sin(3.1415926 * angle / 180)
-    Picture1.Line (x, y)-(x1, y1), RGB(255, 0, 0)
+    If angle <> 0 Then
+        x1 = point(0) + 20 * Cos(3.1415926 * angle / 180)
+        y1 = point(1) + 20 * Sin(3.1415926 * angle / 180)
+        Picture1.Line (point(0), point(1))-(x1, y1), RGB(255, 0, 0)
+    End If
+
+End Sub
+Private Sub Redraw(index As Integer)
+    If index < rowCount Then
+        Call Picture1.Cls
+        Dim point(0 To 1) As Double
+    
+        Dim bl As Double
+        bl = GetScale(Picture1.width, Picture1.height)
+    
+        'draw points in picuture
+        For i = 0 To rowCount - 1
+            point(0) = (pointsX(i) - CenterPoint(0)) * bl + Picture1.width / 2
+            point(1) = (pointsY(i) - CenterPoint(1)) * bl + Picture1.height / 2
+            If index <> i Then
+                Call drawPointLine(point, Angles(i))
+            End If
+            If index <> i - 1 Then
+                Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
+            End If
+        Next i
+    End If
+
+End Sub
+Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
+    Picture1.DrawWidth = 5
+    Picture1.PSet (x, y), color
 End Sub
 
