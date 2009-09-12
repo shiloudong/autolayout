@@ -33,7 +33,7 @@ Begin VB.Form Form3
          Height          =   615
          Left            =   240
          TabIndex        =   13
-         Top             =   7440
+         Top             =   2520
          Width           =   975
       End
       Begin VB.CommandButton Ccmd 
@@ -116,9 +116,9 @@ Begin VB.Form Form3
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   1320
+         Left            =   1440
          TabIndex        =   8
-         Top             =   8280
+         Top             =   3240
          Width           =   975
       End
       Begin VB.CommandButton ClearCmd 
@@ -135,7 +135,7 @@ Begin VB.Form Form3
          Height          =   615
          Left            =   240
          TabIndex        =   7
-         Top             =   8280
+         Top             =   3240
          Width           =   975
       End
       Begin VB.CommandButton UndoCmd 
@@ -155,7 +155,7 @@ Begin VB.Form Form3
          Top             =   840
          Width           =   615
       End
-      Begin VB.CommandButton RightCmd 
+      Begin VB.CommandButton DCmd 
          Caption         =   "D"
          BeginProperty Font 
             Name            =   "Arial"
@@ -172,7 +172,7 @@ Begin VB.Form Form3
          Top             =   840
          Width           =   615
       End
-      Begin VB.CommandButton DownCmd 
+      Begin VB.CommandButton XCmd 
          Caption         =   "X"
          BeginProperty Font 
             Name            =   "Arial"
@@ -206,7 +206,7 @@ Begin VB.Form Form3
          Top             =   240
          Width           =   615
       End
-      Begin VB.CommandButton LeftCmd 
+      Begin VB.CommandButton ACmd 
          Caption         =   "A"
          BeginProperty Font 
             Name            =   "Arial"
@@ -257,6 +257,27 @@ Private Sub Form_Activate()
     pointIndex = 0
 End Sub
 
+Private Sub Form_KeyPress(KeyAscii As Integer)
+If KeyAscii = 113 Then
+Call QCmd_Click
+ElseIf KeyAscii = 119 Then
+Call WCmd_Click
+ElseIf KeyAscii = 101 Then
+Call ECmd_Click
+ElseIf KeyAscii = 97 Then
+Call ACmd_Click
+ElseIf KeyAscii = 100 Then
+Call DCmd_Click
+ElseIf KeyAscii = 122 Then
+Call ZCmd_Click
+ElseIf KeyAscii = 120 Then
+Call XCmd_Click
+ElseIf KeyAscii = 99 Then
+Call CCmd_Click
+End If
+
+End Sub
+
 Private Sub Form_Load()
     Picture1.AutoRedraw = True
     pointIndex = 0
@@ -299,12 +320,15 @@ Private Function GetPoint(index As Integer) As Boolean
     End If
 End Function
 
-Private Sub DownCmd_Click()
+Private Sub XCmd_Click()
     drawLine (90)
 End Sub
-
-Private Sub LeftCmd_Click()
+Private Sub ACmd_Click()
     drawLine (180)
+End Sub
+
+Private Sub Picture1_KeyPress(KeyAscii As Integer)
+Call Form_KeyPress(KeyAscii)
 End Sub
 
 Private Sub resetCmd_Click()
@@ -319,8 +343,7 @@ Private Sub resetCmd_Click()
     End If
     
 End Sub
-
-Private Sub RightCmd_Click()
+Private Sub DCmd_Click()
     drawLine (360)
 End Sub
 
@@ -335,7 +358,6 @@ Private Sub saveCmd_Click()
     Next i
     Call excelApp.Workbooks.Close
 End Sub
-
 Private Sub WCmd_Click()
     drawLine (270)
 End Sub
