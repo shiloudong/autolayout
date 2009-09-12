@@ -306,14 +306,6 @@ Private Sub Form_Load()
     patten = 1
 End Sub
 
-Private Sub DrawAngleLines()
-    For i = 0 To (pointsCount - 1)
-        If pointsX(i) <> 0 And pointsY(i) <> 0 Then
-            Call drawPointLine(pointsX(i), pointsY(i), Angles(i))
-        End If
-    Next i
-End Sub
-
 Private Sub MoveCmd_Click()
     patten = 1
 End Sub
@@ -422,9 +414,7 @@ Private Sub saveCmd_Click()
     Dim corow As Long
     Set excelApp = CreateExcel(Form1.TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
-    corow = excelsheet.usedrange.Rows.count
-    
-    For i = 6 To corow
+    For i = 6 To rowCount
         excelsheet.cells(i, 8).value = Angles(i - 6)
     Next i
     Call excelApp.Workbooks.Close

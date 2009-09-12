@@ -93,7 +93,7 @@ Public Function GetScale(width As Double, height As Double) As Double
 End Function
 
 'Æô¶¯Excel
-Private Function CreateExcel(path As String) As Object
+Public Function CreateExcel(path As String) As Object
     Dim excelApp As Object
     Set excelApp = CreateObject("excel.application")
     excelApp.Workbooks.Open (path)
