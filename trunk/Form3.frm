@@ -245,8 +245,7 @@ Attribute VB_Exposed = False
 Dim pointIndex As Integer
 Dim tempPoint(0 To 1) As Double
 Dim bl As Double
-
-
+Dim movePoint(0 To 1) As Double
 
 Private Sub ClearCmd_Click()
 Picture1.Cls
@@ -258,23 +257,23 @@ Private Sub Form_Activate()
 End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
-If KeyAscii = 113 Then
-Call QCmd_Click
-ElseIf KeyAscii = 119 Then
-Call WCmd_Click
-ElseIf KeyAscii = 101 Then
-Call ECmd_Click
-ElseIf KeyAscii = 97 Then
-Call ACmd_Click
-ElseIf KeyAscii = 100 Then
-Call DCmd_Click
-ElseIf KeyAscii = 122 Then
-Call ZCmd_Click
-ElseIf KeyAscii = 120 Then
-Call XCmd_Click
-ElseIf KeyAscii = 99 Then
-Call CCmd_Click
-End If
+    If KeyAscii = 113 Then
+        Call QCmd_Click
+    ElseIf KeyAscii = 119 Then
+        Call WCmd_Click
+    ElseIf KeyAscii = 101 Then
+        Call ECmd_Click
+    ElseIf KeyAscii = 97 Then
+        Call ACmd_Click
+    ElseIf KeyAscii = 100 Then
+        Call DCmd_Click
+    ElseIf KeyAscii = 122 Then
+        Call ZCmd_Click
+    ElseIf KeyAscii = 120 Then
+        Call XCmd_Click
+    ElseIf KeyAscii = 99 Then
+        Call CCmd_Click
+    End If
 
 End Sub
 
@@ -283,6 +282,8 @@ Private Sub Form_Load()
     pointIndex = 0
     Call GetExcelData(Form1.TextPath.Text)
     bl = GetScale(Picture1.width, Picture1.height)
+    movePoint(0) = Picture1.width / 2
+    movePoint(1) = Picture1.height / 2
 End Sub
 
 Private Sub DrawAngleLines()
@@ -312,8 +313,8 @@ Private Sub DrawPoints()
 End Sub
 Private Function GetPoint(index As Integer) As Boolean
     If index < rowCount Then
-        tempPoint(0) = (pointsX(index) - CenterPoint(0)) * bl + Picture1.width / 2
-        tempPoint(1) = (pointsY(index) - CenterPoint(1)) * bl + Picture1.height / 2
+        tempPoint(0) = (pointsX(index) - CenterPoint(0)) * bl + movePoint(0)
+        tempPoint(1) = (pointsY(index) - CenterPoint(1)) * bl + movePoint(1)
         GetPoint = True
     Else
         GetPoint = False
@@ -423,8 +424,8 @@ Private Sub Redraw(lineIndex As Integer, pointIndex)
     
         'draw points in picuture
         For i = 0 To rowCount - 1
-            point(0) = (pointsX(i) - CenterPoint(0)) * bl + Picture1.width / 2
-            point(1) = (pointsY(i) - CenterPoint(1)) * bl + Picture1.height / 2
+            point(0) = (pointsX(i) - CenterPoint(0)) * bl + movePoint(0)
+            point(1) = (pointsY(i) - CenterPoint(1)) * bl + movePoint(1)
             If lineIndex <> i Then
                 Call drawPointLine(point, Angles(i))
             End If
@@ -438,5 +439,19 @@ End Sub
 Private Sub DrawPoint(X As Double, Y As Double, color As ColorConstants)
     Picture1.DrawWidth = 5
     Picture1.PSet (X, Y), color
+End Sub
+Private Sub RedrawAll()
+    Call Picture1.Cls
+    'draw points in picuture
+    For i = 0 To rowCount - 1
+        point(0) = (pointsX(i) - CenterPoint(0)) * bl + movePoint(0)
+        point(1) = (pointsY(i) - CenterPoint(1)) * bl + movePoint(1)
+        If lineIndex <> i Then
+            Call drawPointLine(point, Angles(i))
+        End If
+        If pointIndex <> i Then
+            Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
+        End If
+    Next i
 End Sub
 
