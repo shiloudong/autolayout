@@ -244,11 +244,34 @@ End Sub
 
 Private Sub Form_Activate()
     Call DrawPoints
+    Call DrawAngleLines
     pointIndex = 0
 End Sub
 
 Private Sub Form_Load()
     Picture1.AutoRedraw = True
+    Call ReadAngles
+End Sub
+Private Sub ReadAngles()
+    Dim corow As Long
+    Set excelApp = CreateExcel(Form1.TextPath.Text)
+    Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
+    corow = excelsheet.usedrange.Rows.count
+    
+    pointsCount = corow - 5
+    ReDim Preserve angles(0 To pointsCount - 1) As Double
+    
+    For i = 6 To corow
+        angles(i - 6) = excelsheet.cells(i, 8).value
+    Next i
+    Call excelApp.Workbooks.Close
+End Sub
+Private Sub DrawAngleLines()
+    For i = 0 To (pointsCount - 1)
+        If pointsX(i) <> 0 And pointsY(i) <> 0 Then
+            Call drawPointLine(pointsX(i), pointsY(i), angles(i))
+        End If
+    Next i
 End Sub
 
 Private Sub DrawPoints()
@@ -258,10 +281,10 @@ Private Sub DrawPoints()
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     corow = excelsheet.usedrange.Rows.count
     'set points array
-    pointsCount = corow
-    ReDim Preserve pointsX(0 To pointsCount) As Double
-    ReDim Preserve pointsY(0 To pointsCount) As Double
-    ReDim Preserve angles(0 To pointsCount) As Double
+    pointsCount = corow - 5
+    ReDim Preserve pointsX(0 To pointsCount - 1) As Double
+    ReDim Preserve pointsY(0 To pointsCount - 1) As Double
+
     
     'get the center point of source points
     Dim minX, maxX, minY, maxY As Double
@@ -333,6 +356,19 @@ End Sub
 Private Sub RightCmd_Click()
     drawLine (0)
 End Sub
+
+Private Sub saveCmd_Click()
+    Dim corow As Long
+    Set excelApp = CreateExcel(Form1.TextPath.Text)
+    Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
+    corow = excelsheet.usedrange.Rows.count
+    
+    For i = 6 To corow
+        excelsheet.cells(i, 8).value = angles(i - 6)
+    Next i
+    Call excelApp.Workbooks.Close
+End Sub
+
 Private Sub WCmd_Click()
     drawLine (270)
 End Sub
@@ -357,5 +393,11 @@ Private Sub drawLine(angle As Integer)
     Picture1.Line (x, y)-(x1, y1), RGB(255, 0, 0)
     angles(pointIndex) = angle
     pointIndex = pointIndex + 1
+End Sub
+Private Sub drawPointLine(x As Double, y As Double, angle As Double)
+    Dim x1, y1 As Double
+    x1 = x + 20 * Cos(3.1415926 * angle / 180)
+    y1 = y + 20 * Sin(3.1415926 * angle / 180)
+    Picture1.Line (x, y)-(x1, y1), RGB(255, 0, 0)
 End Sub
 
