@@ -11,3 +11,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+Private Sub test()
+    Dim a As Integer
+    a = 100 + 200
+End Sub
