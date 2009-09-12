@@ -19,6 +19,23 @@ Begin VB.Form Form3
       TabIndex        =   1
       Top             =   0
       Width           =   2535
+      Begin VB.CommandButton resetCmd 
+         Caption         =   "Reset"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   615
+         Left            =   240
+         TabIndex        =   13
+         Top             =   7440
+         Width           =   975
+      End
       Begin VB.CommandButton Ccmd 
          Caption         =   "C"
          BeginProperty Font 
@@ -285,9 +302,24 @@ End Function
 Private Sub DownCmd_Click()
     drawLine (90)
 End Sub
+
 Private Sub LeftCmd_Click()
     drawLine (180)
 End Sub
+
+Private Sub resetCmd_Click()
+    pointIndex = 0
+    Call Redraw(pointIndex, pointIndex)
+    
+    Dim correct As Boolean
+    correct = GetPoint(pointIndex)
+    If correct = True Then
+        Call DrawPoint(tempPoint(0), tempPoint(1), RGB(255, 0, 0))
+        Call drawPointLine(tempPoint, Angles(pointIndex))
+    End If
+    
+End Sub
+
 Private Sub RightCmd_Click()
     drawLine (360)
 End Sub
@@ -321,7 +353,7 @@ Private Sub CCmd_Click()
 End Sub
 Private Sub drawLine(angle As Double)
     If pointIndex < rowCount Then
-        Call Redraw(pointIndex)
+        Call Redraw(pointIndex, pointIndex + 1)
         Dim point(0 To 1) As Double
         Dim correct As Boolean
         
@@ -359,7 +391,7 @@ Private Sub drawPointLine(point() As Double, angle As Double)
     End If
 
 End Sub
-Private Sub Redraw(index As Integer)
+Private Sub Redraw(lineIndex As Integer, pointIndex)
     If index < rowCount Then
         Call Picture1.Cls
         Dim point(0 To 1) As Double
@@ -371,18 +403,18 @@ Private Sub Redraw(index As Integer)
         For i = 0 To rowCount - 1
             point(0) = (pointsX(i) - CenterPoint(0)) * bl + Picture1.width / 2
             point(1) = (pointsY(i) - CenterPoint(1)) * bl + Picture1.height / 2
-            If index <> i Then
+            If lineIndex <> i Then
                 Call drawPointLine(point, Angles(i))
             End If
-            If index <> i - 1 Then
+            If pointIndex <> i Then
                 Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
             End If
         Next i
     End If
 
 End Sub
-Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
+Private Sub DrawPoint(X As Double, Y As Double, color As ColorConstants)
     Picture1.DrawWidth = 5
-    Picture1.PSet (x, y), color
+    Picture1.PSet (X, Y), color
 End Sub
 
