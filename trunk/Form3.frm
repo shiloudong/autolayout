@@ -250,7 +250,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-Dim bl As Double
+Dim BL As Double
 
 Dim previousPoint(0 To 1) As Double
 Dim startPoint(0 To 1) As Double
@@ -295,7 +295,7 @@ Private Sub Form_Load()
     Picture1.AutoRedraw = True
     M_Index = 0
     Call M_GetExcelData(Form1.TextPath.Text)
-    bl = M_GetScale(Picture1.width, Picture1.height)
+    BL = M_GetScale(Picture1.width, Picture1.height)
     F_MovePoint(0) = Picture1.width / 2
     F_MovePoint(1) = Picture1.height / 2
     isMove = False
@@ -308,42 +308,42 @@ Private Sub MoveCmd_Click()
     patten = 1
 End Sub
 
-Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Button = 1 Then
         isMove = True
-        previousPoint(0) = X
-        previousPoint(1) = Y
+        previousPoint(0) = x
+        previousPoint(1) = y
     ElseIf Button = 2 Then
         isZoom = True
-        previousPoint(0) = X
-        previousPoint(1) = Y
+        previousPoint(0) = x
+        previousPoint(1) = y
     End If
 End Sub
 
-Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim dX, dY, distance As Double
     If Button = 1 And isMove Then
         If (patten = 1) Then
-            dX = X - previousPoint(0)
-            dY = Y - previousPoint(1)
+            dX = x - previousPoint(0)
+            dY = y - previousPoint(1)
     
             F_MovePoint(0) = F_MovePoint(0) + dX
             F_MovePoint(1) = F_MovePoint(1) + dY
             Call M_RedrawPicutreBox
-            previousPoint(0) = X
-            previousPoint(1) = Y
+            previousPoint(0) = x
+            previousPoint(1) = y
         ElseIf patten = 2 Then
             Call M_RedrawPicutreBox
-            Dim endPoint(0 To 1) As Double
-            endPoint(0) = X
-            endPoint(1) = Y
-            Call M_DrawRectangle(previousPoint, endPoint)
+            Dim endpoint(0 To 1) As Double
+            endpoint(0) = x
+            endpoint(1) = y
+            Call M_DrawRectangle(previousPoint, endpoint)
         End If
 
     ElseIf Button = 2 And isZoom Then
         
-        dX = X - previousPoint(0)
-        dY = Y - previousPoint(1)
+        dX = x - previousPoint(0)
+        dY = y - previousPoint(1)
         distance = Sqr(dX * dX + dY * dY)
         If dX > 0 Then
             M_Scale = M_Scale * (1 + distance * 2 / Picture1.width)
@@ -351,21 +351,21 @@ Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single,
             M_Scale = M_Scale * (1 - distance * 2 / Picture1.width)
         End If
         Call M_RedrawPicutreBox
-        previousPoint(0) = X
-        previousPoint(1) = Y
+        previousPoint(0) = x
+        previousPoint(1) = y
     End If
     
 End Sub
 
-Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Button = 1 Then
         If patten = 1 Then
             isMove = False
         ElseIf patten = 2 Then
-            Dim endPoint(0 To 1) As Double
-            endPoint(0) = X
-            endPoint(1) = Y
-            Call CalculateSelectedPoints(previousPoint, endPoint)
+            Dim endpoint(0 To 1) As Double
+            endpoint(0) = x
+            endpoint(1) = y
+            Call CalculateSelectedPoints(previousPoint, endpoint)
             Call M_RedrawPicutreBox
             Call ShowLayerDialog
         End If
@@ -374,7 +374,7 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y
     End If
 End Sub
 Private Sub ShowLayerDialog()
-
+    Form4.Show
 End Sub
 
 Private Sub resetCmd_Click()
