@@ -3,8 +3,8 @@ Begin VB.Form AngleForm
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Angle"
    ClientHeight    =   3495
-   ClientLeft      =   45
-   ClientTop       =   435
+   ClientLeft      =   2775
+   ClientTop       =   1380
    ClientWidth     =   2655
    LinkTopic       =   "Form4"
    MaxButton       =   0   'False
@@ -12,7 +12,6 @@ Begin VB.Form AngleForm
    ScaleHeight     =   3495
    ScaleWidth      =   2655
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.Frame Frame1 
       Caption         =   "Direction"
       BeginProperty Font 

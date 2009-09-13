@@ -3,15 +3,14 @@ Begin VB.Form Form5
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Form5"
    ClientHeight    =   3540
-   ClientLeft      =   45
-   ClientTop       =   435
+   ClientLeft      =   2745
+   ClientTop       =   1350
    ClientWidth     =   3570
    LinkTopic       =   "Form5"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3540
    ScaleWidth      =   3570
-   StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.CommandButton ClearCmd 
       Caption         =   "Clear"
       BeginProperty Font 
@@ -178,7 +177,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label17 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 18"
          BeginProperty Font 
@@ -223,15 +222,6 @@ Begin VB.Form Form5
          BackColor       =   &H00FF0000&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 3"
-         BeginProperty Font 
-            Name            =   "ËÎÌå"
-            Size            =   9
-            Charset         =   134
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -409,7 +399,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label6 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFC0FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 13"
          BeginProperty Font 
@@ -430,7 +420,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label5 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFFFC0&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 14"
          BeginProperty Font 
@@ -451,7 +441,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label4 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H008080FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 15"
          BeginProperty Font 
@@ -472,7 +462,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label3 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H0080C0FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 16"
          BeginProperty Font 
@@ -493,7 +483,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label2 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00404080&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 17"
          BeginProperty Font 

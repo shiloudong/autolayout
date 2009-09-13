@@ -3,8 +3,8 @@ Begin VB.Form AboutForm
    BorderStyle     =   1  'Fixed Single
    Caption         =   "About"
    ClientHeight    =   2460
-   ClientLeft      =   4545
-   ClientTop       =   2940
+   ClientLeft      =   2745
+   ClientTop       =   1350
    ClientWidth     =   3870
    BeginProperty Font 
       Name            =   "Arial"
