@@ -289,170 +289,6 @@ End Sub
 Private Sub Form_Load()
     TextPath.Text = "pa.xls"
 End Sub
-
-'启动Autocad函数
-Private Function CreateAcad() As IAcadApplication
-    Dim cad As autoCAD.AcadApplication
-    On Error Resume Next
-    Set cad = GetObject(, "AutoCAD.Application")
-    If Err Then
-        Err.Clear
-        Set cad = CreateObject("AutoCAD.Application")
-        If Err Then End
-    End If
-    Dim count As Integer
-    count = cad.Documents.count
-    Set document = cad.ActiveDocument
-    cad.Visible = True
-    Set CreateAcad = cad
-End Function
-
-'启动Excel函数
-Private Function CreateExcel(path As String) As Object
-    Dim excelApp As Object
-    Set excelApp = CreateObject("excel.application")
-    excelApp.Workbooks.Open (path)
-    Set CreateExcel = excelApp
-End Function
-
-'画矩形的函数
-Function drawbox(document As IAcadDocument, cp, l, w) '根据矩形中心点坐标画矩形的子程序
-    Dim boxp(0 To 14) As Double
-    boxp(0) = cp(0) - l / 2
-    boxp(1) = cp(1) - w / 2
-    boxp(3) = cp(0) - l / 2
-    boxp(4) = cp(1) + w / 2
-    boxp(6) = cp(0) + l / 2
-    boxp(7) = cp(1) + w / 2
-    boxp(9) = cp(0) + l / 2
-    boxp(10) = cp(1) - w / 2
-    boxp(12) = cp(0) - l / 2
-    boxp(13) = cp(1) - w / 2
-    Call document.ModelSpace.AddPolyline(boxp)
-End Function
-
-' 画圆环的函数
-Function drawDonut(document As IAcadDocument, D1 As Double, D2 As Double, Pt1 As Variant) As AcadLWPolyline
-    Dim LW As Double
-    LW = (D1 - D2) / 2
-    Dim lwPlineObj As AcadLWPolyline
-    Dim points1(0 To 5) As Double
-    points1(0) = Pt1(0) - (D1 - LW) / 2
-    points1(1) = Pt1(1)
-    points1(2) = Pt1(0) + (D1 - LW) / 2
-    points1(3) = Pt1(1)
-    points1(4) = points1(0)
-    points1(5) = points1(1)
-    Set lwPlineObj = document.ModelSpace.AddLightWeightPolyline(points1)
-    lwPlineObj.SetBulge 0, 1
-    lwPlineObj.SetBulge 1, 1
-    lwPlineObj.SetWidth 0, LW, LW
-    lwPlineObj.SetWidth 1, LW, LW
-    Set drawDonut = lwPlineObj
-End Function
-
-'画layout的函数
-Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle As Double, PadNo As String, PadName As String, Trace As String, Jumper As String, Channel As String, Layer As String, BL As Double)
-   Dim pi As Double
-   Dim anglehd As Double
-   pi = 3.1415926
-   anglehd = pi * Angle / 180
-   
-   '画矩形和直线
-    Dim lay7 As AcadLayer
-    Set layer7 = document.Layers.Add("Pads")
-    layer7.color = 7
-    layer7.Lineweight = 0.5
-    document.ActiveLayer = layer7
-    Call drawbox(document, centerPoint, 0.032 * BL, 0.032 * BL)
-    Dim endpoint(0 To 2) As Double
-    endpoint(0) = centerPoint(0) + Text3.Text * BL * Cos(anglehd)
-    endpoint(1) = centerPoint(1) + Text3.Text * BL * Sin(anglehd) 'probe的终点坐标xyz
-    endpoint(2) = 0
-    Call document.ModelSpace.AddLine(centerPoint, endpoint)
-    
-    'pad No
-    Set mytxt = document.TextStyles.Add("mytxt") '添加mytxt样式
-    mytxt.fontFile = "c:\windows\fonts\arial.ttf"
-    document.ActiveTextStyle = mytxt '将当前文字样式设置为mytxt
-    Dim lay1 As AcadLayer
-    Set layer1 = document.Layers.Add("PadNo")
-    layer1.color = 2
-    layer1.Lineweight = 0.5
-    document.ActiveLayer = layer1
-    Dim padnoposition(0 To 2) As Double
-    padnoposition(0) = centerPoint(0) - Text4.Text * BL * Cos(anglehd) + Text2.Text * BL / 2 * Sin(anglehd)
-    padnoposition(1) = centerPoint(1) - Text4.Text * BL * Sin(anglehd) - Text2.Text * BL / 2 * Cos(anglehd) 'pad No.的文本放置的位置
-    padnoposition(2) = 0
-    Set padnoobj = document.ModelSpace.AddText(PadNo, padnoposition, Text2.Text * BL) '写pad No.的文本
-    Call padnoobj.Rotate(padnoposition, anglehd) '旋转pad No.的文本
-    
-    'pad name
-    Dim lay2 As AcadLayer
-    Set layer2 = document.Layers.Add("PadName")
-    layer2.color = 3
-    layer2.Lineweight = 0.5
-    document.ActiveLayer = layer2
-    Dim padnameposition(0 To 2) As Double
-    padnameposition(0) = centerPoint(0) + 0.2 * BL * Cos(anglehd) + Text2.Text * BL / 2 * Sin(anglehd)
-    padnameposition(1) = centerPoint(1) + 0.2 * BL * Sin(anglehd) - Text2.Text * BL / 2 * Cos(anglehd) 'pad name的文本放置的位置
-    padnameposition(2) = 0
-    Set padnameobj = document.ModelSpace.AddText(PadName, padnameposition, Text2.Text * BL) '写pad name的文本
-    Call padnameobj.Rotate(padnameposition, anglehd) '旋转pad name的文本
-    
-    'trace
-    Dim lay3 As AcadLayer
-    Set layer3 = document.Layers.Add("Trace")
-    layer3.color = 4
-    layer3.Lineweight = 0.5
-    document.ActiveLayer = layer3
-    Dim traceposition(0 To 2) As Double
-    traceposition(0) = endpoint(0) + 0.02 * BL * Cos(anglehd) + Text2.Text * BL / 2 * Sin(anglehd)
-    traceposition(1) = endpoint(1) + 0.02 * BL * Sin(anglehd) - Text2.Text * BL / 2 * Cos(anglehd) '焊点的文本放置的位置
-    traceposition(2) = 0
-    Set traceobj = document.ModelSpace.AddText(Trace, traceposition, Text2.Text * BL) '写焊点的文本
-    Call traceobj.Rotate(traceposition, anglehd) '旋转焊点的文本
-
-    'jumper
-    Dim lay4 As AcadLayer
-    Set layer4 = document.Layers.Add("Jumper")
-    layer4.color = 5
-    layer4.Lineweight = 0.5
-    document.ActiveLayer = layer4
-    Dim jumperposition(0 To 2) As Double
-    jumperposition(0) = endpoint(0) + 0.3 * BL * Cos(anglehd) + Text2.Text * BL / 2 * Sin(anglehd)
-    jumperposition(1) = endpoint(1) + 0.3 * BL * Sin(anglehd) - Text2.Text * BL / 2 * Cos(anglehd) '跳线的文本放置的位置
-    jumperposition(2) = 0
-    Set jumperobj = document.ModelSpace.AddText(Jumper, jumperposition, Text2.Text * BL) '写跳线的文本
-    Call jumperobj.Rotate(jumperposition, anglehd) '旋转跳线的文本
-    
-    'channel
-    Dim lay5 As AcadLayer
-    Set layer5 = document.Layers.Add("Channel")
-    layer5.color = 6
-    layer5.Lineweight = 0.5
-    document.ActiveLayer = layer5
-    Dim channelposition(0 To 2) As Double
-    channelposition(0) = endpoint(0) + 0.6 * BL * Cos(anglehd) + Text2.Text * BL / 2 * Sin(anglehd)
-    channelposition(1) = endpoint(1) + 0.6 * BL * Sin(anglehd) - Text2.Text * BL / 2 * Cos(anglehd) 'CH的文本放置的位置
-    channelposition(2) = 0
-    Set channelobj = document.ModelSpace.AddText(Channel, channelposition, Text2.Text * BL) '写CH的文本
-    Call channelobj.Rotate(channelposition, anglehd) '旋转CH的文本
-    
-    'layer
-    Dim lay6 As AcadLayer
-    Set layer6 = document.Layers.Add("Layer")
-    layer6.color = 1
-    layer6.Lineweight = 0.5
-    document.ActiveLayer = layer6
-    Dim probelayerposition(0 To 2) As Double
-    probelayerposition(0) = centerPoint(0) + 0.1 * BL * Cos(anglehd) + Text2.Text * BL / 2 * Sin(anglehd)
-    probelayerposition(1) = centerPoint(1) + 0.1 * BL * Sin(anglehd) - Text2.Text * BL / 2 * Cos(anglehd) '层数的文本放置的位置
-    probelayerposition(2) = 0
-    Set probelayerobj = document.ModelSpace.AddText(Layer, probelayerposition, Text2.Text * BL) '写层数的文本
-    Call probelayerobj.Rotate(probelayerposition, anglehd) '旋转层数的文本
-End Sub
-
 '画断面图函数
 Private Sub drawsection(document As IAcadDocument, tipdia As Double, tiplength As Double, probedia As Double, taper As Double, theta As Double, beamangle As Double)
 Dim p1(0 To 2) As Double
@@ -564,109 +400,109 @@ Private Sub layout_Click()
     Set doc = app.Documents.Add
     'If doc.Active = False Then End
     
-    Dim corow As Long
-    Set excelApp = CreateExcel(TextPath.Text)
+'    Dim corow As Long
+    Set excelApp = M_CreateExcel(TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1") '当前工作表为sheet1
-    corow = excelsheet.usedrange.Rows.count '计算工作表的总行数
-    Dim maxX, minX, maxY, minY As Double
-    minX = excelsheet.cells(6, 2).value  '读取excel中的X坐标
-    minY = excelsheet.cells(6, 3).value  '读取excel中的Y坐标
-    maxX = excelsheet.cells(6, 2).value  '读取excel中的X坐标
-    maxY = excelsheet.cells(6, 3).value  '读取excel中的Y坐标
+'    corow = excelsheet.usedrange.Rows.count '计算工作表的总行数
+'    Dim maxX, minX, maxY, minY As Double
+'    minX = excelsheet.cells(6, 2).value  '读取excel中的X坐标
+'    minY = excelsheet.cells(6, 3).value  '读取excel中的Y坐标
+'    maxX = excelsheet.cells(6, 2).value  '读取excel中的X坐标
+'    maxY = excelsheet.cells(6, 3).value  '读取excel中的Y坐标
 
-For i = 7 To corow
-    Dim currentX, currentY As Double
-    currentX = excelsheet.cells(i, 2).value
-    currentY = excelsheet.cells(i, 3).value
-    If (currentX < minX) Then
-       minX = currentX
-    Else
-        If (currentX > maxX) Then
-            maxX = currentX
-        End If
-    End If
-    
-    If (currentY < minY) Then
-        minY = currentY
-    Else
-        If (currentY > maxY) Then
-            maxY = currentY
-        End If
-    End If
-Next i
+'For i = 7 To corow
+'    Dim currentX, currentY As Double
+'    currentX = excelsheet.cells(i, 2).value
+'    currentY = excelsheet.cells(i, 3).value
+'    If (currentX < minX) Then
+'       minX = currentX
+'    Else
+'        If (currentX > maxX) Then
+'            maxX = currentX
+'        End If
+'    End If
+'
+'    If (currentY < minY) Then
+'        minY = currentY
+'    Else
+'        If (currentY > maxY) Then
+'            maxY = currentY
+'        End If
+'    End If
+'Next i
 
-Dim a, b, c, BL As Double
-a = maxX - minX
-b = maxY - minY
-If a > b Then
-c = a / 1000
-Else
-c = b / 1000
-End If
-BL = 178.2 / c
+'Dim a, b, c, BL As Double
+'a = maxX - minX
+'b = maxY - minY
+'If a > b Then
+'c = a / 1000
+'Else
+'c = b / 1000
+'End If
+'BL = 178.2 / c
 
-    Dim newCenter(0 To 2) As Double
-    newCenter(0) = (maxX + minX) * BL / 2000
-    newCenter(1) = (maxY + minY) * BL / 2000
-    newCenter(2) = 0
-For i = 6 To corow '循环开始
-    Dim Angle As Double '定义拉针角度为double
-    Dim tracetext As String
-    Dim padnametext As String
-    Dim probelayertext As String
-    Dim jumpertext As String
-    Dim channeltext As String
-    Dim padnotext As String
-    Dim p(0 To 2) As Double '定义了圆心的位置坐标，下方的p（0），p（1），p（2）为该圆心的x,y,z
-    Dim x As String '定义x坐标
-    Dim y As String '定义y坐标
-    x = excelsheet.cells(i, 2).value * BL / 1000 '读取excel中的X坐标
-    y = excelsheet.cells(i, 3).value * BL / 1000 '读取excel中的Y坐标
-    p(0) = Val(x) - newCenter(0)
-    p(1) = Val(y) - newCenter(1)
-    p(2) = 0
-    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
-    tracetext = excelsheet.cells(i, 5).value '读取excel里的焊点
-    padnametext = excelsheet.cells(i, 4).value '读取excel里的pad name
-    probelayertext = excelsheet.cells(i, 9).value '读取excel里的针层
-    jumpertext = excelsheet.cells(i, 6).value '读取excel里的跳线
-    channeltext = excelsheet.cells(i, 7).value '读取excel里的CH
-    padnotext = excelsheet.cells(i, 1).value '读取excel里的Pad No.
-    Call DrawUnit(doc, p, Angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
-Next i
-
-'creat layout drawing frame
-    Dim lay8 As AcadLayer
-    Set layer8 = doc.Layers.Add("Layer")
-    layer8.color = 7
-    layer8.Lineweight = 0.5
-    doc.ActiveLayer = layer8
-    Dim p1(0 To 2) As Double
-    Dim p2(0 To 2) As Double
-    Dim p3(0 To 2) As Double
-    Dim p4(0 To 2) As Double
-    Dim p5(0 To 2) As Double
-    Dim p6(0 To 2) As Double
-    Dim l As Double
-    Dim w As Double
-    l = 297
-    w = 420
-    p2(0) = 0
-    p2(1) = 0
-    p2(2) = 0
-    Call drawbox(doc, p2, l, w)
-    Call doc.ModelSpace.AddLine(p3, p4)
-    Dim customer As String
-    Dim device As String
-    Dim pins As String
-    customer = excelsheet.cells(1, 2).value
-    device = excelsheet.cells(2, 2).value
-    pins = excelsheet.cells(3, 2).value
-    'Call doc.ModelSpace.AddText("Customer:" & customer, p3, 250)
-    'Call doc.ModelSpace.AddText("Device:" & device, p5, 250)
-    'Call doc.ModelSpace.AddText("Pins:" & pins, p6, 250)
-    doc.Application.ZoomExtents
-    Call excelApp.Workbooks.Close '关闭excel程序
+'    Dim newCenter(0 To 2) As Double
+'    newCenter(0) = (maxX + minX) * BL / 2000
+'    newCenter(1) = (maxY + minY) * BL / 2000
+'    newCenter(2) = 0
+'For i = 6 To corow '循环开始
+'    Dim Angle As Double '定义拉针角度为double
+'    Dim tracetext As String
+'    Dim padnametext As String
+'    Dim probelayertext As String
+'    Dim jumpertext As String
+'    Dim channeltext As String
+'    Dim padnotext As String
+'    Dim p(0 To 2) As Double '定义了圆心的位置坐标，下方的p（0），p（1），p（2）为该圆心的x,y,z
+'    Dim x As String '定义x坐标
+'    Dim y As String '定义y坐标
+'    x = excelsheet.cells(i, 2).value * BL / 1000 '读取excel中的X坐标
+'    y = excelsheet.cells(i, 3).value * BL / 1000 '读取excel中的Y坐标
+'    p(0) = Val(x) - newCenter(0)
+'    p(1) = Val(y) - newCenter(1)
+'    p(2) = 0
+'    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
+'    tracetext = excelsheet.cells(i, 5).value '读取excel里的焊点
+'    padnametext = excelsheet.cells(i, 4).value '读取excel里的pad name
+'    probelayertext = excelsheet.cells(i, 9).value '读取excel里的针层
+'    jumpertext = excelsheet.cells(i, 6).value '读取excel里的跳线
+'    channeltext = excelsheet.cells(i, 7).value '读取excel里的CH
+'    padnotext = excelsheet.cells(i, 1).value '读取excel里的Pad No.
+'    Call DrawUnit(doc, p, Angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
+'Next i
+'
+''creat layout drawing frame
+'    Dim lay8 As AcadLayer
+'    Set layer8 = doc.Layers.Add("Layer")
+'    layer8.color = 7
+'    layer8.Lineweight = 0.5
+'    doc.ActiveLayer = layer8
+'    Dim p1(0 To 2) As Double
+'    Dim p2(0 To 2) As Double
+'    Dim p3(0 To 2) As Double
+'    Dim p4(0 To 2) As Double
+'    Dim p5(0 To 2) As Double
+'    Dim p6(0 To 2) As Double
+'    Dim l As Double
+'    Dim w As Double
+'    l = 297
+'    w = 420
+'    p2(0) = 0
+'    p2(1) = 0
+'    p2(2) = 0
+'    Call drawbox(doc, p2, l, w)
+'    Call doc.ModelSpace.AddLine(p3, p4)
+'    Dim customer As String
+'    Dim device As String
+'    Dim pins As String
+'    customer = excelsheet.cells(1, 2).value
+'    device = excelsheet.cells(2, 2).value
+'    pins = excelsheet.cells(3, 2).value
+'    'Call doc.ModelSpace.AddText("Customer:" & customer, p3, 250)
+'    'Call doc.ModelSpace.AddText("Device:" & device, p5, 250)
+'    'Call doc.ModelSpace.AddText("Pins:" & pins, p6, 250)
+'    doc.Application.ZoomExtents
+'    Call excelApp.Workbooks.Close '关闭excel程序
 End Sub
 
 'Creat Mask
@@ -683,10 +519,10 @@ Private Sub mask_Click()
     id = Text10.Text / 1000
     ed = Text10.Text / 1000 + Text5.Text / 1000
     Dim corow As Long
-    Set excelApp = CreateExcel(TextPath.Text)
+    Set excelApp = M_CreateExcel(TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1") '当前工作表为sheet1
     corow = excelsheet.usedrange.Rows.count '计算工作表的总行数
-    Dim Angle As Double
+    Dim angle As Double
 
     
     Dim maxX, minX, maxY, minY As Double
@@ -726,10 +562,10 @@ For i = 6 To corow
     Dim y As String '定义y坐标
     x = excelsheet.cells(i, 2).value '读取excel中的X坐标
     y = excelsheet.cells(i, 3).value '读取excel中的Y坐标
-    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
+    angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
         
-    maskp(0) = (Val(x) - newCenter(0)) / 1000 + Text11.Text / 1000 * Cos(3.1415926 * Angle / 180)
-    maskp(1) = (Val(y) - newCenter(1)) / 1000 + Text11.Text / 1000 * Sin(3.1415926 * Angle / 180)
+    maskp(0) = (Val(x) - newCenter(0)) / 1000 + Text11.Text / 1000 * Cos(3.1415926 * angle / 180)
+    maskp(1) = (Val(y) - newCenter(1)) / 1000 + Text11.Text / 1000 * Sin(3.1415926 * angle / 180)
     maskp(2) = 0
     Call drawDonut(doc2, ed, id, maskp)
 Next i
@@ -792,7 +628,7 @@ Dim app As IAcadApplication
     Dim TD As Double
     Dim PD As Double
     theta = Text14.Text
-    Set excelApp = CreateExcel(TextPath.Text)
+    Set excelApp = M_CreateExcel(TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
 For i = 21 To 32
     Dim value As Double
