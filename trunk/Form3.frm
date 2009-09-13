@@ -359,10 +359,21 @@ End Sub
 
 Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Button = 1 Then
-        isMove = False
+        If patten = 1 Then
+            isMove = False
+        ElseIf patten = 2 Then
+            Dim endPoint(0 To 1) As Double
+            endPoint(0) = X
+            endPoint(1) = Y
+            Call CalculateSelectedPoints(previousPoint, endPoint)
+            Call ShowLayerDialog
+        End If
     ElseIf Button = 2 Then
         isZoom = False
     End If
+End Sub
+Private Sub ShowLayerDialog()
+
 End Sub
 
 Private Sub resetCmd_Click()
