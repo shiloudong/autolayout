@@ -4,8 +4,8 @@ Begin VB.Form EntranceForm
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Probe Card Design - AutoLayout"
    ClientHeight    =   4065
-   ClientLeft      =   3540
-   ClientTop       =   2235
+   ClientLeft      =   2700
+   ClientTop       =   1650
    ClientWidth     =   6345
    BeginProperty Font 
       Name            =   "Arial"
