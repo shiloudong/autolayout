@@ -278,48 +278,48 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim Angle As Double
 Private Sub Command1_Click()
-    If (Form4.Text1 <> "") Then
-        Angle = Form4.Text1
+    If (AngleForm.Text1 <> "") Then
+        Angle = AngleForm.Text1
         Call SetSelectedAngle(Angle)
     End If
 End Sub
 
 Private Sub Label1_Click()
     Angle = 90
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label2_Click()
     Angle = 315
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label3_Click()
     Angle = 225
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label4_Click()
     Angle = 45
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label5_Click()
     Angle = 135
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label6_Click()
     Angle = 180
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label7_Click()
     Angle = 0
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub
 
 Private Sub Label8_Click()
     Angle = 270
-    Form4.Text1 = Angle
+    AngleForm.Text1 = Angle
 End Sub

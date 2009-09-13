@@ -20,11 +20,11 @@ Begin VB.Form ProbeAngleForm
       Top             =   0
       Width           =   2535
       Begin VB.CommandButton SelectCmd 
-         Caption         =   "Select"
+         Caption         =   "Angle"
          Height          =   615
          Left            =   240
          TabIndex        =   14
-         Top             =   3360
+         Top             =   3120
          Width           =   855
       End
       Begin VB.CommandButton resetCmd 
@@ -124,9 +124,9 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   1200
+         Left            =   1320
          TabIndex        =   8
-         Top             =   3360
+         Top             =   3120
          Width           =   975
       End
       Begin VB.CommandButton MoveCmd 
@@ -147,7 +147,7 @@ Begin VB.Form ProbeAngleForm
          Width           =   975
       End
       Begin VB.CommandButton UndoCmd 
-         Caption         =   "Undo"
+         Caption         =   "Layer"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   9
@@ -157,11 +157,11 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   495
-         Left            =   960
+         Height          =   615
+         Left            =   240
          TabIndex        =   6
-         Top             =   840
-         Width           =   615
+         Top             =   3720
+         Width           =   855
       End
       Begin VB.CommandButton DCmd 
          Caption         =   "D"
@@ -294,14 +294,14 @@ Private Sub Form_Load()
     Call SetPicure(Picture1)
     Picture1.AutoRedraw = True
     M_Index = 0
-    Call M_GetExcelData(Form1.TextPath.Text)
+    Call M_GetExcelData(EntranceForm.TextPath.Text)
     BL = M_GetScale(Picture1.width, Picture1.height)
     F_MovePoint(0) = Picture1.width / 2
     F_MovePoint(1) = Picture1.height / 2
     isMove = False
     isZoom = False
     'move patten
-    patten = 1
+    patten = 2
 End Sub
 
 Private Sub MoveCmd_Click()
@@ -332,12 +332,13 @@ Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, x As Single,
             Call M_RedrawPicutreBox
             previousPoint(0) = x
             previousPoint(1) = y
-        ElseIf patten = 2 Then
+        ElseIf patten = 2 Or patten = 3 Then
             Call M_RedrawPicutreBox
             Dim endpoint(0 To 1) As Double
             endpoint(0) = x
             endpoint(1) = y
             Call M_DrawRectangle(previousPoint, endpoint)
+        
         End If
 
     ElseIf Button = 2 And isZoom Then
@@ -358,23 +359,31 @@ Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, x As Single,
 End Sub
 
 Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+    Dim endpoint(0 To 1) As Double
     If Button = 1 Then
         If patten = 1 Then
             isMove = False
         ElseIf patten = 2 Then
-            Dim endpoint(0 To 1) As Double
+
             endpoint(0) = x
             endpoint(1) = y
             Call CalculateSelectedPoints(previousPoint, endpoint)
             Call M_RedrawPicutreBox
-            Call ShowLayerDialog
+            Call AngleForm.Show
+        ElseIf patten = 3 Then
+
+            endpoint(0) = x
+            endpoint(1) = y
+            Call CalculateSelectedPoints(previousPoint, endpoint)
+            Call M_RedrawPicutreBox
+            Call Form5.Show
         End If
     ElseIf Button = 2 Then
         isZoom = False
     End If
 End Sub
 Private Sub ShowLayerDialog()
-    Form4.Show
+    AngleForm.Show
 End Sub
 
 Private Sub resetCmd_Click()
@@ -389,7 +398,7 @@ Private Sub SelectCmd_Click()
 End Sub
 
 Private Sub UndoCmd_Click()
-    Call undo
+    patten = 3
 End Sub
 
 Private Sub XCmd_Click()

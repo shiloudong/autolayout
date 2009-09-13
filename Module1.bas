@@ -18,7 +18,12 @@ Public M_MinY As Double
 Public F_MovePoint(0 To 1) As Double
 Public M_Index As Integer
 Public M_Scale As Double
+
+Dim OrderedIndexs() As Integer
+Dim selectedCount As Integer
+
 Dim selectedFlag() As Boolean
+Dim colorMap(0 To 19) As ColorConstants
 
 Private m_picture As PictureBox
 
@@ -26,8 +31,30 @@ Private m_picture As PictureBox
 Public Sub SetPicure(pic As PictureBox)
     Set m_picture = pic
 End Sub
+Private Sub InitializeColorMap()
+    colorMap(0) = vbBlue
+    colorMap(1) = vbCyan
+    colorMap(2) = vbGreen
+    colorMap(3) = vbMagenta
+    colorMap(4) = vbRed
+    colorMap(5) = vbWhite
+    colorMap(6) = vbYellow
+    colorMap(7) = RGB(100, 100, 100)
+    colorMap(8) = vbBlue
+    colorMap(9) = vbBlue
+    colorMap(10) = vbBlue
+    colorMap(11) = vbBlue
+    colorMap(12) = vbBlue
+    colorMap(13) = vbBlue
+    colorMap(14) = vbBlue
+    colorMap(15) = vbBlue
+    colorMap(16) = vbBlue
+    colorMap(17) = vbBlue
+    colorMap(18) = vbBlue
+    colorMap(19) = vbBlue
+End Sub
 Public Sub M_GetExcelData(path As String)
-    Set excelApp = M_CreateExcel(Form1.TextPath.Text)
+    Set excelApp = M_CreateExcel(EntranceForm.TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     
     Dim PadNo, index As Integer
@@ -48,6 +75,7 @@ Public Sub M_GetExcelData(path As String)
     ReDim Preserve M_Angles(0 To M_RowCount - 1) As Double
     ReDim Preserve M_Layers(0 To M_RowCount - 1) As Integer
     ReDim Preserve selectedFlag(0 To M_RowCount - 1) As Boolean
+    ReDim Preserve OrderedIndexs(0 To M_RowCount - 1) As Integer
     
     For i = 0 To M_RowCount - 1
         selectedFlag(i) = False
@@ -84,6 +112,7 @@ Public Sub M_GetExcelData(path As String)
     M_CenterPoint(1) = (M_MaxY + M_MinY) / 2
     '
     Call excelApp.Workbooks.Close
+    Call InitializeColorMap
 End Sub
 
 Public Function M_GetScale(width As Double, height As Double) As Double
@@ -128,33 +157,57 @@ Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
     m_picture.DrawWidth = 5
     m_picture.PSet (x, y), color
 End Sub
-Private Sub DrawAngleLine(point() As Double, angle As Double)
+Private Sub DrawAngleLine(point() As Double, index As Integer)
     m_picture.DrawWidth = 1
     Dim pictureAngle As Double
-    pictureAngle = -angle
+    pictureAngle = -M_Angles(index)
     Dim x1, y1 As Double
 
     x1 = point(0) + 20 * Cos(3.1415926 * pictureAngle / 180)
     y1 = point(1) + 20 * Sin(3.1415926 * pictureAngle / 180)
-    m_picture.Line (point(0), point(1))-(x1, y1), RGB(255, 0, 0)
+    Dim layerIndex As Integer
+    layerIndex = M_Layers(index)
+    If (layerIndex > -1 And layerIndex < 20) Then
+        Dim color As ColorConstants
+        color = colorMap(layerIndex)
+        m_picture.Line (point(0), point(1))-(x1, y1), color
+    End If
 
+End Sub
+
+Private Sub DrawLayerText(index As Integer)
+    Dim x1, y1 As Double
+
+    x1 = M_PointsX(index) + 10 * Cos(3.1415926 * -M_Angles(index) / 180)
+    y1 = M_PointsY(index) + 10 * Sin(3.1415926 * -M_Angles(index) / 180)
+    
+    Dim point(0 To 1) As Double
+    point(0) = (x1 - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
+    point(1) = (y1 - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
+    
+    m_picture.currentX = point(0)
+    m_picture.currentY = point(1)
+    Dim layerTxt As Integer
+    layerTxt = M_Layers(index)
+    'm_picture.Print "layerText"
 End Sub
 Private Sub DrawUnit(index As Integer)
     Dim point(0 To 1) As Double
     point(0) = (M_PointsX(index) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
     point(1) = (M_PointsY(index) - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
-    Call DrawAngleLine(point, M_Angles(index))
+    Call DrawAngleLine(point, index)
     
     If selectedFlag(index) Then
         Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
     Else
         Call DrawPoint(point(0), point(1), RGB(255, 0, 0))
     End If
+    'Call DrawLayerText(index)
 End Sub
 
-Public Sub M_RedrawAngleLine(angle As Double)
+Public Sub M_RedrawAngleLine(Angle As Double)
     If M_Index < M_RowCount Then
-        M_Angles(M_Index) = angle
+        M_Angles(M_Index) = Angle
         M_Index = M_Index + 1
         Call M_RedrawPicutreBox
     End If
@@ -198,13 +251,106 @@ Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, en
         IsInRectange = False
     End If
 End Function
-Public Sub SetSelectedAngle(angle As Double)
+Public Sub SetSelectedAngle(Angle As Double)
     For i = 0 To M_RowCount - 1
         If (selectedFlag(i)) Then
-            M_Angles(i) = angle
+            M_Angles(i) = Angle
         End If
     Next i
     Call M_RedrawPicutreBox
+End Sub
+'order dircetion
+'1: X from low to high
+'2: X from high to low
+'3: Y from low to high
+'4: Y from hight to low
+Public Sub ReorderLayer(layerArray() As Integer, arrayLength As Integer, orderDirection As Integer)
+    Call ReorderSelectedProbe(orderDirection)
+    Call UpdateLayers(layerArray, arrayLength)
+End Sub
+
+Private Sub ReorderSelectedProbe(direction As Integer)
+    Dim index As Integer
+    index = 0
+    Dim i, j As Integer
+    For i = 0 To M_RowCount - 1
+        If (selectedFlag(i)) Then
+            OrderedIndexs(index) = i
+            index = index + 1
+        End If
+    Next i
+    selectedCount = index
+    
+    Dim tempPoint As Integer
+    tempPoint = OrderedIndexs(0)
+    Dim isOrder As Boolean
+    isOrder = False
+
+    For i = 1 To selectedCount - 1
+        For j = 0 To selectedCount - 1 - i
+            isOrder = CompareOrder(OrderedIndexs(j), OrderedIndexs(j + 1), direction)
+            If isOrder = False Then
+                Call SwitchOrder(j, j + 1)
+            End If
+        Next j
+
+    Next i
+    
+End Sub
+Private Sub SwitchOrder(index1 As Integer, index2 As Integer)
+    Dim temp As Integer
+    temp = OrderedIndexs(index1)
+    OrderedIndexs(index1) = OrderedIndexs(index2)
+    OrderedIndexs(index2) = temp
+End Sub
+'order dircetion
+'1: X from low to high
+'2: X from high to low
+'3: Y from low to high
+'4: Y from hight to low
+Private Function CompareOrder(index1, index2, direction) As Boolean
+    Dim data1, data2 As Double
+    Dim isOrder As Boolean
+    isOrder = True
+    Select Case direction
+        Case 1
+            data1 = M_PointsX(index1)
+            data2 = M_PointsX(index2)
+            If (data1 > data2) Then
+                isOrder = False
+            End If
+        Case 2
+            data1 = M_PointsX(index1)
+            data2 = M_PointsX(index2)
+            If (data1 < data2) Then
+                isOrder = False
+            End If
+        Case 3
+            data1 = M_PointsY(index1)
+            data2 = M_PointsY(index2)
+            If (data1 > data2) Then
+                isOrder = False
+            End If
+        Case 4
+            data1 = M_PointsY(index1)
+            data2 = M_PointsY(index2)
+            If (data1 < data2) Then
+                isOrder = False
+            End If
+    End Select
+    CompareOrder = isOrder
+End Function
+Private Sub UpdateLayers(orderArray() As Integer, length As Integer)
+    Dim ordersIndex As Integer
+    ordersIndex = 0
+    For i = 0 To selectedCount - 1
+        M_Layers(OrderedIndexs(i)) = orderArray(ordersIndex)
+        
+        ordersIndex = ordersIndex + 1
+        If (ordersIndex = length) Then
+            ordersIndex = 0
+        End If
+    Next i
 End Sub
 
 
