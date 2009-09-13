@@ -154,4 +154,9 @@ Public Sub M_RedrawAngleLine(angle As Double)
         Call M_RedrawPicutreBox
     End If
 End Sub
+Public Sub CalculateSelectedPoints(startPoint() As Double, endPoint() As Double)
+
+End Sub
+
+
 
