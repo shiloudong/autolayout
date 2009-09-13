@@ -5,6 +5,7 @@ Form=Form1.frm
 Form=Form2.frm
 Form=Form3.frm
 Module=Module1; Module1.bas
+Form=Form4.frm
 Startup="Form1"
 ExeName32="Autolayout.exe"
 Command32=""
