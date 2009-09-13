@@ -10,6 +10,7 @@ Begin VB.Form ProbeAngleForm
    ScaleHeight     =   164.042
    ScaleMode       =   6  'Millimeter
    ScaleWidth      =   240.242
+   StartUpPosition =   2  'ÆÁÄ»ÖÐÐÄ
    Begin VB.Frame Frame1 
       Height          =   9255
       Left            =   12600
