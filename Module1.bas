@@ -30,7 +30,7 @@ Public Sub M_GetExcelData(path As String)
     Set excelApp = M_CreateExcel(Form1.TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     
-    Dim padNo, index As Integer
+    Dim PadNo, index As Integer
     index = 0
     Do While excelsheet.cells(index + 6, 1).value > 0
         index = index + 1
@@ -115,29 +115,29 @@ Public Sub M_RedrawPicutreBox()
     Next i
 End Sub
 
-Public Sub M_DrawRectangle(startPoint() As Double, endPoint() As Double)
+Public Sub M_DrawRectangle(startPoint() As Double, endpoint() As Double)
     m_picture.DrawWidth = 1
-    m_picture.Line (startPoint(0), startPoint(1))-(startPoint(0), endPoint(1)), RGB(255, 255, 255)
-    m_picture.Line (startPoint(0), startPoint(1))-(endPoint(0), startPoint(1)), RGB(255, 255, 255)
-    m_picture.Line (endPoint(0), startPoint(1))-(endPoint(0), endPoint(1)), RGB(255, 255, 255)
-    m_picture.Line (startPoint(0), endPoint(1))-(endPoint(0), endPoint(1)), RGB(255, 255, 255)
+    m_picture.Line (startPoint(0), startPoint(1))-(startPoint(0), endpoint(1)), RGB(255, 255, 255)
+    m_picture.Line (startPoint(0), startPoint(1))-(endpoint(0), startPoint(1)), RGB(255, 255, 255)
+    m_picture.Line (endpoint(0), startPoint(1))-(endpoint(0), endpoint(1)), RGB(255, 255, 255)
+    m_picture.Line (startPoint(0), endpoint(1))-(endpoint(0), endpoint(1)), RGB(255, 255, 255)
     
 End Sub
 
-Private Sub DrawPoint(X As Double, Y As Double, color As ColorConstants)
+Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
     m_picture.DrawWidth = 5
-    m_picture.PSet (X, Y), color
+    m_picture.PSet (x, y), color
 End Sub
 Private Sub DrawAngleLine(point() As Double, angle As Double)
     m_picture.DrawWidth = 1
     Dim pictureAngle As Double
     pictureAngle = -angle
     Dim x1, y1 As Double
-    If angle <> 0 Then
-        x1 = point(0) + 20 * Cos(3.1415926 * pictureAngle / 180)
-        y1 = point(1) + 20 * Sin(3.1415926 * pictureAngle / 180)
-        m_picture.Line (point(0), point(1))-(x1, y1), RGB(255, 0, 0)
-    End If
+
+    x1 = point(0) + 20 * Cos(3.1415926 * pictureAngle / 180)
+    y1 = point(1) + 20 * Sin(3.1415926 * pictureAngle / 180)
+    m_picture.Line (point(0), point(1))-(x1, y1), RGB(255, 0, 0)
+
 End Sub
 Private Sub DrawUnit(index As Integer)
     Dim point(0 To 1) As Double
@@ -159,31 +159,31 @@ Public Sub M_RedrawAngleLine(angle As Double)
         Call M_RedrawPicutreBox
     End If
 End Sub
-Public Sub CalculateSelectedPoints(startPoint() As Double, endPoint() As Double)
+Public Sub CalculateSelectedPoints(startPoint() As Double, endpoint() As Double)
     Dim inside As Boolean
     Dim checkPoint(0 To 1) As Double
     For i = 0 To M_RowCount - 1
         checkPoint(0) = (M_PointsX(i) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
         checkPoint(1) = (M_PointsY(i) - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
-        inside = IsInRectange(checkPoint, startPoint, endPoint)
+        inside = IsInRectange(checkPoint, startPoint, endpoint)
         selectedFlag(i) = inside
     Next i
 End Sub
-Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, endPoint() As Double)
+Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, endpoint() As Double)
     Dim maxX, minX, maxY, minY As Double
-    If startPoint(0) > endPoint(0) Then
+    If startPoint(0) > endpoint(0) Then
         maxX = startPoint(0)
-        minX = endPoint(0)
+        minX = endpoint(0)
     Else
-        maxX = endPoint(0)
+        maxX = endpoint(0)
         minX = startPoint(0)
     End If
     
-    If (startPoint(1) > endPoint(1)) Then
+    If (startPoint(1) > endpoint(1)) Then
         maxY = startPoint(1)
-        minY = endPoint(1)
+        minY = endpoint(1)
     Else
-        maxY = endPoint(1)
+        maxY = endpoint(1)
         minY = startPoint(1)
     End If
     
@@ -198,6 +198,14 @@ Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, en
         IsInRectange = False
     End If
 End Function
+Public Sub SetSelectedAngle(angle As Double)
+    For i = 0 To M_RowCount - 1
+        If (selectedFlag(i)) Then
+            M_Angles(i) = angle
+        End If
+    Next i
+    Call M_RedrawPicutreBox
+End Sub
 
 
 

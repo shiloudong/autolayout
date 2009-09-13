@@ -1,13 +1,17 @@
 VERSION 5.00
 Begin VB.Form Form4 
+   BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Form4"
    ClientHeight    =   4095
-   ClientLeft      =   60
-   ClientTop       =   450
+   ClientLeft      =   45
+   ClientTop       =   435
    ClientWidth     =   2775
    LinkTopic       =   "Form4"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
    ScaleHeight     =   4095
    ScaleWidth      =   2775
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.Frame Frame1 
       Caption         =   "Direction"
@@ -272,34 +276,50 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Dim angle As Double
+Private Sub Command1_Click()
+    If (Form4.Text1 <> "") Then
+        angle = Form4.Text1
+        Call SetSelectedAngle(angle)
+    End If
+End Sub
+
 Private Sub Label1_Click()
-Form4.Text1 = 90
+    angle = 90
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label2_Click()
-Form4.Text1 = 315
+    angle = 315
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label3_Click()
-Form4.Text1 = 225
+    angle = 225
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label4_Click()
-Form4.Text1 = 45
+    angle = 45
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label5_Click()
-Form4.Text1 = 135
+    angle = 135
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label6_Click()
-Form4.Text1 = 180
+    angle = 180
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label7_Click()
-Form4.Text1 = 0
+    angle = 0
+    Form4.Text1 = angle
 End Sub
 
 Private Sub Label8_Click()
-Form4.Text1 = 270
+    angle = 270
+    Form4.Text1 = angle
 End Sub
