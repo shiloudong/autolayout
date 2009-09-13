@@ -270,7 +270,7 @@ Private Sub Command1_Click()
     File1.Pattern = "*.xls"
 End Sub
 Private Sub Command2_Click()
-    Dim newform As New Form2
+    Dim newform As New AboutForm
     newform.Show
 End Sub
 Private Sub Dir1_Change()
@@ -280,7 +280,7 @@ Private Sub Drive1_Change()
     Dir1.path = Drive1.Drive
 End Sub
 Private Sub fan_Click()
-    Dim newform As New Form3
+    Dim newform As New ProbeAngleForm
     newform.Show
 End Sub
 Private Sub File1_Click()

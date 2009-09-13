@@ -1,51 +1,59 @@
 VERSION 5.00
 Begin VB.Form Form5 
    Caption         =   "Form5"
-   ClientHeight    =   3690
+   ClientHeight    =   3540
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   3975
+   ClientWidth     =   4995
    LinkTopic       =   "Form5"
-   ScaleHeight     =   3690
-   ScaleWidth      =   3975
+   ScaleHeight     =   3540
+   ScaleWidth      =   4995
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
+   Begin VB.CommandButton ClearCmd 
+      Caption         =   "Clear"
+      Height          =   375
+      Left            =   2760
+      TabIndex        =   26
+      Top             =   3120
+      Width           =   855
+   End
    Begin VB.TextBox Text2 
       Height          =   375
-      Left            =   960
+      Left            =   1560
       TabIndex        =   25
-      Top             =   840
-      Width           =   735
+      Top             =   1080
+      Width           =   495
    End
    Begin VB.CommandButton Command5 
       Caption         =   "B"
       Height          =   495
-      Left            =   1080
+      Left            =   1560
       TabIndex        =   24
-      Top             =   1440
+      Top             =   1560
       Width           =   495
    End
    Begin VB.CommandButton Command4 
       Caption         =   "R"
       Height          =   495
-      Left            =   1920
+      Left            =   2160
       TabIndex        =   23
-      Top             =   720
+      Top             =   960
       Width           =   495
    End
    Begin VB.CommandButton Command3 
       Caption         =   "L"
       Height          =   495
-      Left            =   240
+      Left            =   960
       TabIndex        =   22
-      Top             =   720
+      Top             =   960
       Width           =   495
    End
    Begin VB.CommandButton Command2 
       Caption         =   "T"
       Height          =   495
-      Left            =   1080
+      Left            =   1560
       TabIndex        =   21
-      Top             =   120
+      Top             =   480
       Width           =   495
    End
    Begin VB.CommandButton Command1 
@@ -60,23 +68,25 @@ Begin VB.Form Form5
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   240
+      Left            =   120
       TabIndex        =   2
       Top             =   3120
-      Width           =   2295
+      Width           =   2535
    End
    Begin VB.TextBox Text1 
+      Enabled         =   0   'False
       Height          =   375
-      Left            =   240
+      Left            =   120
+      Locked          =   -1  'True
       TabIndex        =   1
-      Top             =   2520
-      Width           =   2295
+      Top             =   2640
+      Width           =   3495
    End
    Begin VB.Frame Frame1 
       Height          =   3495
-      Left            =   2760
+      Left            =   3840
       TabIndex        =   0
-      Top             =   120
+      Top             =   0
       Width           =   1095
       Begin VB.Label Label18 
          Appearance      =   0  'Flat
@@ -301,90 +311,143 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Dim layerCount As Integer
+Dim layerOrder(0 To 20) As Integer
+Dim direction As Integer
+'order dircetion
+'1: X from low to high
+'2: X from high to low
+'3: Y from low to high
+'4: Y from hight to low
+
+Private Sub ClearCmd_Click()
+    Text1.Text = ""
+    layerCount = 0
+End Sub
+
+Private Sub Command1_Click()
+'layerArray() As Integer, arrayLength As Integer, orderDirection As Integer
+    Call ReorderLayer(layerOrder, layerCount, direction)
+    Call M_RedrawPicutreBox
+End Sub
+
 Private Sub Command2_Click()
-Form5.Text2.Text = T
+    Form5.Text2.Text = "T"
+    direction = 3
 End Sub
 
 Private Sub Command3_Click()
-Form5.Text2.Text = l
+    Form5.Text2.Text = "L"
+    direction = 2
 End Sub
 
 Private Sub Command4_Click()
-Form5.Text2.Text = R
+    Form5.Text2.Text = "R"
+    direction = 1
 End Sub
 
 Private Sub Command5_Click()
-Form5.Text2.Text = b
+    Form5.Text2.Text = "B"
+    direction = 3
+End Sub
+
+Private Sub Form_Load()
+    layerCount = 0
+    direction = 1
+End Sub
+Private Sub AddLayerOrder(layerNo As Integer)
+    If (layerCount < 20) Then
+        layerOrder(layerCount) = layerNo
+        layerCount = layerCount + 1
+    End If
 End Sub
 
 Private Sub Label1_Click()
-Form5.Text1.Text = Text1.Text & ",1"
+    Form5.Text1.Text = Text1.Text & "1,"
+    Call AddLayerOrder(1)
 End Sub
 
 Private Sub Label10_Click()
-Form5.Text1.Text = Text1.Text & ",8"
+    Form5.Text1.Text = Text1.Text & "8,"
+    Call AddLayerOrder(8)
 End Sub
 
 Private Sub Label11_Click()
-Form5.Text1.Text = Text1.Text & ",7"
+    Form5.Text1.Text = Text1.Text & "7,"
+    Call AddLayerOrder(7)
 End Sub
 
 Private Sub Label12_Click()
-Form5.Text1.Text = Text1.Text & ",6"
+    Form5.Text1.Text = Text1.Text & "6,"
+    Call AddLayerOrder(6)
 End Sub
 
 Private Sub Label13_Click()
-Form5.Text1.Text = Text1.Text & ",5"
+    Form5.Text1.Text = Text1.Text & "5,"
+    Call AddLayerOrder(5)
 End Sub
 
 Private Sub Label14_Click()
-Form5.Text1.Text = Text1.Text & ",4"
+    Form5.Text1.Text = Text1.Text & "4,"
+    Call AddLayerOrder(4)
 End Sub
 
 Private Sub Label15_Click()
-Form5.Text1.Text = Text1.Text & ",3"
+    Form5.Text1.Text = Text1.Text & "3,"
+    Call AddLayerOrder(3)
 End Sub
 
 Private Sub Label16_Click()
-Form5.Text1.Text = Text1.Text & ",2"
+    Form5.Text1.Text = Text1.Text & "2,"
+    Call AddLayerOrder(2)
 End Sub
 
 Private Sub Label17_Click()
-Form5.Text1.Text = Text1.Text & ",18"
+    Form5.Text1.Text = Text1.Text & "18,"
+    Call AddLayerOrder(18)
 End Sub
 
 Private Sub Label18_Click()
-Form5.Text1.Text = Text1.Text & ",9"
+    Form5.Text1.Text = Text1.Text & "9,"
+    Call AddLayerOrder(9)
 End Sub
 
 Private Sub Label2_Click()
-Form5.Text1.Text = Text1.Text & ",17"
+    Form5.Text1.Text = Text1.Text & "17,"
+    Call AddLayerOrder(17)
 End Sub
 
 Private Sub Label3_Click()
-Form5.Text1.Text = Text1.Text & ",16"
+    Form5.Text1.Text = Text1.Text & "16,"
+    Call AddLayerOrder(16)
 End Sub
 
 Private Sub Label4_Click()
-Form5.Text1.Text = Text1.Text & ",15"
+    Form5.Text1.Text = Text1.Text & "15,"
+    Call AddLayerOrder(15)
 End Sub
 
 Private Sub Label5_Click()
-Form5.Text1.Text = Text1.Text & ",14"
+    Form5.Text1.Text = Text1.Text & "14,"
+    Call AddLayerOrder(14)
 End Sub
 
 Private Sub Label6_Click()
-Form5.Text1.Text = Text1.Text & ",13"
+    Form5.Text1.Text = Text1.Text & "13,"
+    Call AddLayerOrder(13)
 End Sub
 
 Private Sub Label7_Click()
-Form5.Text1.Text = Text1.Text & ",12"
+    Form5.Text1.Text = Text1.Text & "12,"
+    Call AddLayerOrder(12)
 End Sub
 
 Private Sub Label8_Click()
-Form5.Text1.Text = Text1.Text & ",11"
+    Form5.Text1.Text = Text1.Text & "11,"
+    Call AddLayerOrder(11)
 End Sub
 
 Private Sub Label9_Click()
-Form5.Text1.Text = Text1.Text & ",10"
+    Form5.Text1.Text = Text1.Text & "10,"
+    Call AddLayerOrder(10)
 End Sub
