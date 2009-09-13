@@ -250,9 +250,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-Dim pointIndex As Integer
 Dim bl As Double
-Dim movePoint(0 To 1) As Double
+
 Dim previousPoint(0 To 1) As Double
 Dim startPoint(0 To 1) As Double
 
@@ -260,16 +259,14 @@ Dim isMove As Boolean
 Dim isZoom As Boolean
 Dim patten As Integer
 
-
-
 Private Sub ClearCmd_Click()
-Picture1.Cls
+    Picture1.Cls
 End Sub
 
 Private Sub Form_Activate()
     'Call DrawPoints
     pointIndex = 0
-    Call RedrawAll
+    Call M_RedrawPicutreBox
 End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
@@ -294,12 +291,13 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub Form_Load()
+    Call SetPicure(Picture1)
     Picture1.AutoRedraw = True
-    pointIndex = 0
-    Call GetExcelData(Form1.TextPath.Text)
-    bl = GetScale(Picture1.width, Picture1.height)
-    movePoint(0) = Picture1.width / 2
-    movePoint(1) = Picture1.height / 2
+    M_Index = 0
+    Call M_GetExcelData(Form1.TextPath.Text)
+    bl = M_GetScale(Picture1.width, Picture1.height)
+    F_MovePoint(0) = Picture1.width / 2
+    F_MovePoint(1) = Picture1.height / 2
     isMove = False
     isZoom = False
     'move patten
@@ -321,14 +319,7 @@ Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, X As Single,
         previousPoint(1) = Y
     End If
 End Sub
-Private Sub DrawRectangle(startPoint() As Double, endPoint() As Double)
-    Picture1.DrawWidth = 1
-    Picture1.Line (startPoint(0), startPoint(1))-(startPoint(0), endPoint(1)), RGB(255, 255, 255)
-    Picture1.Line (startPoint(0), startPoint(1))-(endPoint(0), startPoint(1)), RGB(255, 255, 255)
-    Picture1.Line (endPoint(0), startPoint(1))-(endPoint(0), endPoint(1)), RGB(255, 255, 255)
-    Picture1.Line (startPoint(0), endPoint(1))-(endPoint(0), endPoint(1)), RGB(255, 255, 255)
-    
-End Sub
+
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim dX, dY, distance As Double
     If Button = 1 And isMove Then
@@ -336,17 +327,17 @@ Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single,
             dX = X - previousPoint(0)
             dY = Y - previousPoint(1)
     
-            movePoint(0) = movePoint(0) + dX
-            movePoint(1) = movePoint(1) + dY
-            Call RedrawAll
+            F_MovePoint(0) = F_MovePoint(0) + dX
+            F_MovePoint(1) = F_MovePoint(1) + dY
+            Call M_RedrawPicutreBox
             previousPoint(0) = X
             previousPoint(1) = Y
         ElseIf patten = 2 Then
-            Call RedrawAll
+            Call M_RedrawPicutreBox
             Dim endPoint(0 To 1) As Double
             endPoint(0) = X
             endPoint(1) = Y
-            Call DrawRectangle(previousPoint, endPoint)
+            Call M_DrawRectangle(previousPoint, endPoint)
         End If
 
     ElseIf Button = 2 And isZoom Then
@@ -355,11 +346,11 @@ Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, X As Single,
         dY = Y - previousPoint(1)
         distance = Sqr(dX * dX + dY * dY)
         If dX > 0 Then
-            bl = bl * (1 + distance * 2 / Picture1.width)
+            M_Scale = M_Scale * (1 + distance * 2 / Picture1.width)
         Else
-            bl = bl * (1 - distance * 2 / Picture1.width)
+            M_Scale = M_Scale * (1 - distance * 2 / Picture1.width)
         End If
-        Call RedrawAll
+        Call M_RedrawPicutreBox
         previousPoint(0) = X
         previousPoint(1) = Y
     End If
@@ -375,10 +366,10 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y
 End Sub
 
 Private Sub resetCmd_Click()
-    bl = GetScale(Picture1.width, Picture1.height)
-    movePoint(0) = Picture1.width / 2
-    movePoint(1) = Picture1.height / 2
-    Call RedrawAll
+    Call M_GetScale(Picture1.width, Picture1.height)
+    F_MovePoint(0) = Picture1.width / 2
+    F_MovePoint(1) = Picture1.height / 2
+    Call M_RedrawPicutreBox
 End Sub
 
 Private Sub SelectCmd_Click()
@@ -390,10 +381,10 @@ Private Sub UndoCmd_Click()
 End Sub
 
 Private Sub XCmd_Click()
-    drawLine (90)
+    M_RedrawAngleLine (90)
 End Sub
 Private Sub ACmd_Click()
-    drawLine (180)
+    M_RedrawAngleLine (180)
 End Sub
 
 Private Sub Picture1_KeyPress(KeyAscii As Integer)
@@ -401,84 +392,38 @@ Private Sub Picture1_KeyPress(KeyAscii As Integer)
 End Sub
 
 Private Sub undo()
-    If pointIndex > 0 Then
-        pointIndex = pointIndex - 1
+    If M_Index > 0 Then
+        M_Index = M_Index - 1
     End If
-    Call RedrawAll
+    Call M_RedrawPicutreBox
 End Sub
 Private Sub DCmd_Click()
-    drawLine (360)
+    M_RedrawAngleLine (360)
 End Sub
 
 Private Sub saveCmd_Click()
     Dim corow As Long
-    Set excelApp = CreateExcel(Form1.TextPath.Text)
+    Set excelApp = M_CreateExcel(Form1.TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     For i = 6 To rowCount
-        excelsheet.cells(i, 8).value = Angles(i - 6)
+        excelsheet.cells(i, 8).value = M_Angles(i - 6)
     Next i
     Call excelApp.Workbooks.Close
 End Sub
 Private Sub WCmd_Click()
-    drawLine (270)
+    M_RedrawAngleLine (270)
 End Sub
 Private Sub QCmd_Click()
-    drawLine (225)
+    M_RedrawAngleLine (225)
 End Sub
 Private Sub ECmd_Click()
-    drawLine (315)
+    M_RedrawAngleLine (315)
 End Sub
 Private Sub ZCmd_Click()
-    drawLine (135)
+    M_RedrawAngleLine (135)
 End Sub
 Private Sub CCmd_Click()
-    drawLine (45)
-End Sub
-
-Private Sub drawLine(angle As Double)
-    If pointIndex < rowCount Then
-        Angles(pointIndex) = angle
-        pointIndex = pointIndex + 1
-        Call RedrawAll
-    End If
-
-End Sub
-
-Private Sub drawPointLine(point() As Double, angle As Double)
-    Picture1.DrawWidth = 1
-    Dim x1, y1 As Double
-    If angle <> 0 Then
-        x1 = point(0) + 20 * Cos(3.1415926 * angle / 180)
-        y1 = point(1) + 20 * Sin(3.1415926 * angle / 180)
-        Picture1.Line (point(0), point(1))-(x1, y1), RGB(255, 0, 0)
-    End If
-
-End Sub
-
-Private Sub DrawPoint(X As Double, Y As Double, color As ColorConstants)
-    Picture1.DrawWidth = 5
-    Picture1.PSet (X, Y), color
-End Sub
-
-Private Sub RedrawAll()
-    Call Picture1.Cls
-    For i = 0 To rowCount - 1
-        DrawUnit (i)
-    Next i
-End Sub
-
-Private Sub DrawUnit(index As Integer)
-    Dim point(0 To 1) As Double
-    point(0) = (pointsX(index) - CenterPoint(0)) * bl + movePoint(0)
-    point(1) = (pointsY(index) - CenterPoint(1)) * bl + movePoint(1)
-    Call drawPointLine(point, Angles(index))
-    
-    If index <> pointIndex Then
-        Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
-    Else
-        Call DrawPoint(point(0), point(1), RGB(255, 0, 0))
-    End If
-    
+    M_RedrawAngleLine (45)
 End Sub
 
 
