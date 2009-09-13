@@ -32,26 +32,26 @@ Public Sub SetPicure(pic As PictureBox)
     Set m_picture = pic
 End Sub
 Private Sub InitializeColorMap()
-    colorMap(0) = vbBlue
-    colorMap(1) = vbCyan
-    colorMap(2) = vbGreen
-    colorMap(3) = vbMagenta
-    colorMap(4) = vbRed
-    colorMap(5) = vbWhite
-    colorMap(6) = vbYellow
-    colorMap(7) = RGB(100, 100, 100)
-    colorMap(8) = vbBlue
-    colorMap(9) = vbBlue
-    colorMap(10) = vbBlue
-    colorMap(11) = vbBlue
-    colorMap(12) = vbBlue
-    colorMap(13) = vbBlue
-    colorMap(14) = vbBlue
-    colorMap(15) = vbBlue
-    colorMap(16) = vbBlue
-    colorMap(17) = vbBlue
-    colorMap(18) = vbBlue
-    colorMap(19) = vbBlue
+    colorMap(0) = RGB(255, 0, 0)
+    colorMap(1) = RGB(0, 255, 0)
+    colorMap(2) = RGB(0, 0, 255)
+    colorMap(3) = RGB(255, 0, 255)
+    colorMap(4) = RGB(255, 255, 0)
+    colorMap(5) = RGB(255, 255, 255)
+    colorMap(6) = RGB(0, 255, 255)
+    colorMap(7) = RGB(255, 127, 127)
+    colorMap(8) = RGB(192, 192, 192)
+    colorMap(9) = RGB(127, 255, 191)
+    colorMap(10) = RGB(127, 191, 255)
+    colorMap(11) = RGB(233, 255, 168)
+    colorMap(12) = RGB(255, 255, 255)
+    colorMap(13) = RGB(255, 255, 255)
+    colorMap(14) = RGB(255, 255, 255)
+    colorMap(15) = RGB(255, 255, 255)
+    colorMap(16) = RGB(255, 255, 255)
+    colorMap(17) = RGB(255, 255, 255)
+    colorMap(18) = RGB(255, 255, 255)
+    colorMap(19) = RGB(255, 255, 255)
 End Sub
 Public Sub M_GetExcelData(path As String)
     Set excelApp = M_CreateExcel(EntranceForm.TextPath.Text)
@@ -77,17 +77,22 @@ Public Sub M_GetExcelData(path As String)
     ReDim Preserve selectedFlag(0 To M_RowCount - 1) As Boolean
     ReDim Preserve OrderedIndexs(0 To M_RowCount - 1) As Integer
     
+    Dim layerNo As Integer
     For i = 0 To M_RowCount - 1
         selectedFlag(i) = False
         M_PadNumbers(i) = excelsheet.cells(i + 6, 1).value
         M_PointsX(i) = excelsheet.cells(i + 6, 2).value / 1000
-        M_PointsY(i) = -1 * excelsheet.cells(i + 6, 3).value / 1000
+        M_PointsY(i) = excelsheet.cells(i + 6, 3).value / 1000
         M_PadNames(i) = excelsheet.cells(i + 6, 4).value
         M_Traces(i) = excelsheet.cells(i + 6, 5).value
         M_Jumpers(i) = excelsheet.cells(i + 6, 6).value
         M_Channels(i) = excelsheet.cells(i + 6, 7).value
         M_Angles(i) = excelsheet.cells(i + 6, 8).value
-        M_Layers(i) = excelsheet.cells(i + 6, 9).value
+        layerNo = excelsheet.cells(i + 6, 9).value
+        If (layerNo = 0) Then
+            layerNo = 1
+        End If
+        M_Layers(i) = layerNo
         If i = 0 Then
             M_MaxX = M_PointsX(i)
             M_MinX = M_PointsX(i)
@@ -117,12 +122,12 @@ End Sub
 
 Public Function M_GetScale(width As Double, height As Double) As Double
     Dim a As Double
-    If width > hight Then
+    If width < height Then
         a = width
     Else
-        a = hight
+        a = height
     End If
-    If maxX - minX > maxY - minY Then
+    If M_MaxX - M_MinX > M_MaxY - M_MinY Then
         M_Scale = a * 0.8 / (M_MaxX - M_MinX)
     Else
         M_Scale = a * 0.8 / (M_MaxY - M_MinY)
@@ -154,11 +159,11 @@ Public Sub M_DrawRectangle(startPoint() As Double, endpoint() As Double)
 End Sub
 
 Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
-    m_picture.DrawWidth = 5
+    m_picture.DrawWidth = 8
     m_picture.PSet (x, y), color
 End Sub
 Private Sub DrawAngleLine(point() As Double, index As Integer)
-    m_picture.DrawWidth = 1
+    m_picture.DrawWidth = 2
     Dim pictureAngle As Double
     pictureAngle = -M_Angles(index)
     Dim x1, y1 As Double
@@ -167,34 +172,19 @@ Private Sub DrawAngleLine(point() As Double, index As Integer)
     y1 = point(1) + 20 * Sin(3.1415926 * pictureAngle / 180)
     Dim layerIndex As Integer
     layerIndex = M_Layers(index)
-    If (layerIndex > -1 And layerIndex < 20) Then
+    If (layerIndex > 0 And layerIndex < 20) Then
         Dim color As ColorConstants
-        color = colorMap(layerIndex)
+        color = colorMap(layerIndex - 1)
         m_picture.Line (point(0), point(1))-(x1, y1), color
     End If
 
 End Sub
 
-Private Sub DrawLayerText(index As Integer)
-    Dim x1, y1 As Double
 
-    x1 = M_PointsX(index) + 10 * Cos(3.1415926 * -M_Angles(index) / 180)
-    y1 = M_PointsY(index) + 10 * Sin(3.1415926 * -M_Angles(index) / 180)
-    
-    Dim point(0 To 1) As Double
-    point(0) = (x1 - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
-    point(1) = (y1 - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
-    
-    m_picture.currentX = point(0)
-    m_picture.currentY = point(1)
-    Dim layerTxt As Integer
-    layerTxt = M_Layers(index)
-    'm_picture.Print "layerText"
-End Sub
 Private Sub DrawUnit(index As Integer)
     Dim point(0 To 1) As Double
     point(0) = (M_PointsX(index) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
-    point(1) = (M_PointsY(index) - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
+    point(1) = (-1 * M_PointsY(index) + M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
     Call DrawAngleLine(point, index)
     
     If selectedFlag(index) Then
@@ -205,9 +195,9 @@ Private Sub DrawUnit(index As Integer)
     'Call DrawLayerText(index)
 End Sub
 
-Public Sub M_RedrawAngleLine(Angle As Double)
+Public Sub M_RedrawAngleLine(angle As Double)
     If M_Index < M_RowCount Then
-        M_Angles(M_Index) = Angle
+        M_Angles(M_Index) = angle
         M_Index = M_Index + 1
         Call M_RedrawPicutreBox
     End If
@@ -217,7 +207,7 @@ Public Sub CalculateSelectedPoints(startPoint() As Double, endpoint() As Double)
     Dim checkPoint(0 To 1) As Double
     For i = 0 To M_RowCount - 1
         checkPoint(0) = (M_PointsX(i) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
-        checkPoint(1) = (M_PointsY(i) - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
+        checkPoint(1) = (-1 * M_PointsY(i) + M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
         inside = IsInRectange(checkPoint, startPoint, endpoint)
         selectedFlag(i) = inside
     Next i
@@ -251,10 +241,10 @@ Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, en
         IsInRectange = False
     End If
 End Function
-Public Sub SetSelectedAngle(Angle As Double)
+Public Sub SetSelectedAngle(angle As Double)
     For i = 0 To M_RowCount - 1
         If (selectedFlag(i)) Then
-            M_Angles(i) = Angle
+            M_Angles(i) = angle
         End If
     Next i
     Call M_RedrawPicutreBox

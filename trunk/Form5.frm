@@ -90,7 +90,7 @@ Begin VB.Form Form5
       Width           =   1095
       Begin VB.Label Label18 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00C0C0C0&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 9"
          ForeColor       =   &H80000008&
@@ -114,7 +114,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label16 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H0000C000&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 2"
          ForeColor       =   &H80000008&
@@ -126,7 +126,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label15 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FF0000&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 3"
          ForeColor       =   &H80000008&
@@ -138,7 +138,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label14 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FF00FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 4"
          ForeColor       =   &H80000008&
@@ -150,7 +150,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label13 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H0000FFFF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 5"
          ForeColor       =   &H80000008&
@@ -162,7 +162,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label12 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 6"
          ForeColor       =   &H80000008&
@@ -174,7 +174,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label11 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFFF00&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 7"
          ForeColor       =   &H80000008&
@@ -186,7 +186,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label10 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00C0C0FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 8"
          ForeColor       =   &H80000008&
@@ -198,7 +198,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label9 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00C0FFC0&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 10"
          ForeColor       =   &H80000008&
@@ -210,7 +210,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label8 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00FFC0C0&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 11"
          ForeColor       =   &H80000008&
@@ -222,7 +222,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label7 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H00C0FFFF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 12"
          ForeColor       =   &H80000008&
@@ -294,7 +294,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label1 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000005&
+         BackColor       =   &H000000FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 1"
          ForeColor       =   &H80000008&

@@ -1,30 +1,44 @@
 VERSION 5.00
 Begin VB.Form ProbeAngleForm 
-   BorderStyle     =   1  'Fixed Single
    Caption         =   "Probe Angle"
-   ClientHeight    =   9330
-   ClientLeft      =   1545
-   ClientTop       =   1335
-   ClientWidth     =   11970
+   ClientHeight    =   10530
+   ClientLeft      =   1560
+   ClientTop       =   1350
+   ClientWidth     =   13620
    Icon            =   "Form3.frx":0000
    LinkTopic       =   "Form3"
-   MaxButton       =   0   'False
-   MinButton       =   0   'False
-   ScaleHeight     =   164.571
+   ScaleHeight     =   185.738
    ScaleMode       =   6  'Millimeter
-   ScaleWidth      =   211.138
+   ScaleWidth      =   240.242
    Begin VB.Frame Frame1 
       Height          =   9255
-      Left            =   9360
+      Left            =   12600
       TabIndex        =   1
       Top             =   0
-      Width           =   2535
+      Width           =   1095
+      Begin VB.CommandButton Command1 
+         Caption         =   "DXF"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   615
+         Left            =   120
+         TabIndex        =   7
+         Top             =   1680
+         Width           =   855
+      End
       Begin VB.CommandButton SelectCmd 
          Caption         =   "Angle"
          Height          =   615
-         Left            =   240
-         TabIndex        =   14
-         Top             =   3120
+         Left            =   120
+         TabIndex        =   6
+         Top             =   2400
          Width           =   855
       End
       Begin VB.CommandButton resetCmd 
@@ -39,78 +53,10 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   240
-         TabIndex        =   13
-         Top             =   2520
-         Width           =   975
-      End
-      Begin VB.CommandButton Ccmd 
-         Caption         =   "C"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   1680
-         TabIndex        =   12
-         Top             =   1440
-         Width           =   615
-      End
-      Begin VB.CommandButton Zcmd 
-         Caption         =   "Z"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   240
-         TabIndex        =   11
-         Top             =   1440
-         Width           =   615
-      End
-      Begin VB.CommandButton QCmd 
-         Caption         =   "Q"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   240
-         TabIndex        =   10
-         Top             =   240
-         Width           =   615
-      End
-      Begin VB.CommandButton Ecmd 
-         Caption         =   "E"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   1680
-         TabIndex        =   9
-         Top             =   240
-         Width           =   615
+         Left            =   120
+         TabIndex        =   5
+         Top             =   3120
+         Width           =   855
       End
       Begin VB.CommandButton saveCmd 
          Caption         =   "Save"
@@ -124,13 +70,13 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   1320
-         TabIndex        =   8
-         Top             =   3120
-         Width           =   975
+         Left            =   120
+         TabIndex        =   4
+         Top             =   960
+         Width           =   855
       End
-      Begin VB.CommandButton MoveCmd 
-         Caption         =   "Move"
+      Begin VB.CommandButton ZoomCmd 
+         Caption         =   "Zoom"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   9
@@ -141,10 +87,10 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   1320
-         TabIndex        =   7
-         Top             =   2520
-         Width           =   975
+         Left            =   120
+         TabIndex        =   3
+         Top             =   240
+         Width           =   855
       End
       Begin VB.CommandButton UndoCmd 
          Caption         =   "Layer"
@@ -158,90 +104,22 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   240
-         TabIndex        =   6
-         Top             =   3720
-         Width           =   855
-      End
-      Begin VB.CommandButton DCmd 
-         Caption         =   "D"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   1680
-         TabIndex        =   5
-         Top             =   840
-         Width           =   615
-      End
-      Begin VB.CommandButton XCmd 
-         Caption         =   "X"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   960
-         TabIndex        =   4
-         Top             =   1440
-         Width           =   615
-      End
-      Begin VB.CommandButton WCmd 
-         Caption         =   "W"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   960
-         TabIndex        =   3
-         Top             =   240
-         Width           =   615
-      End
-      Begin VB.CommandButton ACmd 
-         Caption         =   "A"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   21.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   240
+         Left            =   120
          TabIndex        =   2
-         Top             =   840
-         Width           =   615
+         Top             =   3840
+         Width           =   855
       End
    End
    Begin VB.PictureBox Picture1 
       BackColor       =   &H00000000&
-      Height          =   9135
+      Height          =   10335
       Left            =   120
-      ScaleHeight     =   160.073
+      ScaleHeight     =   181.24
       ScaleMode       =   6  'Millimeter
-      ScaleWidth      =   160.073
+      ScaleWidth      =   217.223
       TabIndex        =   0
       Top             =   120
-      Width           =   9135
+      Width           =   12375
    End
 End
 Attribute VB_Name = "ProbeAngleForm"
@@ -261,6 +139,10 @@ Dim patten As Integer
 
 Private Sub ClearCmd_Click()
     Picture1.Cls
+End Sub
+
+Private Sub Command1_Click()
+    Call CreateDXFFile
 End Sub
 
 Private Sub Form_Activate()
@@ -304,17 +186,14 @@ Private Sub Form_Load()
     patten = 2
 End Sub
 
-Private Sub MoveCmd_Click()
-    patten = 1
-End Sub
 
 Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Button = 1 Then
-        isMove = True
+        isZoom = True
         previousPoint(0) = x
         previousPoint(1) = y
     ElseIf Button = 2 Then
-        isZoom = True
+        isMove = True
         previousPoint(0) = x
         previousPoint(1) = y
     End If
@@ -322,13 +201,16 @@ End Sub
 
 Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim dX, dY, distance As Double
-    If Button = 1 And isMove Then
+    If Button = 1 And isZoom Then
         If (patten = 1) Then
             dX = x - previousPoint(0)
             dY = y - previousPoint(1)
-    
-            F_MovePoint(0) = F_MovePoint(0) + dX
-            F_MovePoint(1) = F_MovePoint(1) + dY
+            distance = Sqr(dX * dX + dY * dY)
+            If dX > 0 Then
+                M_Scale = M_Scale * (1 + distance * 2 / Picture1.width)
+            Else
+                M_Scale = M_Scale * (1 - distance * 2 / Picture1.width)
+            End If
             Call M_RedrawPicutreBox
             previousPoint(0) = x
             previousPoint(1) = y
@@ -338,19 +220,14 @@ Private Sub Picture1_MouseMove(Button As Integer, Shift As Integer, x As Single,
             endpoint(0) = x
             endpoint(1) = y
             Call M_DrawRectangle(previousPoint, endpoint)
-        
         End If
 
-    ElseIf Button = 2 And isZoom Then
+    ElseIf Button = 2 And isMove Then
         
         dX = x - previousPoint(0)
         dY = y - previousPoint(1)
-        distance = Sqr(dX * dX + dY * dY)
-        If dX > 0 Then
-            M_Scale = M_Scale * (1 + distance * 2 / Picture1.width)
-        Else
-            M_Scale = M_Scale * (1 - distance * 2 / Picture1.width)
-        End If
+        F_MovePoint(0) = F_MovePoint(0) + dX
+        F_MovePoint(1) = F_MovePoint(1) + dY
         Call M_RedrawPicutreBox
         previousPoint(0) = x
         previousPoint(1) = y
@@ -362,7 +239,8 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y
     Dim endpoint(0 To 1) As Double
     If Button = 1 Then
         If patten = 1 Then
-            isMove = False
+            isZoom = False
+            
         ElseIf patten = 2 Then
 
             endpoint(0) = x
@@ -379,7 +257,7 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y
             Call Form5.Show
         End If
     ElseIf Button = 2 Then
-        isZoom = False
+        isMove = False
     End If
 End Sub
 Private Sub ShowLayerDialog()
@@ -424,10 +302,11 @@ End Sub
 
 Private Sub saveCmd_Click()
     Dim corow As Long
-    Set excelApp = M_CreateExcel(Form1.TextPath.Text)
+    Set excelApp = M_CreateExcel(EntranceForm.TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
-    For i = 6 To rowCount
-        excelsheet.cells(i, 8).value = M_Angles(i - 6)
+    For i = 0 To M_RowCount - 1
+        excelsheet.cells(i + 6, 8).value = M_Angles(i)
+        excelsheet.cells(i + 6, 9).value = M_Layers(i)
     Next i
     Call excelApp.Workbooks.Close
 End Sub
@@ -448,3 +327,6 @@ Private Sub CCmd_Click()
 End Sub
 
 
+Private Sub ZoomCmd_Click()
+    patten = 1
+End Sub
