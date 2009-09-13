@@ -1,7 +1,7 @@
 VERSION 5.00
-Begin VB.Form Form4 
+Begin VB.Form AngleForm 
    BorderStyle     =   3  'Fixed Dialog
-   Caption         =   "Form4"
+   Caption         =   "Angle"
    ClientHeight    =   4095
    ClientLeft      =   45
    ClientTop       =   435
@@ -271,55 +271,55 @@ Begin VB.Form Form4
       End
    End
 End
-Attribute VB_Name = "Form4"
+Attribute VB_Name = "AngleForm"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim angle As Double
+Dim Angle As Double
 Private Sub Command1_Click()
     If (Form4.Text1 <> "") Then
-        angle = Form4.Text1
-        Call SetSelectedAngle(angle)
+        Angle = Form4.Text1
+        Call SetSelectedAngle(Angle)
     End If
 End Sub
 
 Private Sub Label1_Click()
-    angle = 90
-    Form4.Text1 = angle
+    Angle = 90
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label2_Click()
-    angle = 315
-    Form4.Text1 = angle
+    Angle = 315
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label3_Click()
-    angle = 225
-    Form4.Text1 = angle
+    Angle = 225
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label4_Click()
-    angle = 45
-    Form4.Text1 = angle
+    Angle = 45
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label5_Click()
-    angle = 135
-    Form4.Text1 = angle
+    Angle = 135
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label6_Click()
-    angle = 180
-    Form4.Text1 = angle
+    Angle = 180
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label7_Click()
-    angle = 0
-    Form4.Text1 = angle
+    Angle = 0
+    Form4.Text1 = Angle
 End Sub
 
 Private Sub Label8_Click()
-    angle = 270
-    Form4.Text1 = angle
+    Angle = 270
+    Form4.Text1 = Angle
 End Sub
