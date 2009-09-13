@@ -196,23 +196,30 @@ Private Sub DrawUnit(index As Integer)
     'Call DrawLayerText(index)
 End Sub
 
-Public Sub M_RedrawAngleLine(angle As Double)
+Public Sub M_RedrawAngleLine(Angle As Double)
     If M_Index < M_RowCount Then
-        M_Angles(M_Index) = angle
+        M_Angles(M_Index) = Angle
         M_Index = M_Index + 1
         Call M_RedrawPicutreBox
     End If
 End Sub
-Public Sub CalculateSelectedPoints(startPoint() As Double, endpoint() As Double)
+Public Function CalculateSelectedPoints(startPoint() As Double, endpoint() As Double) As Boolean
     Dim inside As Boolean
+    Dim existPoints As Boolean
+    existPoints = False
     Dim checkPoint(0 To 1) As Double
     For i = 0 To M_RowCount - 1
         checkPoint(0) = (M_PointsX(i) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
         checkPoint(1) = (-1 * M_PointsY(i) + M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
         inside = IsInRectange(checkPoint, startPoint, endpoint)
         selectedFlag(i) = inside
+        If (inside) Then
+            existPoints = True
+        End If
+        
     Next i
-End Sub
+    CalculateSelectedPoints = existPoints
+End Function
 Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, endpoint() As Double)
     Dim maxX, minX, maxY, minY As Double
     If startPoint(0) > endpoint(0) Then
@@ -242,10 +249,10 @@ Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, en
         IsInRectange = False
     End If
 End Function
-Public Sub SetSelectedAngle(angle As Double)
+Public Sub SetSelectedAngle(Angle As Double)
     For i = 0 To M_RowCount - 1
         If (selectedFlag(i)) Then
-            M_Angles(i) = angle
+            M_Angles(i) = Angle
         End If
     Next i
     Call M_RedrawPicutreBox

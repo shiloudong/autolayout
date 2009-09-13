@@ -4,12 +4,12 @@ Begin VB.Form ProbeAngleForm
    ClientHeight    =   9300
    ClientLeft      =   -525
    ClientTop       =   60
-   ClientWidth     =   13620
+   ClientWidth     =   13770
    Icon            =   "Form3.frx":0000
    LinkTopic       =   "Form3"
    ScaleHeight     =   164.042
    ScaleMode       =   6  'Millimeter
-   ScaleWidth      =   240.242
+   ScaleWidth      =   242.888
    StartUpPosition =   2  'ÆÁÄ»ÖÐÐÄ
    Begin VB.Frame Frame1 
       Height          =   9255
@@ -17,7 +17,7 @@ Begin VB.Form ProbeAngleForm
       TabIndex        =   1
       Top             =   0
       Width           =   1095
-      Begin VB.CommandButton Command1 
+      Begin VB.CommandButton DXFCmd 
          Caption         =   "DXF"
          BeginProperty Font 
             Name            =   "Arial"
@@ -31,19 +31,28 @@ Begin VB.Form ProbeAngleForm
          Height          =   615
          Left            =   120
          TabIndex        =   7
-         Top             =   1680
+         Top             =   3120
          Width           =   855
       End
       Begin VB.CommandButton SelectCmd 
          Caption         =   "Angle"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   615
          Left            =   120
          TabIndex        =   6
-         Top             =   2400
+         Top             =   1680
          Width           =   855
       End
       Begin VB.CommandButton resetCmd 
-         Caption         =   "Reset"
+         Caption         =   "ZoomAll"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   9
@@ -56,7 +65,7 @@ Begin VB.Form ProbeAngleForm
          Height          =   615
          Left            =   120
          TabIndex        =   5
-         Top             =   3120
+         Top             =   960
          Width           =   855
       End
       Begin VB.CommandButton saveCmd 
@@ -73,7 +82,7 @@ Begin VB.Form ProbeAngleForm
          Height          =   615
          Left            =   120
          TabIndex        =   4
-         Top             =   960
+         Top             =   3840
          Width           =   855
       End
       Begin VB.CommandButton ZoomCmd 
@@ -107,7 +116,7 @@ Begin VB.Form ProbeAngleForm
          Height          =   615
          Left            =   120
          TabIndex        =   2
-         Top             =   3840
+         Top             =   2400
          Width           =   855
       End
    End
@@ -130,19 +139,13 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Dim BL As Double
-
 Dim previousPoint(0 To 1) As Double
 Dim startPoint(0 To 1) As Double
-
 Dim isMove As Boolean
 Dim isZoom As Boolean
 Dim patten As Integer
 
-Private Sub ClearCmd_Click()
-    Picture1.Cls
-End Sub
-
-Private Sub Command1_Click()
+Private Sub DXFCmd_Click()
     Call CreateDXFFile
 End Sub
 
@@ -238,6 +241,8 @@ End Sub
 
 Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim endpoint(0 To 1) As Double
+    Dim exist As Boolean
+    
     If Button = 1 Then
         If patten = 1 Then
             isZoom = False
@@ -246,16 +251,22 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y
 
             endpoint(0) = x
             endpoint(1) = y
-            Call CalculateSelectedPoints(previousPoint, endpoint)
+            exist = CalculateSelectedPoints(previousPoint, endpoint)
             Call M_RedrawPicutreBox
-            Call AngleForm.Show
+            If (exist) Then
+                Call AngleForm.Show
+            End If
+
         ElseIf patten = 3 Then
 
             endpoint(0) = x
             endpoint(1) = y
-            Call CalculateSelectedPoints(previousPoint, endpoint)
+            exist = CalculateSelectedPoints(previousPoint, endpoint)
             Call M_RedrawPicutreBox
-            Call Form5.Show
+            If (exist) Then
+                Call Form5.Show
+            End If
+
         End If
     ElseIf Button = 2 Then
         isMove = False

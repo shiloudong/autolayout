@@ -1,59 +1,117 @@
 VERSION 5.00
 Begin VB.Form Form5 
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "Form5"
    ClientHeight    =   3540
-   ClientLeft      =   60
-   ClientTop       =   450
-   ClientWidth     =   4995
+   ClientLeft      =   45
+   ClientTop       =   435
+   ClientWidth     =   3810
    LinkTopic       =   "Form5"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
    ScaleHeight     =   3540
-   ScaleWidth      =   4995
+   ScaleWidth      =   3810
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.CommandButton ClearCmd 
       Caption         =   "Clear"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
-      Left            =   2760
+      Left            =   1680
       TabIndex        =   26
-      Top             =   3120
+      Top             =   3000
       Width           =   855
    End
    Begin VB.TextBox Text2 
-      Height          =   375
-      Left            =   1560
+      Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   330
+      Left            =   840
       TabIndex        =   25
       Top             =   1080
-      Width           =   495
+      Width           =   735
    End
    Begin VB.CommandButton Command5 
-      Caption         =   "B"
+      Caption         =   "B¡ü"
+      BeginProperty Font 
+         Name            =   "Times New Roman"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   495
-      Left            =   1560
+      Left            =   960
       TabIndex        =   24
       Top             =   1560
       Width           =   495
    End
    Begin VB.CommandButton Command4 
-      Caption         =   "R"
+      Caption         =   "¡û R"
+      BeginProperty Font 
+         Name            =   "Times New Roman"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   495
-      Left            =   2160
+      Left            =   1680
       TabIndex        =   23
       Top             =   960
-      Width           =   495
+      Width           =   615
    End
    Begin VB.CommandButton Command3 
-      Caption         =   "L"
+      Caption         =   "L ¡ú"
+      BeginProperty Font 
+         Name            =   "Times New Roman"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   495
-      Left            =   960
+      Left            =   120
       TabIndex        =   22
       Top             =   960
-      Width           =   495
+      Width           =   615
    End
    Begin VB.CommandButton Command2 
-      Caption         =   "T"
-      Height          =   495
-      Left            =   1560
+      Caption         =   "T¡ý"
+      BeginProperty Font 
+         Name            =   "Times New Roman"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   615
+      Left            =   960
       TabIndex        =   21
-      Top             =   480
+      Top             =   240
       Width           =   495
    End
    Begin VB.CommandButton Command1 
@@ -70,21 +128,30 @@ Begin VB.Form Form5
       Height          =   375
       Left            =   120
       TabIndex        =   2
-      Top             =   3120
-      Width           =   2535
+      Top             =   3000
+      Width           =   1455
    End
    Begin VB.TextBox Text1 
       Enabled         =   0   'False
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   375
       Left            =   120
       Locked          =   -1  'True
       TabIndex        =   1
-      Top             =   2640
-      Width           =   3495
+      Top             =   2520
+      Width           =   2415
    End
    Begin VB.Frame Frame1 
       Height          =   3495
-      Left            =   3840
+      Left            =   2640
       TabIndex        =   0
       Top             =   0
       Width           =   1095
@@ -329,21 +396,22 @@ Private Sub Command1_Click()
 'layerArray() As Integer, arrayLength As Integer, orderDirection As Integer
     Call ReorderLayer(layerOrder, layerCount, direction)
     Call M_RedrawPicutreBox
+    Call Form5.Hide
 End Sub
 
 Private Sub Command2_Click()
     Form5.Text2.Text = "T"
-    direction = 3
+    direction = 4
 End Sub
 
 Private Sub Command3_Click()
     Form5.Text2.Text = "L"
-    direction = 2
+    direction = 1
 End Sub
 
 Private Sub Command4_Click()
     Form5.Text2.Text = "R"
-    direction = 1
+    direction = 2
 End Sub
 
 Private Sub Command5_Click()

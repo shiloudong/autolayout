@@ -45,7 +45,7 @@ Begin VB.Form EntranceForm
          Width           =   975
       End
       Begin VB.CommandButton Section 
-         Caption         =   "Creat Section Drawing"
+         Caption         =   "SECTION DRAWING"
          Height          =   375
          Left            =   3360
          TabIndex        =   16
@@ -85,12 +85,12 @@ Begin VB.Form EntranceForm
          Width           =   975
       End
       Begin VB.CommandButton mask 
-         Caption         =   "Creat Mask"
+         Caption         =   "CREAT MASK"
          Height          =   375
-         Left            =   1560
+         Left            =   1440
          TabIndex        =   11
          Top             =   1560
-         Width           =   1215
+         Width           =   1335
       End
       Begin VB.TextBox Text11 
          BeginProperty Font 
@@ -181,9 +181,9 @@ Begin VB.Form EntranceForm
          Width           =   975
       End
       Begin VB.CommandButton fan 
-         Caption         =   "Probe Angle"
+         Caption         =   "PREVIEW"
          Height          =   375
-         Left            =   120
+         Left            =   1440
          TabIndex        =   12
          Top             =   1560
          Width           =   1335
@@ -384,118 +384,6 @@ Call line12obj.Rotate(p6, -(pi - thetahd - beamanglehd))
 
 End Sub
 
-'Creat Layout
-Private Sub layout_Click()
-    Dim app As IAcadApplication
-    Dim doc As IAcadDocument
-    Set app = CreateAcad
-    Set doc = app.Documents.Add
-    'If doc.Active = False Then End
-    
-'    Dim corow As Long
-    Set excelApp = M_CreateExcel(TextPath.Text)
-    Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1") '当前工作表为sheet1
-'    corow = excelsheet.usedrange.Rows.count '计算工作表的总行数
-'    Dim maxX, minX, maxY, minY As Double
-'    minX = excelsheet.cells(6, 2).value  '读取excel中的X坐标
-'    minY = excelsheet.cells(6, 3).value  '读取excel中的Y坐标
-'    maxX = excelsheet.cells(6, 2).value  '读取excel中的X坐标
-'    maxY = excelsheet.cells(6, 3).value  '读取excel中的Y坐标
-
-'For i = 7 To corow
-'    Dim currentX, currentY As Double
-'    currentX = excelsheet.cells(i, 2).value
-'    currentY = excelsheet.cells(i, 3).value
-'    If (currentX < minX) Then
-'       minX = currentX
-'    Else
-'        If (currentX > maxX) Then
-'            maxX = currentX
-'        End If
-'    End If
-'
-'    If (currentY < minY) Then
-'        minY = currentY
-'    Else
-'        If (currentY > maxY) Then
-'            maxY = currentY
-'        End If
-'    End If
-'Next i
-
-'Dim a, b, c, BL As Double
-'a = maxX - minX
-'b = maxY - minY
-'If a > b Then
-'c = a / 1000
-'Else
-'c = b / 1000
-'End If
-'BL = 178.2 / c
-
-'    Dim newCenter(0 To 2) As Double
-'    newCenter(0) = (maxX + minX) * BL / 2000
-'    newCenter(1) = (maxY + minY) * BL / 2000
-'    newCenter(2) = 0
-'For i = 6 To corow '循环开始
-'    Dim Angle As Double '定义拉针角度为double
-'    Dim tracetext As String
-'    Dim padnametext As String
-'    Dim probelayertext As String
-'    Dim jumpertext As String
-'    Dim channeltext As String
-'    Dim padnotext As String
-'    Dim p(0 To 2) As Double '定义了圆心的位置坐标，下方的p（0），p（1），p（2）为该圆心的x,y,z
-'    Dim x As String '定义x坐标
-'    Dim y As String '定义y坐标
-'    x = excelsheet.cells(i, 2).value * BL / 1000 '读取excel中的X坐标
-'    y = excelsheet.cells(i, 3).value * BL / 1000 '读取excel中的Y坐标
-'    p(0) = Val(x) - newCenter(0)
-'    p(1) = Val(y) - newCenter(1)
-'    p(2) = 0
-'    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
-'    tracetext = excelsheet.cells(i, 5).value '读取excel里的焊点
-'    padnametext = excelsheet.cells(i, 4).value '读取excel里的pad name
-'    probelayertext = excelsheet.cells(i, 9).value '读取excel里的针层
-'    jumpertext = excelsheet.cells(i, 6).value '读取excel里的跳线
-'    channeltext = excelsheet.cells(i, 7).value '读取excel里的CH
-'    padnotext = excelsheet.cells(i, 1).value '读取excel里的Pad No.
-'    Call DrawUnit(doc, p, Angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
-'Next i
-'
-''creat layout drawing frame
-'    Dim lay8 As AcadLayer
-'    Set layer8 = doc.Layers.Add("Layer")
-'    layer8.color = 7
-'    layer8.Lineweight = 0.5
-'    doc.ActiveLayer = layer8
-'    Dim p1(0 To 2) As Double
-'    Dim p2(0 To 2) As Double
-'    Dim p3(0 To 2) As Double
-'    Dim p4(0 To 2) As Double
-'    Dim p5(0 To 2) As Double
-'    Dim p6(0 To 2) As Double
-'    Dim l As Double
-'    Dim w As Double
-'    l = 297
-'    w = 420
-'    p2(0) = 0
-'    p2(1) = 0
-'    p2(2) = 0
-'    Call drawbox(doc, p2, l, w)
-'    Call doc.ModelSpace.AddLine(p3, p4)
-'    Dim customer As String
-'    Dim device As String
-'    Dim pins As String
-'    customer = excelsheet.cells(1, 2).value
-'    device = excelsheet.cells(2, 2).value
-'    pins = excelsheet.cells(3, 2).value
-'    'Call doc.ModelSpace.AddText("Customer:" & customer, p3, 250)
-'    'Call doc.ModelSpace.AddText("Device:" & device, p5, 250)
-'    'Call doc.ModelSpace.AddText("Pins:" & pins, p6, 250)
-'    doc.Application.ZoomExtents
-'    Call excelApp.Workbooks.Close '关闭excel程序
-End Sub
 
 'Creat Mask
 Private Sub mask_Click()
@@ -514,7 +402,7 @@ Private Sub mask_Click()
     Set excelApp = M_CreateExcel(TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1") '当前工作表为sheet1
     corow = excelsheet.usedrange.Rows.count '计算工作表的总行数
-    Dim angle As Double
+    Dim Angle As Double
 
     
     Dim maxX, minX, maxY, minY As Double
@@ -554,10 +442,10 @@ For i = 6 To corow
     Dim y As String '定义y坐标
     x = excelsheet.cells(i, 2).value '读取excel中的X坐标
     y = excelsheet.cells(i, 3).value '读取excel中的Y坐标
-    angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
+    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
         
-    maskp(0) = (Val(x) - newCenter(0)) / 1000 + Text11.Text / 1000 * Cos(3.1415926 * angle / 180)
-    maskp(1) = (Val(y) - newCenter(1)) / 1000 + Text11.Text / 1000 * Sin(3.1415926 * angle / 180)
+    maskp(0) = (Val(x) - newCenter(0)) / 1000 + Text11.Text / 1000 * Cos(3.1415926 * Angle / 180)
+    maskp(1) = (Val(y) - newCenter(1)) / 1000 + Text11.Text / 1000 * Sin(3.1415926 * Angle / 180)
     maskp(2) = 0
     Call drawDonut(doc2, ed, id, maskp)
 Next i

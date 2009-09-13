@@ -39,7 +39,7 @@ Public Sub CreateDXFFile()
     newCenter(0) = (M_MaxX + M_MinX) * BL / 2
     newCenter(1) = (M_MaxY + M_MinY) * BL / 2
     newCenter(2) = 0
-    Dim angle As Double
+    Dim Angle As Double
     Dim padnotext As String
     Dim padnametext As String
     Dim tracetext As String
@@ -57,17 +57,17 @@ Public Sub CreateDXFFile()
         p(0) = Val(x) - newCenter(0)
         p(1) = Val(y) - newCenter(1)
         p(2) = 0
-        angle = M_Angles(i) '读取excel里的拉针角度
+        Angle = M_Angles(i) '读取excel里的拉针角度
         tracetext = M_Traces(i) '读取excel里的焊点
         padnametext = M_PadNames(i) '读取excel里的pad name
         probelayertext = M_Layers(i) '读取excel里的针层
         jumpertext = M_Jumpers(i) '读取excel里的跳线
         channeltext = M_Channels(i) '读取excel里的CH
         padnotext = M_PadNumbers(i) '读取excel里的Pad No.
-        Call DrawUnit(doc, p, angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
+        Call DrawUnit(doc, p, Angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
        
     Next i
-    'draw text
+
     'creat layout drawing frame
     Dim lay8 As AcadLayer
     Set layer8 = doc.Layers.Add("Layer")
@@ -137,11 +137,11 @@ Function drawDonut(document As IAcadDocument, D1 As Double, D2 As Double, Pt1 As
 End Function
 
 '画layout的函数
-Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle As Double, PadNo As String, PadName As String, Trace As String, Jumper As String, Channel As String, Layer As String, BL As Double)
+Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle As Double, PadNo As String, PadName As String, Trace As String, Jumper As String, Channel As String, Layer As String, BL As Double)
    Dim pi As Double
    Dim anglehd As Double
    pi = 3.1415926
-   anglehd = pi * angle / 180
+   anglehd = pi * Angle / 180
    
    '画矩形和直线
     Dim lay7 As AcadLayer

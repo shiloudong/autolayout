@@ -2,14 +2,14 @@ VERSION 5.00
 Begin VB.Form AngleForm 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Angle"
-   ClientHeight    =   4095
+   ClientHeight    =   3690
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   2775
    LinkTopic       =   "Form4"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4095
+   ScaleHeight     =   3690
    ScaleWidth      =   2775
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
@@ -24,7 +24,7 @@ Begin VB.Form AngleForm
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3855
+      Height          =   3495
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -43,7 +43,7 @@ Begin VB.Form AngleForm
          Height          =   495
          Left            =   120
          TabIndex        =   12
-         Top             =   3240
+         Top             =   2880
          Width           =   2295
       End
       Begin VB.TextBox Text1 
@@ -281,6 +281,8 @@ Private Sub Command1_Click()
     If (AngleForm.Text1 <> "") Then
         Angle = AngleForm.Text1
         Call SetSelectedAngle(Angle)
+        AngleForm.Hide
+        
     End If
 End Sub
 
