@@ -159,11 +159,12 @@ Public Sub M_DrawRectangle(startPoint() As Double, endpoint() As Double)
 End Sub
 
 Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
-    m_picture.DrawWidth = 8
-    m_picture.PSet (x, y), color
+    m_picture.DrawWidth = 1
+
+    m_picture.Line (x - 1, y - 1)-(x + 1, y + 1), color, B
 End Sub
 Private Sub DrawAngleLine(point() As Double, index As Integer)
-    m_picture.DrawWidth = 2
+    m_picture.DrawWidth = 1
     Dim pictureAngle As Double
     pictureAngle = -M_Angles(index)
     Dim x1, y1 As Double
