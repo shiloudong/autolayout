@@ -21,26 +21,34 @@ Begin VB.Form AboutForm
    MinButton       =   0   'False
    ScaleHeight     =   2460
    ScaleWidth      =   3870
-   Begin VB.Label Label3 
-      Caption         =   "2009-09-07"
+   Begin VB.Label Label5 
+      Caption         =   "ALLEN LIU"
       Height          =   255
-      Left            =   600
+      Left            =   2520
+      TabIndex        =   4
+      Top             =   1200
+      Width           =   975
+   End
+   Begin VB.Label Label3 
+      Caption         =   "2009-09-13"
+      Height          =   255
+      Left            =   480
       TabIndex        =   3
       Top             =   1560
-      Width           =   1455
+      Width           =   1215
    End
    Begin VB.Label Label4 
-      Caption         =   "copyright ALLEN LIU"
+      Caption         =   "DESIGN BY    BEN LEE"
       Height          =   255
-      Left            =   600
+      Left            =   480
       TabIndex        =   2
       Top             =   1200
-      Width           =   2175
+      Width           =   2055
    End
    Begin VB.Label Label2 
       Caption         =   "Ver 1.0"
       Height          =   255
-      Left            =   600
+      Left            =   480
       TabIndex        =   1
       Top             =   840
       Width           =   1575
@@ -57,7 +65,7 @@ Begin VB.Form AboutForm
          Strikethrough   =   0   'False
       EndProperty
       Height          =   255
-      Left            =   600
+      Left            =   480
       TabIndex        =   0
       Top             =   480
       Width           =   2295
