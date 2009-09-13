@@ -366,6 +366,7 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y
             endPoint(0) = X
             endPoint(1) = Y
             Call CalculateSelectedPoints(previousPoint, endPoint)
+            Call M_RedrawPicutreBox
             Call ShowLayerDialog
         End If
     ElseIf Button = 2 Then

@@ -18,6 +18,7 @@ Public M_MinY As Double
 Public F_MovePoint(0 To 1) As Double
 Public M_Index As Integer
 Public M_Scale As Double
+Dim selectedFlag() As Boolean
 
 Private m_picture As PictureBox
 
@@ -46,8 +47,10 @@ Public Sub M_GetExcelData(path As String)
     ReDim Preserve M_Channels(0 To M_RowCount - 1) As String
     ReDim Preserve M_Angles(0 To M_RowCount - 1) As Double
     ReDim Preserve M_Layers(0 To M_RowCount - 1) As Integer
+    ReDim Preserve selectedFlag(0 To M_RowCount - 1) As Boolean
     
     For i = 0 To M_RowCount - 1
+        selectedFlag(i) = False
         M_PadNumbers(i) = excelsheet.cells(i + 6, 1).value
         M_PointsX(i) = excelsheet.cells(i + 6, 2).value / 1000
         M_PointsY(i) = -1 * excelsheet.cells(i + 6, 3).value / 1000
@@ -142,7 +145,7 @@ Private Sub DrawUnit(index As Integer)
     point(1) = (M_PointsY(index) - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
     Call DrawAngleLine(point, M_Angles(index))
     
-    If index <> M_Index Then
+    If selectedFlag(index) Then
         Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
     Else
         Call DrawPoint(point(0), point(1), RGB(255, 0, 0))
@@ -157,8 +160,44 @@ Public Sub M_RedrawAngleLine(angle As Double)
     End If
 End Sub
 Public Sub CalculateSelectedPoints(startPoint() As Double, endPoint() As Double)
-
+    Dim inside As Boolean
+    Dim checkPoint(0 To 1) As Double
+    For i = 0 To M_RowCount - 1
+        checkPoint(0) = (M_PointsX(i) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
+        checkPoint(1) = (M_PointsY(i) - M_CenterPoint(1)) * M_Scale + F_MovePoint(1)
+        inside = IsInRectange(checkPoint, startPoint, endPoint)
+        selectedFlag(i) = inside
+    Next i
 End Sub
+Private Function IsInRectange(checkPoint() As Double, startPoint() As Double, endPoint() As Double)
+    Dim maxX, minX, maxY, minY As Double
+    If startPoint(0) > endPoint(0) Then
+        maxX = startPoint(0)
+        minX = endPoint(0)
+    Else
+        maxX = endPoint(0)
+        minX = startPoint(0)
+    End If
+    
+    If (startPoint(1) > endPoint(1)) Then
+        maxY = startPoint(1)
+        minY = endPoint(1)
+    Else
+        maxY = endPoint(1)
+        minY = startPoint(1)
+    End If
+    
+
+    If checkPoint(0) > minX And checkPoint(0) < maxX Then
+        If checkPoint(1) > minY And checkPoint(1) < maxY Then
+            IsInRectange = True
+        Else
+            IsInRectange = False
+        End If
+    Else
+        IsInRectange = False
+    End If
+End Function
 
 
 
