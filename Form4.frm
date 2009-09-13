@@ -289,5 +289,34 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Label1_Click()
+Form4.Text1 = 90
+End Sub
+
+Private Sub Label2_Click()
+Form4.Text1 = 315
+End Sub
+
+Private Sub Label3_Click()
+Form4.Text1 = 225
+End Sub
+
+Private Sub Label4_Click()
+Form4.Text1 = 45
+End Sub
+
+Private Sub Label5_Click()
+Form4.Text1 = 135
+End Sub
+
+Private Sub Label6_Click()
+Form4.Text1 = 180
+End Sub
+
+Private Sub Label7_Click()
+Form4.Text1 = 0
+End Sub
+
 Private Sub Label8_Click()
+Form4.Text1 = 270
 End Sub
