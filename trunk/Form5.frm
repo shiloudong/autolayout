@@ -5,12 +5,12 @@ Begin VB.Form Form5
    ClientHeight    =   3540
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   3810
+   ClientWidth     =   3570
    LinkTopic       =   "Form5"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3540
-   ScaleWidth      =   3810
+   ScaleWidth      =   3570
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.CommandButton ClearCmd 
       Caption         =   "Clear"
@@ -24,10 +24,10 @@ Begin VB.Form Form5
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   1680
+      Left            =   1560
       TabIndex        =   26
-      Top             =   3000
-      Width           =   855
+      Top             =   3080
+      Width           =   735
    End
    Begin VB.TextBox Text2 
       Enabled         =   0   'False
@@ -43,7 +43,7 @@ Begin VB.Form Form5
       Height          =   330
       Left            =   840
       TabIndex        =   25
-      Top             =   1080
+      Top             =   1050
       Width           =   735
    End
    Begin VB.CommandButton Command5 
@@ -78,7 +78,7 @@ Begin VB.Form Form5
       Left            =   1680
       TabIndex        =   23
       Top             =   960
-      Width           =   615
+      Width           =   495
    End
    Begin VB.CommandButton Command3 
       Caption         =   "L ¡ú"
@@ -92,10 +92,10 @@ Begin VB.Form Form5
          Strikethrough   =   0   'False
       EndProperty
       Height          =   495
-      Left            =   120
+      Left            =   240
       TabIndex        =   22
       Top             =   960
-      Width           =   615
+      Width           =   495
    End
    Begin VB.CommandButton Command2 
       Caption         =   "T¡ý"
@@ -108,10 +108,10 @@ Begin VB.Form Form5
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   615
+      Height          =   495
       Left            =   960
       TabIndex        =   21
-      Top             =   240
+      Top             =   360
       Width           =   495
    End
    Begin VB.CommandButton Command1 
@@ -128,8 +128,8 @@ Begin VB.Form Form5
       Height          =   375
       Left            =   120
       TabIndex        =   2
-      Top             =   3000
-      Width           =   1455
+      Top             =   3080
+      Width           =   1335
    End
    Begin VB.TextBox Text1 
       Enabled         =   0   'False
@@ -147,11 +147,11 @@ Begin VB.Form Form5
       Locked          =   -1  'True
       TabIndex        =   1
       Top             =   2520
-      Width           =   2415
+      Width           =   2175
    End
    Begin VB.Frame Frame1 
       Height          =   3495
-      Left            =   2640
+      Left            =   2400
       TabIndex        =   0
       Top             =   0
       Width           =   1095
@@ -159,7 +159,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H00C0C0C0&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 9"
+         Caption         =   "  9"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -172,6 +181,15 @@ Begin VB.Form Form5
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 18"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -183,7 +201,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H0000C000&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 2"
+         Caption         =   "  2"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -196,6 +223,15 @@ Begin VB.Form Form5
          BackColor       =   &H00FF0000&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 3"
+         BeginProperty Font 
+            Name            =   "ËÎÌå"
+            Size            =   9
+            Charset         =   134
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -207,7 +243,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H00FF00FF&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 4"
+         Caption         =   "  4"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -219,7 +264,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H0000FFFF&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 5"
+         Caption         =   "  5"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -231,7 +285,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H000000FF&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 6"
+         Caption         =   "  6"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -243,7 +306,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H00FFFF00&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 7"
+         Caption         =   "  7"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -255,7 +327,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H00C0C0FF&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 8"
+         Caption         =   "  8"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -268,6 +349,15 @@ Begin VB.Form Form5
          BackColor       =   &H00C0FFC0&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 10"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -280,6 +370,15 @@ Begin VB.Form Form5
          BackColor       =   &H00FFC0C0&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 11"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -292,6 +391,15 @@ Begin VB.Form Form5
          BackColor       =   &H00C0FFFF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 12"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -304,6 +412,15 @@ Begin VB.Form Form5
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 13"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -316,6 +433,15 @@ Begin VB.Form Form5
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 14"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -328,6 +454,15 @@ Begin VB.Form Form5
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 15"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -340,6 +475,15 @@ Begin VB.Form Form5
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 16"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -352,6 +496,15 @@ Begin VB.Form Form5
          BackColor       =   &H80000005&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 17"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   600
@@ -363,7 +516,16 @@ Begin VB.Form Form5
          Appearance      =   0  'Flat
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  'Fixed Single
-         Caption         =   " 1"
+         Caption         =   "  1"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120

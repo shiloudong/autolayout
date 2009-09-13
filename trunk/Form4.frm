@@ -2,15 +2,15 @@ VERSION 5.00
 Begin VB.Form AngleForm 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Angle"
-   ClientHeight    =   3690
+   ClientHeight    =   3495
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   2775
+   ClientWidth     =   2655
    LinkTopic       =   "Form4"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3690
-   ScaleWidth      =   2775
+   ScaleHeight     =   3495
+   ScaleWidth      =   2655
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.Frame Frame1 
@@ -24,10 +24,10 @@ Begin VB.Form AngleForm
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3495
-      Left            =   120
+      Height          =   3375
+      Left            =   80
       TabIndex        =   0
-      Top             =   120
+      Top             =   60
       Width           =   2535
       Begin VB.CommandButton Command1 
          Caption         =   "Set Probes to  Angle"
@@ -43,10 +43,19 @@ Begin VB.Form AngleForm
          Height          =   495
          Left            =   120
          TabIndex        =   12
-         Top             =   2880
+         Top             =   2760
          Width           =   2295
       End
       Begin VB.TextBox Text1 
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   270
          Left            =   1440
          TabIndex        =   10
@@ -57,7 +66,7 @@ Begin VB.Form AngleForm
          Height          =   2055
          Left            =   120
          TabIndex        =   1
-         Top             =   240
+         Top             =   200
          Width           =   2295
          Begin VB.Line Line4 
             X1              =   720
@@ -171,7 +180,7 @@ Begin VB.Form AngleForm
             Appearance      =   0  'Flat
             BackColor       =   &H80000005&
             BorderStyle     =   1  'Fixed Single
-            Caption         =   " 45"
+            Caption         =   "   45"
             BeginProperty Font 
                Name            =   "Arial"
                Size            =   9
@@ -234,7 +243,7 @@ Begin VB.Form AngleForm
             Appearance      =   0  'Flat
             BackColor       =   &H80000005&
             BorderStyle     =   1  'Fixed Single
-            Caption         =   "  90"
+            Caption         =   "   90"
             BeginProperty Font 
                Name            =   "Arial"
                Size            =   9
