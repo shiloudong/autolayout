@@ -32,12 +32,12 @@ Public Sub SetPicure(pic As PictureBox)
     Set m_picture = pic
 End Sub
 Private Sub InitializeColorMap()
-    colorMap(0) = RGB(255, 0, 0)
+    colorMap(0) = RGB(255, 255, 255)
     colorMap(1) = RGB(0, 255, 0)
     colorMap(2) = RGB(0, 0, 255)
     colorMap(3) = RGB(255, 0, 255)
     colorMap(4) = RGB(255, 255, 0)
-    colorMap(5) = RGB(255, 255, 255)
+    colorMap(5) = RGB(255, 0, 0)
     colorMap(6) = RGB(0, 255, 255)
     colorMap(7) = RGB(255, 127, 127)
     colorMap(8) = RGB(192, 192, 192)
@@ -190,7 +190,7 @@ Private Sub DrawUnit(index As Integer)
     If selectedFlag(index) Then
         Call DrawPoint(point(0), point(1), RGB(0, 255, 0))
     Else
-        Call DrawPoint(point(0), point(1), RGB(255, 0, 0))
+        Call DrawPoint(point(0), point(1), RGB(255, 255, 255))
     End If
     'Call DrawLayerText(index)
 End Sub
