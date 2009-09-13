@@ -25,7 +25,7 @@ Begin VB.Form EntranceForm
       Caption         =   "About"
       Height          =   255
       Left            =   5400
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   70
       Width           =   855
    End
@@ -33,13 +33,13 @@ Begin VB.Form EntranceForm
       Caption         =   "Needle Assembly"
       Height          =   1215
       Left            =   120
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   4920
       Width           =   6120
       Begin VB.TextBox Text14 
          Height          =   285
          Left            =   1440
-         TabIndex        =   25
+         TabIndex        =   24
          Text            =   "94"
          Top             =   360
          Width           =   975
@@ -48,7 +48,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Creat Section Drawing"
          Height          =   375
          Left            =   3360
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   720
          Width           =   2295
       End
@@ -56,7 +56,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Browse Excel of Needle Force First "
          Height          =   255
          Left            =   2760
-         TabIndex        =   27
+         TabIndex        =   26
          Top             =   360
          Width           =   3135
       End
@@ -64,7 +64,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Theta"
          Height          =   255
          Left            =   600
-         TabIndex        =   26
+         TabIndex        =   25
          Top             =   360
          Width           =   615
       End
@@ -79,7 +79,7 @@ Begin VB.Form EntranceForm
       Begin VB.TextBox Text5 
          Height          =   270
          Left            =   1560
-         TabIndex        =   24
+         TabIndex        =   23
          Text            =   "25"
          Top             =   1080
          Width           =   975
@@ -88,7 +88,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Creat Mask"
          Height          =   375
          Left            =   1560
-         TabIndex        =   12
+         TabIndex        =   11
          Top             =   1560
          Width           =   1215
       End
@@ -128,7 +128,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Width [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   23
+         TabIndex        =   22
          Top             =   1080
          Width           =   975
       End
@@ -159,7 +159,7 @@ Begin VB.Form EntranceForm
       Begin VB.TextBox Text4 
          Height          =   270
          Left            =   1440
-         TabIndex        =   21
+         TabIndex        =   20
          Text            =   "0.1"
          Top             =   1080
          Width           =   975
@@ -167,7 +167,7 @@ Begin VB.Form EntranceForm
       Begin VB.TextBox Text3 
          Height          =   270
          Left            =   1440
-         TabIndex        =   19
+         TabIndex        =   18
          Text            =   "0.7"
          Top             =   720
          Width           =   975
@@ -175,7 +175,7 @@ Begin VB.Form EntranceForm
       Begin VB.TextBox Text2 
          Height          =   270
          Left            =   1440
-         TabIndex        =   15
+         TabIndex        =   14
          Text            =   "0.03"
          Top             =   360
          Width           =   975
@@ -184,15 +184,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Probe Angle"
          Height          =   375
          Left            =   120
-         TabIndex        =   13
-         Top             =   1560
-         Width           =   1335
-      End
-      Begin VB.CommandButton layout 
-         Caption         =   "Creat Layout"
-         Height          =   375
-         Left            =   1560
-         TabIndex        =   11
+         TabIndex        =   12
          Top             =   1560
          Width           =   1335
       End
@@ -200,7 +192,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Offset [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   1080
          Width           =   975
       End
@@ -208,7 +200,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Length [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   18
+         TabIndex        =   17
          Top             =   720
          Width           =   975
       End
@@ -216,7 +208,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Font [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   360
          Width           =   855
       End

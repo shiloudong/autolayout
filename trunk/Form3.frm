@@ -1,13 +1,13 @@
 VERSION 5.00
 Begin VB.Form ProbeAngleForm 
    Caption         =   "Probe Angle"
-   ClientHeight    =   10530
-   ClientLeft      =   1560
-   ClientTop       =   1350
+   ClientHeight    =   9300
+   ClientLeft      =   -525
+   ClientTop       =   60
    ClientWidth     =   13620
    Icon            =   "Form3.frx":0000
    LinkTopic       =   "Form3"
-   ScaleHeight     =   185.738
+   ScaleHeight     =   164.042
    ScaleMode       =   6  'Millimeter
    ScaleWidth      =   240.242
    Begin VB.Frame Frame1 
@@ -112,9 +112,9 @@ Begin VB.Form ProbeAngleForm
    End
    Begin VB.PictureBox Picture1 
       BackColor       =   &H00000000&
-      Height          =   10335
+      Height          =   9135
       Left            =   120
-      ScaleHeight     =   181.24
+      ScaleHeight     =   160.073
       ScaleMode       =   6  'Millimeter
       ScaleWidth      =   217.223
       TabIndex        =   0

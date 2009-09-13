@@ -162,7 +162,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label12 
          Appearance      =   0  'Flat
-         BackColor       =   &H00FFFFFF&
+         BackColor       =   &H000000FF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 6"
          ForeColor       =   &H80000008&
@@ -294,7 +294,7 @@ Begin VB.Form Form5
       End
       Begin VB.Label Label1 
          Appearance      =   0  'Flat
-         BackColor       =   &H000000FF&
+         BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  'Fixed Single
          Caption         =   " 1"
          ForeColor       =   &H80000008&
