@@ -392,7 +392,7 @@ Private Sub UndoCmd_Click()
 End Sub
 
 Private Sub XCmd_Click()
-    M_RedrawAngleLine (90)
+    M_RedrawAngleLine (270)
 End Sub
 Private Sub ACmd_Click()
     M_RedrawAngleLine (180)
@@ -422,19 +422,19 @@ Private Sub saveCmd_Click()
     Call excelApp.Workbooks.Close
 End Sub
 Private Sub WCmd_Click()
-    M_RedrawAngleLine (270)
+    M_RedrawAngleLine (90)
 End Sub
 Private Sub QCmd_Click()
-    M_RedrawAngleLine (225)
-End Sub
-Private Sub ECmd_Click()
-    M_RedrawAngleLine (315)
-End Sub
-Private Sub ZCmd_Click()
     M_RedrawAngleLine (135)
 End Sub
-Private Sub CCmd_Click()
+Private Sub ECmd_Click()
     M_RedrawAngleLine (45)
+End Sub
+Private Sub ZCmd_Click()
+    M_RedrawAngleLine (225)
+End Sub
+Private Sub CCmd_Click()
+    M_RedrawAngleLine (315)
 End Sub
 
 
