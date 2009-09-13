@@ -180,7 +180,7 @@ Private Sub Form_Load()
     Call SetPicure(Picture1)
     Picture1.AutoRedraw = True
     M_Index = 0
-    Call M_GetExcelData(EntranceForm.TextPath.Text)
+    Call M_GetExcelData(EntranceForm.CommonDialog1.FileName)
     BL = M_GetScale(Picture1.width, Picture1.height)
     F_MovePoint(0) = Picture1.width / 2
     F_MovePoint(1) = Picture1.height / 2
@@ -314,7 +314,7 @@ End Sub
 
 Private Sub saveCmd_Click()
     Dim corow As Long
-    Set excelApp = M_CreateExcel(EntranceForm.TextPath.Text)
+    Set excelApp = M_CreateExcel(EntranceForm.CommonDialog1.FileName)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     For i = 0 To M_RowCount - 1
         excelsheet.cells(i + 6, 8).value = M_Angles(i)

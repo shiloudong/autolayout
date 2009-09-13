@@ -18,19 +18,16 @@ Public M_MinY As Double
 Public F_MovePoint(0 To 1) As Double
 Public M_Index As Integer
 Public M_Scale As Double
-
 Dim OrderedIndexs() As Integer
 Dim selectedCount As Integer
-
 Dim selectedFlag() As Boolean
 Dim colorMap(0 To 19) As ColorConstants
-
 Private m_picture As PictureBox
-
 
 Public Sub SetPicure(pic As PictureBox)
     Set m_picture = pic
 End Sub
+
 Private Sub InitializeColorMap()
     colorMap(0) = RGB(255, 255, 255)
     colorMap(1) = RGB(0, 255, 0)
@@ -53,6 +50,7 @@ Private Sub InitializeColorMap()
     colorMap(18) = RGB(255, 255, 255)
     colorMap(19) = RGB(255, 255, 255)
 End Sub
+
 Public Sub M_GetExcelData(path As String)
     Set excelApp = M_CreateExcel(EntranceForm.TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
