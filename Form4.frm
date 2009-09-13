@@ -4,28 +4,11 @@ Begin VB.Form Form4
    ClientHeight    =   4095
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   5370
+   ClientWidth     =   2775
    LinkTopic       =   "Form4"
    ScaleHeight     =   4095
-   ScaleWidth      =   5370
+   ScaleWidth      =   2775
    StartUpPosition =   3  '´°¿ÚÈ±Ê¡
-   Begin VB.Frame Frame2 
-      Caption         =   "Layers"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   3855
-      Left            =   2880
-      TabIndex        =   1
-      Top             =   120
-      Width           =   2415
-   End
    Begin VB.Frame Frame1 
       Caption         =   "Direction"
       BeginProperty Font 
@@ -55,21 +38,21 @@ Begin VB.Form Form4
          EndProperty
          Height          =   495
          Left            =   120
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   3240
          Width           =   2295
       End
       Begin VB.TextBox Text1 
          Height          =   270
          Left            =   1440
-         TabIndex        =   11
+         TabIndex        =   10
          Top             =   2400
          Width           =   975
       End
       Begin VB.Frame Frame3 
          Height          =   2055
          Left            =   120
-         TabIndex        =   2
+         TabIndex        =   1
          Top             =   240
          Width           =   2295
          Begin VB.Line Line4 
@@ -113,7 +96,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   840
-            TabIndex        =   10
+            TabIndex        =   9
             Top             =   1680
             Width           =   495
          End
@@ -134,7 +117,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   1680
-            TabIndex        =   9
+            TabIndex        =   8
             Top             =   960
             Width           =   495
          End
@@ -155,7 +138,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   8
+            TabIndex        =   7
             Top             =   960
             Width           =   495
          End
@@ -176,7 +159,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   7
+            TabIndex        =   6
             Top             =   360
             Width           =   495
          End
@@ -197,7 +180,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   1680
-            TabIndex        =   6
+            TabIndex        =   5
             Top             =   360
             Width           =   495
          End
@@ -218,7 +201,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   5
+            TabIndex        =   4
             Top             =   1560
             Width           =   495
          End
@@ -239,7 +222,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   1680
-            TabIndex        =   4
+            TabIndex        =   3
             Top             =   1560
             Width           =   495
          End
@@ -260,7 +243,7 @@ Begin VB.Form Form4
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   840
-            TabIndex        =   3
+            TabIndex        =   2
             Top             =   240
             Width           =   495
          End
@@ -278,7 +261,7 @@ Begin VB.Form Form4
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   12
+         TabIndex        =   11
          Top             =   2400
          Width           =   1215
       End
