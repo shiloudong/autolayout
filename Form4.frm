@@ -108,7 +108,7 @@ Begin VB.Form AngleForm
             Appearance      =   0  'Flat
             BackColor       =   &H80000005&
             BorderStyle     =   1  'Fixed Single
-            Caption         =   "  0"
+            Caption         =   "    0"
             BeginProperty Font 
                Name            =   "Arial"
                Size            =   9
