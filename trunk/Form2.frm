@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form Form2 
+Begin VB.Form AboutForm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "About"
    ClientHeight    =   2460
@@ -63,7 +63,7 @@ Begin VB.Form Form2
       Width           =   2295
    End
 End
-Attribute VB_Name = "Form2"
+Attribute VB_Name = "AboutForm"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True

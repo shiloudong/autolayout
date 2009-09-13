@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form Form1 
+Begin VB.Form EntranceForm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Probe Card Design - AutoLayout"
    ClientHeight    =   6225
@@ -259,7 +259,7 @@ Begin VB.Form Form1
       Width           =   1815
    End
 End
-Attribute VB_Name = "Form1"
+Attribute VB_Name = "EntranceForm"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -352,16 +352,16 @@ Function drawDonut(document As IAcadDocument, D1 As Double, D2 As Double, Pt1 As
 End Function
 
 '画layout的函数
-Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle As Double, PadNo As String, PadName As String, Trace As String, Jumper As String, Channel As String, Layer As String, BL As Double)
+Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle As Double, PadNo As String, PadName As String, Trace As String, Jumper As String, Channel As String, Layer As String, BL As Double)
    Dim pi As Double
    Dim anglehd As Double
    pi = 3.1415926
-   anglehd = pi * angle / 180
+   anglehd = pi * Angle / 180
    
    '画矩形和直线
     Dim lay7 As AcadLayer
     Set layer7 = document.Layers.Add("Pads")
-    layer7.Color = 7
+    layer7.color = 7
     layer7.Lineweight = 0.5
     document.ActiveLayer = layer7
     Call drawbox(document, centerPoint, 0.032 * BL, 0.032 * BL)
@@ -377,7 +377,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle A
     document.ActiveTextStyle = mytxt '将当前文字样式设置为mytxt
     Dim lay1 As AcadLayer
     Set layer1 = document.Layers.Add("PadNo")
-    layer1.Color = 2
+    layer1.color = 2
     layer1.Lineweight = 0.5
     document.ActiveLayer = layer1
     Dim padnoposition(0 To 2) As Double
@@ -390,7 +390,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle A
     'pad name
     Dim lay2 As AcadLayer
     Set layer2 = document.Layers.Add("PadName")
-    layer2.Color = 3
+    layer2.color = 3
     layer2.Lineweight = 0.5
     document.ActiveLayer = layer2
     Dim padnameposition(0 To 2) As Double
@@ -403,7 +403,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle A
     'trace
     Dim lay3 As AcadLayer
     Set layer3 = document.Layers.Add("Trace")
-    layer3.Color = 4
+    layer3.color = 4
     layer3.Lineweight = 0.5
     document.ActiveLayer = layer3
     Dim traceposition(0 To 2) As Double
@@ -416,7 +416,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle A
     'jumper
     Dim lay4 As AcadLayer
     Set layer4 = document.Layers.Add("Jumper")
-    layer4.Color = 5
+    layer4.color = 5
     layer4.Lineweight = 0.5
     document.ActiveLayer = layer4
     Dim jumperposition(0 To 2) As Double
@@ -429,7 +429,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle A
     'channel
     Dim lay5 As AcadLayer
     Set layer5 = document.Layers.Add("Channel")
-    layer5.Color = 6
+    layer5.color = 6
     layer5.Lineweight = 0.5
     document.ActiveLayer = layer5
     Dim channelposition(0 To 2) As Double
@@ -442,7 +442,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, angle A
     'layer
     Dim lay6 As AcadLayer
     Set layer6 = document.Layers.Add("Layer")
-    layer6.Color = 1
+    layer6.color = 1
     layer6.Lineweight = 0.5
     document.ActiveLayer = layer6
     Dim probelayerposition(0 To 2) As Double
@@ -610,7 +610,7 @@ BL = 178.2 / c
     newCenter(1) = (maxY + minY) * BL / 2000
     newCenter(2) = 0
 For i = 6 To corow '循环开始
-    Dim angle As Double '定义拉针角度为double
+    Dim Angle As Double '定义拉针角度为double
     Dim tracetext As String
     Dim padnametext As String
     Dim probelayertext As String
@@ -625,20 +625,20 @@ For i = 6 To corow '循环开始
     p(0) = Val(x) - newCenter(0)
     p(1) = Val(y) - newCenter(1)
     p(2) = 0
-    angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
+    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
     tracetext = excelsheet.cells(i, 5).value '读取excel里的焊点
     padnametext = excelsheet.cells(i, 4).value '读取excel里的pad name
     probelayertext = excelsheet.cells(i, 9).value '读取excel里的针层
     jumpertext = excelsheet.cells(i, 6).value '读取excel里的跳线
     channeltext = excelsheet.cells(i, 7).value '读取excel里的CH
     padnotext = excelsheet.cells(i, 1).value '读取excel里的Pad No.
-    Call DrawUnit(doc, p, angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
+    Call DrawUnit(doc, p, Angle, padnotext, padnametext, tracetext, jumpertext, channeltext, probelayertext, BL)
 Next i
 
 'creat layout drawing frame
     Dim lay8 As AcadLayer
     Set layer8 = doc.Layers.Add("Layer")
-    layer8.Color = 7
+    layer8.color = 7
     layer8.Lineweight = 0.5
     doc.ActiveLayer = layer8
     Dim p1(0 To 2) As Double
@@ -686,7 +686,7 @@ Private Sub mask_Click()
     Set excelApp = CreateExcel(TextPath.Text)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1") '当前工作表为sheet1
     corow = excelsheet.usedrange.Rows.count '计算工作表的总行数
-    Dim angle As Double
+    Dim Angle As Double
 
     
     Dim maxX, minX, maxY, minY As Double
@@ -726,10 +726,10 @@ For i = 6 To corow
     Dim y As String '定义y坐标
     x = excelsheet.cells(i, 2).value '读取excel中的X坐标
     y = excelsheet.cells(i, 3).value '读取excel中的Y坐标
-    angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
+    Angle = excelsheet.cells(i, 8).value '读取excel里的拉针角度
         
-    maskp(0) = (Val(x) - newCenter(0)) / 1000 + Text11.Text / 1000 * Cos(3.1415926 * angle / 180)
-    maskp(1) = (Val(y) - newCenter(1)) / 1000 + Text11.Text / 1000 * Sin(3.1415926 * angle / 180)
+    maskp(0) = (Val(x) - newCenter(0)) / 1000 + Text11.Text / 1000 * Cos(3.1415926 * Angle / 180)
+    maskp(1) = (Val(y) - newCenter(1)) / 1000 + Text11.Text / 1000 * Sin(3.1415926 * Angle / 180)
     maskp(2) = 0
     Call drawDonut(doc2, ed, id, maskp)
 Next i

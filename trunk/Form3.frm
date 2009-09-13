@@ -1,5 +1,5 @@
 VERSION 5.00
-Begin VB.Form Form3 
+Begin VB.Form ProbeAngleForm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Probe Angle"
    ClientHeight    =   9330
@@ -244,7 +244,7 @@ Begin VB.Form Form3
       Width           =   9135
    End
 End
-Attribute VB_Name = "Form3"
+Attribute VB_Name = "ProbeAngleForm"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
