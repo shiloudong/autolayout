@@ -3,9 +3,9 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form EntranceForm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Probe Card Design - AutoLayout"
-   ClientHeight    =   4590
+   ClientHeight    =   4065
    ClientLeft      =   3540
-   ClientTop       =   1935
+   ClientTop       =   2235
    ClientWidth     =   6345
    BeginProperty Font 
       Name            =   "Arial"
@@ -20,43 +20,27 @@ Begin VB.Form EntranceForm
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4590
+   ScaleHeight     =   4065
    ScaleWidth      =   6345
-   Begin VB.CommandButton OpenCmd 
-      Caption         =   "Open"
-      Height          =   375
-      Left            =   5400
-      TabIndex        =   24
-      Top             =   480
-      Width           =   735
-   End
    Begin MSComDlg.CommonDialog CommonDialog1 
-      Left            =   2280
+      Left            =   5760
       Top             =   0
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
       FilterIndex     =   2
    End
-   Begin VB.CommandButton Command2 
-      Caption         =   "About"
-      Height          =   255
-      Left            =   5400
-      TabIndex        =   18
-      Top             =   70
-      Width           =   855
-   End
    Begin VB.Frame Frame3 
       Caption         =   "Needle Assembly"
       Height          =   1215
       Left            =   120
-      TabIndex        =   12
-      Top             =   3240
+      TabIndex        =   11
+      Top             =   2760
       Width           =   6120
       Begin VB.TextBox Text14 
          Height          =   285
          Left            =   1440
-         TabIndex        =   21
+         TabIndex        =   19
          Text            =   "94"
          Top             =   360
          Width           =   975
@@ -65,7 +49,7 @@ Begin VB.Form EntranceForm
          Caption         =   "SECTION DRAWING"
          Height          =   375
          Left            =   3360
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   720
          Width           =   2295
       End
@@ -73,7 +57,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Browse Excel of Needle Force First "
          Height          =   255
          Left            =   2760
-         TabIndex        =   23
+         TabIndex        =   21
          Top             =   360
          Width           =   3135
       End
@@ -81,7 +65,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Theta"
          Height          =   255
          Left            =   600
-         TabIndex        =   22
+         TabIndex        =   20
          Top             =   360
          Width           =   615
       End
@@ -90,13 +74,13 @@ Begin VB.Form EntranceForm
       Caption         =   "MASK"
       Height          =   2055
       Left            =   3240
-      TabIndex        =   3
-      Top             =   960
+      TabIndex        =   2
+      Top             =   600
       Width           =   3000
       Begin VB.TextBox Text5 
          Height          =   270
          Left            =   1560
-         TabIndex        =   20
+         TabIndex        =   18
          Text            =   "25"
          Top             =   1080
          Width           =   975
@@ -105,7 +89,7 @@ Begin VB.Form EntranceForm
          Caption         =   "CREAT MASK"
          Height          =   375
          Left            =   1440
-         TabIndex        =   8
+         TabIndex        =   7
          Top             =   1560
          Width           =   1335
       End
@@ -121,7 +105,7 @@ Begin VB.Form EntranceForm
          EndProperty
          Height          =   270
          Left            =   1560
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   360
          Width           =   975
       End
@@ -137,7 +121,7 @@ Begin VB.Form EntranceForm
          EndProperty
          Height          =   270
          Left            =   1560
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   720
          Width           =   975
       End
@@ -145,7 +129,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Width [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   19
+         TabIndex        =   17
          Top             =   1080
          Width           =   975
       End
@@ -153,7 +137,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Offset [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   5
+         TabIndex        =   4
          Top             =   360
          Width           =   975
       End
@@ -161,7 +145,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Diameter [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   4
+         TabIndex        =   3
          Top             =   720
          Width           =   1215
       End
@@ -170,13 +154,13 @@ Begin VB.Form EntranceForm
       Caption         =   "LAYOUT"
       Height          =   2055
       Left            =   120
-      TabIndex        =   2
-      Top             =   960
+      TabIndex        =   1
+      Top             =   600
       Width           =   3000
       Begin VB.TextBox Text4 
          Height          =   270
          Left            =   1440
-         TabIndex        =   17
+         TabIndex        =   16
          Text            =   "0.1"
          Top             =   1080
          Width           =   975
@@ -184,7 +168,7 @@ Begin VB.Form EntranceForm
       Begin VB.TextBox Text3 
          Height          =   270
          Left            =   1440
-         TabIndex        =   15
+         TabIndex        =   14
          Text            =   "0.7"
          Top             =   720
          Width           =   975
@@ -192,16 +176,16 @@ Begin VB.Form EntranceForm
       Begin VB.TextBox Text2 
          Height          =   270
          Left            =   1440
-         TabIndex        =   11
+         TabIndex        =   10
          Text            =   "0.03"
          Top             =   360
          Width           =   975
       End
-      Begin VB.CommandButton fan 
+      Begin VB.CommandButton Preview 
          Caption         =   "PREVIEW"
          Height          =   375
          Left            =   1440
-         TabIndex        =   9
+         TabIndex        =   8
          Top             =   1560
          Width           =   1335
       End
@@ -209,7 +193,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Offset [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   16
+         TabIndex        =   15
          Top             =   1080
          Width           =   975
       End
@@ -217,7 +201,7 @@ Begin VB.Form EntranceForm
          Caption         =   "Length [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   720
          Width           =   975
       End
@@ -225,25 +209,30 @@ Begin VB.Form EntranceForm
          Caption         =   "Font [um]"
          Height          =   255
          Left            =   240
-         TabIndex        =   10
+         TabIndex        =   9
          Top             =   360
          Width           =   855
       End
    End
    Begin VB.TextBox TextPath 
       Height          =   420
-      Left            =   240
-      TabIndex        =   0
-      Top             =   480
-      Width           =   5040
-   End
-   Begin VB.Label Label3 
-      Caption         =   "Browse the Excel File"
-      Height          =   255
       Left            =   120
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   120
-      Width           =   1815
+      Width           =   6120
+   End
+   Begin VB.Menu File 
+      Caption         =   "File"
+      WindowList      =   -1  'True
+      Begin VB.Menu LoadExcel 
+         Caption         =   "Load Excel"
+      End
+   End
+   Begin VB.Menu About 
+      Caption         =   "About"
+      Begin VB.Menu AutoLayout 
+         Caption         =   "About AutoLayout"
+      End
    End
 End
 Attribute VB_Name = "EntranceForm"
@@ -253,29 +242,24 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim gActiveDoc As IAcadDocument
 Dim gAcadApplication As IAcadApplication
-Private Sub Command1_Click()
-    File1.Pattern = "*.xls"
-End Sub
-Private Sub Command2_Click()
+Private Sub AutoLayout_Click()
     Dim newform As New AboutForm
     newform.Show
 End Sub
-Private Sub Dir1_Change()
-    File1.path = Dir1.path
+Private Sub LoadExcel_Click()
+   On Error GoTo ErrHandler
+    CommonDialog1.Filter = "excelfile (*.xls)|*.xls|"
+    CommonDialog1.ShowOpen
+    TextPath.Text = CommonDialog1.FileName
+    Exit Sub
+ErrHandler:
+    Exit Sub
 End Sub
-Private Sub Drive1_Change()
-    Dir1.path = Drive1.Drive
-End Sub
-Private Sub fan_Click()
+Private Sub Preview_Click()
     Dim newform As New ProbeAngleForm
     newform.Show
 End Sub
-Private Sub File1_Click()
-    TextPath.Text = File1.path + "\" + File1.FileName
-End Sub
-Private Sub Form_Load()
-    TextPath.Text = "pa.xls"
-End Sub
+
 '画断面图函数
 Private Sub drawsection(document As IAcadDocument, tipdia As Double, tiplength As Double, probedia As Double, taper As Double, theta As Double, beamangle As Double)
 Dim p1(0 To 2) As Double
@@ -378,7 +362,6 @@ Call line11obj.Rotate(p6, -(pi - thetahd - beamanglehd))
 Call line12obj.Rotate(p6, -(pi - thetahd - beamanglehd))
 
 End Sub
-
 
 'Creat Mask
 Private Sub mask_Click()
@@ -488,16 +471,6 @@ Next i
     Call doc2.ModelSpace.AddText("Offset=" & Text11.Text, p13, 1.5)
     doc2.Application.ZoomExtents
     Call excelApp.Workbooks.Close '关闭excel程序
-End Sub
-
-Private Sub OpenCmd_Click()
-    On Error GoTo ErrHandler
-    CommonDialog1.Filter = "excelfile (*.xls)|*.xls|"
-    CommonDialog1.ShowOpen
-    TextPath.Text = CommonDialog1.FileName
-    Exit Sub
-ErrHandler:
-    Exit Sub
 End Sub
 
 Private Sub Section_Click()
