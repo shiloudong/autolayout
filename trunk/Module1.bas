@@ -50,7 +50,7 @@ Public Sub M_GetExcelData(path As String)
     For i = 0 To M_RowCount - 1
         M_PadNumbers(i) = excelsheet.cells(i + 6, 1).value
         M_PointsX(i) = excelsheet.cells(i + 6, 2).value / 1000
-        M_PointsY(i) = excelsheet.cells(i + 6, 3).value / 1000
+        M_PointsY(i) = -1 * excelsheet.cells(i + 6, 3).value / 1000
         M_PadNames(i) = excelsheet.cells(i + 6, 4).value
         M_Traces(i) = excelsheet.cells(i + 6, 5).value
         M_Jumpers(i) = excelsheet.cells(i + 6, 6).value
@@ -127,10 +127,12 @@ Private Sub DrawPoint(X As Double, Y As Double, color As ColorConstants)
 End Sub
 Private Sub DrawAngleLine(point() As Double, angle As Double)
     m_picture.DrawWidth = 1
+    Dim pictureAngle As Double
+    pictureAngle = -angle
     Dim x1, y1 As Double
     If angle <> 0 Then
-        x1 = point(0) + 20 * Cos(3.1415926 * angle / 180)
-        y1 = point(1) + 20 * Sin(3.1415926 * angle / 180)
+        x1 = point(0) + 20 * Cos(3.1415926 * pictureAngle / 180)
+        y1 = point(1) + 20 * Sin(3.1415926 * pictureAngle / 180)
         m_picture.Line (point(0), point(1))-(x1, y1), RGB(255, 0, 0)
     End If
 End Sub
