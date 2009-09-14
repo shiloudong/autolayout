@@ -1,7 +1,7 @@
 VERSION 5.00
-Begin VB.Form Form5 
+Begin VB.Form LayerForm 
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "Form5"
+   Caption         =   "Layer Assignment"
    ClientHeight    =   3540
    ClientLeft      =   2745
    ClientTop       =   1350
@@ -525,7 +525,7 @@ Begin VB.Form Form5
       End
    End
 End
-Attribute VB_Name = "Form5"
+Attribute VB_Name = "LayerForm"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -548,26 +548,26 @@ Private Sub Command1_Click()
 'layerArray() As Integer, arrayLength As Integer, orderDirection As Integer
     Call ReorderLayer(layerOrder, layerCount, direction)
     Call M_RedrawPicutreBox
-    Call Form5.Hide
+    Call LayerForm.Hide
 End Sub
 
 Private Sub Command2_Click()
-    Form5.Text2.Text = "T"
+    LayerForm.Text2.Text = "T"
     direction = 4
 End Sub
 
 Private Sub Command3_Click()
-    Form5.Text2.Text = "L"
+    LayerForm.Text2.Text = "L"
     direction = 1
 End Sub
 
 Private Sub Command4_Click()
-    Form5.Text2.Text = "R"
+    LayerForm.Text2.Text = "R"
     direction = 2
 End Sub
 
 Private Sub Command5_Click()
-    Form5.Text2.Text = "B"
+    LayerForm.Text2.Text = "B"
     direction = 3
 End Sub
 
@@ -583,91 +583,91 @@ Private Sub AddLayerOrder(layerNo As Integer)
 End Sub
 
 Private Sub Label1_Click()
-    Form5.Text1.Text = Text1.Text & "1,"
+    LayerForm.Text1.Text = Text1.Text & "1,"
     Call AddLayerOrder(1)
 End Sub
 
 Private Sub Label10_Click()
-    Form5.Text1.Text = Text1.Text & "8,"
+    LayerForm.Text1.Text = Text1.Text & "8,"
     Call AddLayerOrder(8)
 End Sub
 
 Private Sub Label11_Click()
-    Form5.Text1.Text = Text1.Text & "7,"
+    LayerForm.Text1.Text = Text1.Text & "7,"
     Call AddLayerOrder(7)
 End Sub
 
 Private Sub Label12_Click()
-    Form5.Text1.Text = Text1.Text & "6,"
+    LayerForm.Text1.Text = Text1.Text & "6,"
     Call AddLayerOrder(6)
 End Sub
 
 Private Sub Label13_Click()
-    Form5.Text1.Text = Text1.Text & "5,"
+    LayerForm.Text1.Text = Text1.Text & "5,"
     Call AddLayerOrder(5)
 End Sub
 
 Private Sub Label14_Click()
-    Form5.Text1.Text = Text1.Text & "4,"
+    LayerForm.Text1.Text = Text1.Text & "4,"
     Call AddLayerOrder(4)
 End Sub
 
 Private Sub Label15_Click()
-    Form5.Text1.Text = Text1.Text & "3,"
+    LayerForm.Text1.Text = Text1.Text & "3,"
     Call AddLayerOrder(3)
 End Sub
 
 Private Sub Label16_Click()
-    Form5.Text1.Text = Text1.Text & "2,"
+    LayerForm.Text1.Text = Text1.Text & "2,"
     Call AddLayerOrder(2)
 End Sub
 
 Private Sub Label17_Click()
-    Form5.Text1.Text = Text1.Text & "18,"
+    LayerForm.Text1.Text = Text1.Text & "18,"
     Call AddLayerOrder(18)
 End Sub
 
 Private Sub Label18_Click()
-    Form5.Text1.Text = Text1.Text & "9,"
+    LayerForm.Text1.Text = Text1.Text & "9,"
     Call AddLayerOrder(9)
 End Sub
 
 Private Sub Label2_Click()
-    Form5.Text1.Text = Text1.Text & "17,"
+    LayerForm.Text1.Text = Text1.Text & "17,"
     Call AddLayerOrder(17)
 End Sub
 
 Private Sub Label3_Click()
-    Form5.Text1.Text = Text1.Text & "16,"
+    LayerForm.Text1.Text = Text1.Text & "16,"
     Call AddLayerOrder(16)
 End Sub
 
 Private Sub Label4_Click()
-    Form5.Text1.Text = Text1.Text & "15,"
+    LayerForm.Text1.Text = Text1.Text & "15,"
     Call AddLayerOrder(15)
 End Sub
 
 Private Sub Label5_Click()
-    Form5.Text1.Text = Text1.Text & "14,"
+    LayerForm.Text1.Text = Text1.Text & "14,"
     Call AddLayerOrder(14)
 End Sub
 
 Private Sub Label6_Click()
-    Form5.Text1.Text = Text1.Text & "13,"
+    LayerForm.Text1.Text = Text1.Text & "13,"
     Call AddLayerOrder(13)
 End Sub
 
 Private Sub Label7_Click()
-    Form5.Text1.Text = Text1.Text & "12,"
+    LayerForm.Text1.Text = Text1.Text & "12,"
     Call AddLayerOrder(12)
 End Sub
 
 Private Sub Label8_Click()
-    Form5.Text1.Text = Text1.Text & "11,"
+    LayerForm.Text1.Text = Text1.Text & "11,"
     Call AddLayerOrder(11)
 End Sub
 
 Private Sub Label9_Click()
-    Form5.Text1.Text = Text1.Text & "10,"
+    LayerForm.Text1.Text = Text1.Text & "10,"
     Call AddLayerOrder(10)
 End Sub

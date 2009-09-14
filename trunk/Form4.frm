@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form AngleForm 
    BorderStyle     =   3  'Fixed Dialog
-   Caption         =   "Angle"
+   Caption         =   "Angle Assignment"
    ClientHeight    =   3495
    ClientLeft      =   2775
    ClientTop       =   1380

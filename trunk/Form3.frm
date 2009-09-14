@@ -1,21 +1,29 @@
 VERSION 5.00
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form ProbeAngleForm 
    Caption         =   "Probe Angle"
-   ClientHeight    =   9300
+   ClientHeight    =   9030
    ClientLeft      =   2730
-   ClientTop       =   1335
-   ClientWidth     =   13770
+   ClientTop       =   1635
+   ClientWidth     =   13935
    Icon            =   "Form3.frx":0000
    LinkTopic       =   "Form3"
-   ScaleHeight     =   164.042
+   ScaleHeight     =   159.279
    ScaleMode       =   6  'Millimeter
-   ScaleWidth      =   242.888
-   Begin VB.Frame Frame1 
-      Height          =   9255
-      Left            =   12600
-      TabIndex        =   1
+   ScaleWidth      =   245.798
+   Begin MSComDlg.CommonDialog CommonDialog1 
+      Left            =   12120
       Top             =   0
-      Width           =   1095
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+   End
+   Begin VB.Frame Frame1 
+      Height          =   735
+      Left            =   240
+      TabIndex        =   1
+      Top             =   120
+      Width           =   5175
       Begin VB.CommandButton DXFCmd 
          Caption         =   "DXF"
          BeginProperty Font 
@@ -27,11 +35,11 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
-         Left            =   120
+         Height          =   495
+         Left            =   3480
          TabIndex        =   7
-         Top             =   3120
-         Width           =   855
+         Top             =   160
+         Width           =   735
       End
       Begin VB.CommandButton SelectCmd 
          Caption         =   "Angle"
@@ -44,11 +52,11 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
-         Left            =   120
+         Height          =   495
+         Left            =   1800
          TabIndex        =   6
-         Top             =   1680
-         Width           =   855
+         Top             =   160
+         Width           =   735
       End
       Begin VB.CommandButton resetCmd 
          Caption         =   "ZoomAll"
@@ -61,11 +69,11 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
-         Left            =   120
+         Height          =   495
+         Left            =   960
          TabIndex        =   5
-         Top             =   960
-         Width           =   855
+         Top             =   160
+         Width           =   735
       End
       Begin VB.CommandButton saveCmd 
          Caption         =   "Save"
@@ -78,11 +86,11 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
-         Left            =   120
+         Height          =   495
+         Left            =   4320
          TabIndex        =   4
-         Top             =   3840
-         Width           =   855
+         Top             =   160
+         Width           =   735
       End
       Begin VB.CommandButton ZoomCmd 
          Caption         =   "Zoom"
@@ -95,11 +103,11 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
+         Height          =   495
          Left            =   120
          TabIndex        =   3
-         Top             =   240
-         Width           =   855
+         Top             =   160
+         Width           =   735
       End
       Begin VB.CommandButton UndoCmd 
          Caption         =   "Layer"
@@ -112,23 +120,45 @@ Begin VB.Form ProbeAngleForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   615
-         Left            =   120
+         Height          =   495
+         Left            =   2640
          TabIndex        =   2
-         Top             =   2400
-         Width           =   855
+         Top             =   160
+         Width           =   735
       End
    End
    Begin VB.PictureBox Picture1 
       BackColor       =   &H00000000&
-      Height          =   9135
+      Height          =   7935
       Left            =   120
-      ScaleHeight     =   160.073
+      ScaleHeight     =   138.906
       ScaleMode       =   6  'Millimeter
-      ScaleWidth      =   217.223
+      ScaleWidth      =   240.506
       TabIndex        =   0
-      Top             =   120
-      Width           =   12375
+      Top             =   960
+      Width           =   13695
+   End
+   Begin VB.Menu File 
+      Caption         =   "File"
+      Index           =   1
+      Begin VB.Menu LoadExcel 
+         Caption         =   "Load Excel"
+         Shortcut        =   ^E
+      End
+      Begin VB.Menu ExportMask 
+         Caption         =   "Export Mask"
+         Shortcut        =   ^A
+      End
+      Begin VB.Menu SectionDrawing 
+         Caption         =   "Secton Drawing"
+         Shortcut        =   ^S
+      End
+   End
+   Begin VB.Menu About 
+      Caption         =   "About"
+      Begin VB.Menu AboutAutolayout 
+         Caption         =   "About AutoLayout"
+      End
    End
 End
 Attribute VB_Name = "ProbeAngleForm"
@@ -136,7 +166,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+Dim gActiveDoc As IAcadDocument
+Dim gAcadApplication As IAcadApplication
 Dim BL As Double
 Dim previousPoint(0 To 1) As Double
 Dim startPoint(0 To 1) As Double
@@ -144,15 +175,23 @@ Dim isMove As Boolean
 Dim isZoom As Boolean
 Dim patten As Integer
 
-Private Sub DXFCmd_Click()
-    Call CreateDXFFile
+Private Sub AboutAutolayout_Click()
+AboutForm.Show
 End Sub
 
-Private Sub Form_Activate()
-    'Call DrawPoints
-    pointIndex = 0
-    Call M_RedrawPicutreBox
+Private Sub DXFCmd_Click()
+    DXFForm.Show
 End Sub
+
+Private Sub ExportMask_Click()
+MaskForm.Show
+End Sub
+
+'Private Sub Form_Activate()
+'    Call DrawPoints
+'    pointIndex = 0
+'    Call M_RedrawPicutreBox
+'End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
     If KeyAscii = 113 Then
@@ -175,11 +214,30 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 
 End Sub
 
-Private Sub Form_Load()
+'Private Sub Form_Load()
+'    Call SetPicure(Picture1)
+'    Picture1.AutoRedraw = True
+'    M_Index = 0
+'    Call M_GetExcelData(ProbeAngleForm.CommonDialog1.FileName)
+'    BL = M_GetScale(Picture1.width, Picture1.height)
+'    F_MovePoint(0) = Picture1.width / 2
+'    F_MovePoint(1) = Picture1.height / 2
+'    isMove = False
+'    isZoom = False
+'    'move patten
+'    patten = 2
+'End Sub
+
+
+Private Sub LoadExcel_Click()
+   On Error GoTo ErrHandler
+    CommonDialog1.Filter = "excelfile (*.xls)|*.xls|"
+    CommonDialog1.ShowOpen
+    'TextPath.Text = CommonDialog1.FileName
     Call SetPicure(Picture1)
     Picture1.AutoRedraw = True
     M_Index = 0
-    Call M_GetExcelData(EntranceForm.CommonDialog1.FileName)
+    Call M_GetExcelData(ProbeAngleForm.CommonDialog1.FileName)
     BL = M_GetScale(Picture1.width, Picture1.height)
     F_MovePoint(0) = Picture1.width / 2
     F_MovePoint(1) = Picture1.height / 2
@@ -187,8 +245,11 @@ Private Sub Form_Load()
     isZoom = False
     'move patten
     patten = 2
+    Call resetCmd_Click
+    Exit Sub
+ErrHandler:
+    Exit Sub
 End Sub
-
 
 Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Button = 1 Then
@@ -263,7 +324,7 @@ Private Sub Picture1_MouseUp(Button As Integer, Shift As Integer, x As Single, y
             exist = CalculateSelectedPoints(previousPoint, endpoint)
             Call M_RedrawPicutreBox
             If (exist) Then
-                Call Form5.Show
+                Call LayerForm.Show
             End If
 
         End If
@@ -280,6 +341,10 @@ Private Sub resetCmd_Click()
     F_MovePoint(0) = Picture1.width / 2
     F_MovePoint(1) = Picture1.height / 2
     Call M_RedrawPicutreBox
+End Sub
+
+Private Sub SectionDrawing_Click()
+SectionForm.Show
 End Sub
 
 Private Sub SelectCmd_Click()
@@ -313,7 +378,7 @@ End Sub
 
 Private Sub saveCmd_Click()
     Dim corow As Long
-    Set excelApp = M_CreateExcel(EntranceForm.CommonDialog1.FileName)
+    Set excelApp = M_CreateExcel(ProbeAngleForm.CommonDialog1.FileName)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     For i = 0 To M_RowCount - 1
         excelsheet.cells(i + 6, 8).value = M_Angles(i)

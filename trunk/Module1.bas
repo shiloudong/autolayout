@@ -52,7 +52,7 @@ Private Sub InitializeColorMap()
 End Sub
 
 Public Sub M_GetExcelData(path As String)
-    Set excelApp = M_CreateExcel(EntranceForm.TextPath.Text)
+    Set excelApp = M_CreateExcel(path)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     
     Dim PadNo, index As Integer
