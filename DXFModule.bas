@@ -237,3 +237,107 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Set probelayerobj = document.ModelSpace.AddText(Layer, probelayerposition, EntranceForm.Text2.Text * BL) '写层数的文本
     Call probelayerobj.Rotate(probelayerposition, anglehd) '旋转层数的文本
 End Sub
+
+'画断面图函数
+Private Sub drawsection(document As IAcadDocument, tipdia As Double, tiplength As Double, probedia As Double, taper As Double, theta As Double, beamangle As Double)
+Dim p1(0 To 2) As Double
+Dim p2(0 To 2) As Double
+Dim p3(0 To 2) As Double
+Dim p4(0 To 2) As Double
+Dim p5(0 To 2) As Double
+Dim p6(0 To 2) As Double
+Dim p7(0 To 2) As Double
+Dim p8(0 To 2) As Double
+Dim p9(0 To 2) As Double
+Dim p10(0 To 2) As Double
+Dim p11(0 To 2) As Double
+Dim bendangle As Double
+Dim taperhd As Double
+Dim thetahd As Double
+Dim TL2 As Double
+Dim TL1 As Double
+Dim EL As Double
+Dim EL1 As Double
+Dim pi As Double
+pi = 3.1415926
+
+taperhd = pi * taper / 360
+thetahd = pi * theta / 180
+beamanglehd = pi * beamangle / 180
+bendanglehd = pi * beamangle / 180
+TL = tiplength + 0.002
+TL1 = TL / Cos(taperhd)
+EL = (probedia - tipdia) / (2 * Tan(taperhd))
+EL1 = EL / Cos(taperhd)
+
+p2(0) = 100
+p2(1) = 100
+p2(2) = 0
+
+p1(0) = p2(0) - tipdia * Cos(thetahd - pi / 2) / 2
+p1(1) = p2(1) + tipdia * Sin(thetahd - pi / 2) / 2
+p1(2) = 0
+
+p3(0) = p2(0) + tipdia * Cos(thetahd - pi / 2) / 2
+p3(1) = p2(1) - tipdia * Sin(thetahd - pi / 2) / 2
+p3(2) = 0
+
+p4(0) = p1(0) + TL1 * Cos(pi - thetahd + taperhd)
+p4(1) = p1(1) + TL1 * Sin(pi - thetahd + taperhd)
+p4(2) = 0
+
+p5(0) = p2(0) + TL * Cos(pi - thetahd)
+p5(1) = p2(1) + TL * Sin(pi - thetahd)
+p5(2) = 0
+
+p6(0) = p3(0) + TL1 * Cos(pi - thetahd - taperhd)
+p6(1) = p3(1) + TL1 * Sin(pi - thetahd - taperhd)
+p6(2) = 0
+
+p7(0) = p1(0) + EL1 * Cos(pi - thetahd + taperhd)
+p7(1) = p1(1) + EL1 * Sin(pi - thetahd + taperhd)
+p7(2) = 0
+
+p8(0) = p2(0) + EL * Cos(pi - thetahd)
+p8(1) = p2(1) + EL * Sin(pi - thetahd)
+p8(2) = 0
+
+p9(0) = p3(0) + EL1 * Cos(pi - thetahd - taperhd)
+p9(1) = p3(1) + EL1 * Sin(pi - thetahd - taperhd)
+p9(2) = 0
+
+p10(0) = p7(0) + 60 * Cos(pi - thetahd)
+p10(1) = p7(1) + 60 * Sin(pi - thetahd)
+p10(2) = 0
+
+p11(0) = p9(0) + 60 * Cos(pi - thetahd)
+p11(1) = p9(1) + 60 * Sin(pi - thetahd)
+p11(2) = 0
+
+'creat tip
+Set line1obj = document.ModelSpace.AddLine(p1, p3)
+Set line2obj = document.ModelSpace.AddLine(p1, p4)
+Set line3obj = document.ModelSpace.AddLine(p3, p6)
+Set line4obj = document.ModelSpace.AddLine(p2, p5)
+Set line5obj = document.ModelSpace.AddLine(p4, p6)
+
+'creat 其他
+Set line12obj = document.ModelSpace.AddLine(p4, p6)
+Set line6obj = document.ModelSpace.AddLine(p4, p7)
+Set line7obj = document.ModelSpace.AddLine(p5, p8)
+Set line8obj = document.ModelSpace.AddLine(p6, p9)
+Set line9obj = document.ModelSpace.AddLine(p7, p9)
+Set line10obj = document.ModelSpace.AddLine(p7, p10)
+Set line11obj = document.ModelSpace.AddLine(p9, p11)
+
+'Rotate Probe
+Call line6obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+Call line7obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+Call line8obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+Call line9obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+Call line10obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+Call line11obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+Call line12obj.Rotate(p6, -(pi - thetahd - beamanglehd))
+
+End Sub
+

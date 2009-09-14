@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form AboutForm 
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "About"
+   Caption         =   "About AutoLayout"
    ClientHeight    =   2460
    ClientLeft      =   2745
    ClientTop       =   1350
