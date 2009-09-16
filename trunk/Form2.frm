@@ -46,7 +46,7 @@ Begin VB.Form AboutForm
       Width           =   2055
    End
    Begin VB.Label Label2 
-      Caption         =   "Ver 1.0"
+      Caption         =   "AutoLayout Ver 1.0"
       Height          =   255
       Left            =   480
       TabIndex        =   1
@@ -76,3 +76,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub Label2_Click()
+
+End Sub
