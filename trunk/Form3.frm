@@ -228,7 +228,6 @@ End Sub
 '    patten = 2
 'End Sub
 
-
 Private Sub LoadExcel_Click()
    On Error GoTo ErrHandler
     CommonDialog1.Filter = "excelfile (*.xls)|*.xls|"
@@ -377,7 +376,7 @@ Private Sub DCmd_Click()
 End Sub
 
 Private Sub saveCmd_Click()
-    Dim corow As Long
+    
     Set excelApp = M_CreateExcel(ProbeAngleForm.CommonDialog1.FileName)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     For i = 0 To M_RowCount - 1

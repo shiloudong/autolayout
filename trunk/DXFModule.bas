@@ -24,15 +24,17 @@ Public Sub CreateDXFFile()
     Set excelApp = M_CreateExcel(ProbeAngleForm.CommonDialog1.FileName)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
     
-    Dim a, b, c, BL As Double
+    Dim a, b As Double
+    Dim BL As Double
+    
+    'a > b
     a = M_MaxX - M_MinX
     b = M_MaxY - M_MinY
     If a > b Then
-        c = a / 1000
+    BL = 0.6 * 420 / a
     Else
-        c = b / 1000
+    BL = 0.6 * 297 / a
     End If
-    BL = 178.2 / c
     
     Dim newCenter(0 To 2) As Double
     newCenter(0) = (M_MaxX + M_MinX) * BL / 2
@@ -85,17 +87,21 @@ Public Sub CreateDXFFile()
     p2(0) = 0
     p2(1) = 0
     p2(2) = 0
+    If a > b Then
+    Call drawbox(doc, p2, w, l)
+    Else
     Call drawbox(doc, p2, l, w)
-    Call doc.ModelSpace.AddLine(p3, p4)
-    Dim customer As String
-    Dim device As String
-    Dim pins As String
-    customer = excelsheet.cells(1, 2).value
-    device = excelsheet.cells(2, 2).value
-    pins = excelsheet.cells(3, 2).value
-    Call doc.ModelSpace.AddText("Customer:" & customer, p3, 250)
-    Call doc.ModelSpace.AddText("Device:" & device, p5, 250)
-    Call doc.ModelSpace.AddText("Pins:" & pins, p6, 250)
+    End If
+'    Call doc.ModelSpace.AddLine(p3, p4)
+'    Dim customer As String
+'    Dim device As String
+'    Dim pins As String
+'    customer = excelsheet.cells(1, 2).value
+'    device = excelsheet.cells(2, 2).value
+'    pins = excelsheet.cells(3, 2).value
+'    Call doc.ModelSpace.AddText("Customer:" & customer, p3, 2)
+'    Call doc.ModelSpace.AddText("Device:" & device, p5, 2)
+'    Call doc.ModelSpace.AddText("Pins:" & pins, p6, 2)
     doc.Application.ZoomExtents
     Call excelApp.Workbooks.Close '关闭excel程序
 End Sub
@@ -141,6 +147,13 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
    Dim angletext As Double
    pi = 3.1415926
    anglehd = pi * Angle / 180
+   Dim probelength As Double
+   Dim lettersize As Double
+   Dim letteroffset As Double
+   lettersize = DXFForm.Text2.Text / 1000
+   probelength = DXFForm.Text3.Text / 1000
+   letteroffset = DXFForm.Text4.Text / 1000
+   
    
    '画矩形和直线
     Dim lay7 As AcadLayer
@@ -148,10 +161,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer7.color = 7
     layer7.Lineweight = 0.5
     document.ActiveLayer = layer7
-    Call drawbox(document, centerPoint, 0.032 * BL, 0.032 * BL)
+    Call drawbox(document, centerPoint, 0.04 * BL, 0.04 * BL)
     Dim endpoint(0 To 2) As Double
-    endpoint(0) = centerPoint(0) + DXFForm.Text3.Text * BL * Cos(anglehd)
-    endpoint(1) = centerPoint(1) + DXFForm.Text3.Text * BL * Sin(anglehd) 'probe的终点坐标xyz
+    endpoint(0) = centerPoint(0) + probelength * BL * Cos(anglehd)
+    endpoint(1) = centerPoint(1) + probelength * BL * Sin(anglehd) 'probe的终点坐标xyz
     endpoint(2) = 0
     Call document.ModelSpace.AddLine(centerPoint, endpoint)
     
@@ -165,10 +178,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer1.Lineweight = 0.5
     document.ActiveLayer = layer1
     Dim padnoposition(0 To 2) As Double
-    padnoposition(0) = centerPoint(0) - DXFForm.Text4.Text * BL * Cos(anglehd) + DXFForm.Text2.Text * BL / 2 * Sin(anglehd)
-    padnoposition(1) = centerPoint(1) - DXFForm.Text4.Text * BL * Sin(anglehd) - DXFForm.Text2.Text * BL / 2 * Cos(anglehd) 'pad No.的文本放置的位置
+    padnoposition(0) = centerPoint(0) - letteroffset * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
+    padnoposition(1) = centerPoint(1) - letteroffset * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) 'pad No.的文本放置的位置
     padnoposition(2) = 0
-    Set padnoobj = document.ModelSpace.AddText(PadNo, padnoposition, DXFForm.Text2.Text * BL) '写pad No.的文本
+    Set padnoobj = document.ModelSpace.AddText(PadNo, padnoposition, lettersize * BL) '写pad No.的文本
     Call padnoobj.Rotate(padnoposition, anglehd) '旋转pad No.的文本
     
     'pad name
@@ -178,10 +191,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer2.Lineweight = 0.5
     document.ActiveLayer = layer2
     Dim padnameposition(0 To 2) As Double
-    padnameposition(0) = centerPoint(0) + 0.2 * BL * Cos(anglehd) + DXFForm.Text2.Text * BL / 2 * Sin(anglehd)
-    padnameposition(1) = centerPoint(1) + 0.2 * BL * Sin(anglehd) - DXFForm.Text2.Text * BL / 2 * Cos(anglehd) 'pad name的文本放置的位置
+    padnameposition(0) = centerPoint(0) + 0.2 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
+    padnameposition(1) = centerPoint(1) + 0.2 * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) 'pad name的文本放置的位置
     padnameposition(2) = 0
-    Set padnameobj = document.ModelSpace.AddText(PadName, padnameposition, DXFForm.Text2.Text * BL) '写pad name的文本
+    Set padnameobj = document.ModelSpace.AddText(PadName, padnameposition, lettersize * BL) '写pad name的文本
     Call padnameobj.Rotate(padnameposition, anglehd) '旋转pad name的文本
     
     'trace
@@ -191,10 +204,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer3.Lineweight = 0.5
     document.ActiveLayer = layer3
     Dim traceposition(0 To 2) As Double
-    traceposition(0) = endpoint(0) + 0.02 * BL * Cos(anglehd) + DXFForm.Text2.Text * BL / 2 * Sin(anglehd)
-    traceposition(1) = endpoint(1) + 0.02 * BL * Sin(anglehd) - DXFForm.Text2.Text * BL / 2 * Cos(anglehd) '焊点的文本放置的位置
+    traceposition(0) = endpoint(0) + 0.02 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
+    traceposition(1) = endpoint(1) + 0.02 * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) '焊点的文本放置的位置
     traceposition(2) = 0
-    Set traceobj = document.ModelSpace.AddText(Trace, traceposition, DXFForm.Text2.Text * BL) '写焊点的文本
+    Set traceobj = document.ModelSpace.AddText(Trace, traceposition, lettersize * BL) '写焊点的文本
     Call traceobj.Rotate(traceposition, anglehd) '旋转焊点的文本
 
     'jumper
@@ -204,10 +217,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer4.Lineweight = 0.5
     document.ActiveLayer = layer4
     Dim jumperposition(0 To 2) As Double
-    jumperposition(0) = endpoint(0) + 0.3 * BL * Cos(anglehd) + DXFForm.Text2.Text * BL / 2 * Sin(anglehd)
-    jumperposition(1) = endpoint(1) + 0.3 * BL * Sin(anglehd) - DXFForm.Text2.Text * BL / 2 * Cos(anglehd) '跳线的文本放置的位置
+    jumperposition(0) = endpoint(0) + 0.3 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
+    jumperposition(1) = endpoint(1) + 0.3 * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) '跳线的文本放置的位置
     jumperposition(2) = 0
-    Set jumperobj = document.ModelSpace.AddText(Jumper, jumperposition, DXFForm.Text2.Text * BL) '写跳线的文本
+    Set jumperobj = document.ModelSpace.AddText(Jumper, jumperposition, lettersize * BL) '写跳线的文本
     Call jumperobj.Rotate(jumperposition, anglehd) '旋转跳线的文本
     
     'channel
@@ -217,10 +230,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer5.Lineweight = 0.5
     document.ActiveLayer = layer5
     Dim channelposition(0 To 2) As Double
-    channelposition(0) = endpoint(0) + 0.6 * BL * Cos(anglehd) + DXFForm.Text2.Text * BL / 2 * Sin(anglehd)
-    channelposition(1) = endpoint(1) + 0.6 * BL * Sin(anglehd) - DXFForm.Text2.Text * BL / 2 * Cos(anglehd) 'CH的文本放置的位置
+    channelposition(0) = endpoint(0) + 0.6 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
+    channelposition(1) = endpoint(1) + 0.6 * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) 'CH的文本放置的位置
     channelposition(2) = 0
-    Set channelobj = document.ModelSpace.AddText(Channel, channelposition, DXFForm.Text2.Text * BL) '写CH的文本
+    Set channelobj = document.ModelSpace.AddText(Channel, channelposition, lettersize * BL) '写CH的文本
     Call channelobj.Rotate(channelposition, anglehd) '旋转CH的文本
     
     'layer
@@ -230,10 +243,10 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer6.Lineweight = 0.5
     document.ActiveLayer = layer6
     Dim probelayerposition(0 To 2) As Double
-    probelayerposition(0) = centerPoint(0) + 0.1 * BL * Cos(anglehd) + DXFForm.Text2.Text * BL / 2 * Sin(anglehd)
-    probelayerposition(1) = centerPoint(1) + 0.1 * BL * Sin(anglehd) - DXFForm.Text2.Text * BL / 2 * Cos(anglehd) '层数的文本放置的位置
+    probelayerposition(0) = centerPoint(0) + 0.1 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
+    probelayerposition(1) = centerPoint(1) + 0.1 * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) '层数的文本放置的位置
     probelayerposition(2) = 0
-    Set probelayerobj = document.ModelSpace.AddText(Layer, probelayerposition, DXFForm.Text2.Text * BL) '写层数的文本
+    Set probelayerobj = document.ModelSpace.AddText(Layer, probelayerposition, lettersize * BL) '写层数的文本
     Call probelayerobj.Rotate(probelayerposition, anglehd) '旋转层数的文本
 End Sub
 
