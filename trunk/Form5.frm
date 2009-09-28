@@ -6,6 +6,7 @@ Begin VB.Form LayerForm
    ClientLeft      =   2745
    ClientTop       =   1350
    ClientWidth     =   3570
+   Icon            =   "Form5.frx":0000
    LinkTopic       =   "Form5"
    MaxButton       =   0   'False
    MinButton       =   0   'False

@@ -1,5 +1,4 @@
 Attribute VB_Name = "Module1"
-
 Public M_RowCount As Integer
 Public M_PadNumbers() As Integer
 Public M_PointsX() As Double
@@ -23,11 +22,9 @@ Dim selectedCount As Integer
 Dim selectedFlag() As Boolean
 Dim colorMap(0 To 19) As ColorConstants
 Private m_picture As PictureBox
-
 Public Sub SetPicure(pic As PictureBox)
     Set m_picture = pic
 End Sub
-
 Private Sub InitializeColorMap()
     colorMap(0) = RGB(255, 255, 255)
     colorMap(1) = RGB(0, 255, 0)
@@ -50,18 +47,15 @@ Private Sub InitializeColorMap()
     colorMap(18) = RGB(255, 255, 255)
     colorMap(19) = RGB(255, 255, 255)
 End Sub
-
 Public Sub M_GetExcelData(path As String)
     Set excelApp = M_CreateExcel(path)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
-    
     Dim PadNo, index As Integer
     index = 0
     Do While excelsheet.cells(index + 6, 1).value > 0
         index = index + 1
     Loop
     M_RowCount = index
-    
     'redefine the length of array
     ReDim Preserve M_PadNumbers(0 To M_RowCount - 1) As Integer
     ReDim Preserve M_PointsX(0 To M_RowCount - 1) As Double
@@ -113,11 +107,9 @@ Public Sub M_GetExcelData(path As String)
     'get center point
     M_CenterPoint(0) = (M_MaxX + M_MinX) / 2
     M_CenterPoint(1) = (M_MaxY + M_MinY) / 2
-    '
     Call excelApp.Workbooks.Close
     Call InitializeColorMap
 End Sub
-
 Public Function M_GetScale(width As Double, height As Double) As Double
     Dim a As Double
     If width < height Then
@@ -132,7 +124,6 @@ Public Function M_GetScale(width As Double, height As Double) As Double
     End If
     M_GetScale = M_Scale
 End Function
-
 '启动Excel
 Public Function M_CreateExcel(path As String) As Object
     Dim excelApp As Object
@@ -146,19 +137,16 @@ Public Sub M_RedrawPicutreBox()
         DrawUnit (i)
     Next i
 End Sub
-
+'画pad 矩形的函数
 Public Sub M_DrawRectangle(startPoint() As Double, endpoint() As Double)
     m_picture.DrawWidth = 1
     m_picture.Line (startPoint(0), startPoint(1))-(startPoint(0), endpoint(1)), RGB(255, 255, 255)
     m_picture.Line (startPoint(0), startPoint(1))-(endpoint(0), startPoint(1)), RGB(255, 255, 255)
     m_picture.Line (endpoint(0), startPoint(1))-(endpoint(0), endpoint(1)), RGB(255, 255, 255)
     m_picture.Line (startPoint(0), endpoint(1))-(endpoint(0), endpoint(1)), RGB(255, 255, 255)
-    
 End Sub
-
 Private Sub DrawPoint(x As Double, y As Double, color As ColorConstants)
     m_picture.DrawWidth = 1
-
     m_picture.Line (x - 1, y - 1)-(x + 1, y + 1), color, B
 End Sub
 Private Sub DrawAngleLine(point() As Double, index As Integer)
@@ -166,7 +154,6 @@ Private Sub DrawAngleLine(point() As Double, index As Integer)
     Dim pictureAngle As Double
     pictureAngle = -M_Angles(index)
     Dim x1, y1 As Double
-
     x1 = point(0) + 20 * Cos(3.1415926 * pictureAngle / 180)
     y1 = point(1) + 20 * Sin(3.1415926 * pictureAngle / 180)
     Dim layerIndex As Integer
@@ -176,10 +163,7 @@ Private Sub DrawAngleLine(point() As Double, index As Integer)
         color = colorMap(layerIndex - 1)
         m_picture.Line (point(0), point(1))-(x1, y1), color
     End If
-
 End Sub
-
-
 Private Sub DrawUnit(index As Integer)
     Dim point(0 To 1) As Double
     point(0) = (M_PointsX(index) - M_CenterPoint(0)) * M_Scale + F_MovePoint(0)
@@ -193,7 +177,6 @@ Private Sub DrawUnit(index As Integer)
     End If
     'Call DrawLayerText(index)
 End Sub
-
 Public Sub M_RedrawAngleLine(Angle As Double)
     If M_Index < M_RowCount Then
         M_Angles(M_Index) = Angle
@@ -214,7 +197,6 @@ Public Function CalculateSelectedPoints(startPoint() As Double, endpoint() As Do
         If (inside) Then
             existPoints = True
         End If
-        
     Next i
     CalculateSelectedPoints = existPoints
 End Function
@@ -264,7 +246,6 @@ Public Sub ReorderLayer(layerArray() As Integer, arrayLength As Integer, orderDi
     Call ReorderSelectedProbe(orderDirection)
     Call UpdateLayers(layerArray, arrayLength)
 End Sub
-
 Private Sub ReorderSelectedProbe(direction As Integer)
     Dim index As Integer
     index = 0
@@ -289,9 +270,7 @@ Private Sub ReorderSelectedProbe(direction As Integer)
                 Call SwitchOrder(j, j + 1)
             End If
         Next j
-
     Next i
-    
 End Sub
 Private Sub SwitchOrder(index1 As Integer, index2 As Integer)
     Dim temp As Integer
@@ -341,13 +320,9 @@ Private Sub UpdateLayers(orderArray() As Integer, length As Integer)
     ordersIndex = 0
     For i = 0 To selectedCount - 1
         M_Layers(OrderedIndexs(i)) = orderArray(ordersIndex)
-        
         ordersIndex = ordersIndex + 1
         If (ordersIndex = length) Then
             ordersIndex = 0
         End If
     Next i
 End Sub
-
-
-
