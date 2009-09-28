@@ -191,6 +191,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     layer2.Lineweight = 0.5
     document.ActiveLayer = layer2
     Dim padnameposition(0 To 2) As Double
+     Dim padnameposition1(0 To 2) As Double
     padnameposition(0) = centerPoint(0) + 0.2 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
     padnameposition(1) = centerPoint(1) + 0.2 * BL * Sin(anglehd) - lettersize * BL / 2 * Cos(anglehd) 'pad name的文本放置的位置
     padnameposition(2) = 0

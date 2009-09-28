@@ -6,6 +6,7 @@ Begin VB.Form AngleForm
    ClientLeft      =   2775
    ClientTop       =   1380
    ClientWidth     =   2655
+   Icon            =   "Form4.frx":0000
    LinkTopic       =   "Form4"
    MaxButton       =   0   'False
    MinButton       =   0   'False
