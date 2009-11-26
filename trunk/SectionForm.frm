@@ -1,15 +1,17 @@
 VERSION 5.00
 Begin VB.Form SectionForm 
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "Section Drawing"
-   ClientHeight    =   3090
-   ClientLeft      =   60
-   ClientTop       =   450
+   ClientHeight    =   2535
+   ClientLeft      =   2805
+   ClientTop       =   1410
    ClientWidth     =   3585
    Icon            =   "SectionForm.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   3090
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   ScaleHeight     =   2535
    ScaleWidth      =   3585
-   StartUpPosition =   3  '´°¿ÚÈ±Ê¡
    Begin VB.Frame Frame3 
       Caption         =   "Needle Assembly"
       BeginProperty Font 
@@ -21,7 +23,7 @@ Begin VB.Form SectionForm
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   2895
+      Height          =   2295
       Left            =   120
       TabIndex        =   0
       Top             =   120
@@ -41,7 +43,7 @@ Begin VB.Form SectionForm
          Left            =   120
          TabIndex        =   2
          Top             =   1680
-         Width           =   2295
+         Width           =   2055
       End
       Begin VB.TextBox Text14 
          BeginProperty Font 
@@ -54,10 +56,10 @@ Begin VB.Form SectionForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   720
+         Left            =   840
          TabIndex        =   1
          Text            =   "94"
-         Top             =   960
+         Top             =   1200
          Width           =   975
       End
       Begin VB.Label Label14 
@@ -74,7 +76,7 @@ Begin VB.Form SectionForm
          Height          =   255
          Left            =   120
          TabIndex        =   4
-         Top             =   960
+         Top             =   1200
          Width           =   615
       End
       Begin VB.Label Label1 
