@@ -1,12 +1,15 @@
 VERSION 5.00
 Begin VB.Form MaskForm 
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "Mask DXF"
    ClientHeight    =   2385
-   ClientLeft      =   3195
-   ClientTop       =   1905
+   ClientLeft      =   2865
+   ClientTop       =   1425
    ClientWidth     =   2580
    Icon            =   "Mask.frx":0000
    LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
    ScaleHeight     =   2385
    ScaleWidth      =   2580
    Begin VB.Frame Frame2 

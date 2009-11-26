@@ -159,7 +159,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay7 As AcadLayer
     Set layer7 = document.Layers.Add("Pads")
     layer7.color = 7
-    layer7.Lineweight = 0.5
+    layer7.Lineweight = 0.3
     document.ActiveLayer = layer7
     Call drawbox(document, centerPoint, 0.04 * BL, 0.04 * BL)
     Dim endpoint(0 To 2) As Double
@@ -175,7 +175,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay1 As AcadLayer
     Set layer1 = document.Layers.Add("PadNo")
     layer1.color = 2
-    layer1.Lineweight = 0.5
+    layer1.Lineweight = 0.3
     document.ActiveLayer = layer1
     Dim padnoposition(0 To 2) As Double
     padnoposition(0) = centerPoint(0) - letteroffset * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
@@ -188,7 +188,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay2 As AcadLayer
     Set layer2 = document.Layers.Add("PadName")
     layer2.color = 3
-    layer2.Lineweight = 0.5
+    layer2.Lineweight = 0.3
     document.ActiveLayer = layer2
     Dim padnameposition(0 To 2) As Double
      Dim padnameposition1(0 To 2) As Double
@@ -202,7 +202,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay3 As AcadLayer
     Set layer3 = document.Layers.Add("Trace")
     layer3.color = 4
-    layer3.Lineweight = 0.5
+    layer3.Lineweight = 0.3
     document.ActiveLayer = layer3
     Dim traceposition(0 To 2) As Double
     traceposition(0) = endpoint(0) + 0.02 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
@@ -215,7 +215,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay4 As AcadLayer
     Set layer4 = document.Layers.Add("Jumper")
     layer4.color = 5
-    layer4.Lineweight = 0.5
+    layer4.Lineweight = 0.3
     document.ActiveLayer = layer4
     Dim jumperposition(0 To 2) As Double
     jumperposition(0) = endpoint(0) + 0.3 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
@@ -228,7 +228,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay5 As AcadLayer
     Set layer5 = document.Layers.Add("Channel")
     layer5.color = 6
-    layer5.Lineweight = 0.5
+    layer5.Lineweight = 0.3
     document.ActiveLayer = layer5
     Dim channelposition(0 To 2) As Double
     channelposition(0) = endpoint(0) + 0.6 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)
@@ -241,7 +241,7 @@ Private Sub DrawUnit(document As IAcadDocument, centerPoint() As Double, Angle A
     Dim lay6 As AcadLayer
     Set layer6 = document.Layers.Add("Layer")
     layer6.color = 1
-    layer6.Lineweight = 0.5
+    layer6.Lineweight = 0.3
     document.ActiveLayer = layer6
     Dim probelayerposition(0 To 2) As Double
     probelayerposition(0) = centerPoint(0) + 0.1 * BL * Cos(anglehd) + lettersize * BL / 2 * Sin(anglehd)

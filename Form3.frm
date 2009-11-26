@@ -1,13 +1,16 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form ProbeAngleForm 
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "AutoLayout"
    ClientHeight    =   9030
-   ClientLeft      =   2730
-   ClientTop       =   1635
+   ClientLeft      =   2715
+   ClientTop       =   1620
    ClientWidth     =   13935
    Icon            =   "Form3.frx":0000
    LinkTopic       =   "Form3"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
    ScaleHeight     =   159.279
    ScaleMode       =   6  'Millimeter
    ScaleWidth      =   245.798
@@ -23,7 +26,41 @@ Begin VB.Form ProbeAngleForm
       Left            =   240
       TabIndex        =   1
       Top             =   120
-      Width           =   5175
+      Width           =   7215
+      Begin VB.CommandButton SectionCmd 
+         Caption         =   "Section"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   5400
+         TabIndex        =   9
+         Top             =   160
+         Width           =   855
+      End
+      Begin VB.CommandButton MaskCmd 
+         Caption         =   "MASK"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   4560
+         TabIndex        =   8
+         Top             =   160
+         Width           =   735
+      End
       Begin VB.CommandButton DXFCmd 
          Caption         =   "DXF"
          BeginProperty Font 
@@ -36,7 +73,7 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   495
-         Left            =   3480
+         Left            =   3720
          TabIndex        =   7
          Top             =   160
          Width           =   735
@@ -53,13 +90,13 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   495
-         Left            =   1800
+         Left            =   2040
          TabIndex        =   6
          Top             =   160
          Width           =   735
       End
       Begin VB.CommandButton resetCmd 
-         Caption         =   "ZoomAll"
+         Caption         =   "Zoom All"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   9
@@ -73,7 +110,7 @@ Begin VB.Form ProbeAngleForm
          Left            =   960
          TabIndex        =   5
          Top             =   160
-         Width           =   735
+         Width           =   975
       End
       Begin VB.CommandButton saveCmd 
          Caption         =   "Save"
@@ -87,7 +124,7 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   495
-         Left            =   4320
+         Left            =   6360
          TabIndex        =   4
          Top             =   160
          Width           =   735
@@ -121,7 +158,7 @@ Begin VB.Form ProbeAngleForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   495
-         Left            =   2640
+         Left            =   2880
          TabIndex        =   2
          Top             =   160
          Width           =   735
@@ -250,6 +287,10 @@ ErrHandler:
     Exit Sub
 End Sub
 
+Private Sub MaskCmd_Click()
+MaskForm.Show
+End Sub
+
 Private Sub Picture1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Button = 1 Then
         isZoom = True
@@ -340,6 +381,10 @@ Private Sub resetCmd_Click()
     F_MovePoint(0) = Picture1.width / 2
     F_MovePoint(1) = Picture1.height / 2
     Call M_RedrawPicutreBox
+End Sub
+
+Private Sub SectionCmd_Click()
+SectionForm.Show
 End Sub
 
 Private Sub SectionDrawing_Click()
