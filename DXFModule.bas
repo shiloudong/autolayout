@@ -26,7 +26,6 @@ Public Sub CreateDXFFile()
     
     Dim a, b As Double
     Dim BL As Double
-    
     'a > b
     a = M_MaxX - M_MinX
     b = M_MaxY - M_MinY

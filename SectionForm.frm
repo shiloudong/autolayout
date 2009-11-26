@@ -1,10 +1,11 @@
 VERSION 5.00
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form SectionForm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Section Drawing"
    ClientHeight    =   2535
    ClientLeft      =   2805
-   ClientTop       =   1410
+   ClientTop       =   1710
    ClientWidth     =   3585
    Icon            =   "SectionForm.frx":0000
    LinkTopic       =   "Form1"
@@ -28,6 +29,13 @@ Begin VB.Form SectionForm
       TabIndex        =   0
       Top             =   120
       Width           =   3360
+      Begin MSComDlg.CommonDialog CommonDialog2 
+         Left            =   2520
+         Top             =   960
+         _ExtentX        =   847
+         _ExtentY        =   847
+         _Version        =   393216
+      End
       Begin VB.CommandButton Section 
          Caption         =   "SECTION DRAWING"
          BeginProperty Font 
@@ -97,12 +105,27 @@ Begin VB.Form SectionForm
          Width           =   3135
       End
    End
+   Begin VB.Menu File 
+      Caption         =   "File"
+      Begin VB.Menu LoadForceExcel 
+         Caption         =   "Load Force Excel"
+      End
+   End
 End
 Attribute VB_Name = "SectionForm"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub LoadForceExcel_Click()
+   On Error GoTo ErrHandler
+    CommonDialog2.Filter = "excelfile (*.xls)|*.xls|"
+    CommonDialog2.ShowOpen
+    Exit Sub
+ErrHandler:
+    Exit Sub
+End Sub
+
 Private Sub Section_Click()
 Dim app As IAcadApplication
     Dim doc3 As IAcadDocument
@@ -116,7 +139,7 @@ Dim app As IAcadApplication
     Dim TD As Double
     Dim PD As Double
     theta = Text14.Text
-    Set excelApp = M_CreateExcel(TextPath.Text)
+    Set excelApp = M_CreateExcel(SectionForm.CommonDialog2.FileName)
     Set excelsheet = excelApp.ActiveWorkbook.Sheets("sheet1")
 For i = 21 To 32
     Dim value As Double
