@@ -176,7 +176,7 @@ Begin VB.Form ProbeAngleForm
       Width           =   13695
    End
    Begin VB.Menu File 
-      Caption         =   "File"
+      Caption         =   "File(&F)"
       Index           =   1
       Begin VB.Menu LoadExcel 
          Caption         =   "Load Excel"
@@ -186,13 +186,17 @@ Begin VB.Form ProbeAngleForm
          Caption         =   "Export Mask"
          Shortcut        =   ^A
       End
+      Begin VB.Menu ExportLayout 
+         Caption         =   "Export Layout"
+         Shortcut        =   ^C
+      End
       Begin VB.Menu SectionDrawing 
          Caption         =   "Secton Drawing"
          Shortcut        =   ^S
       End
    End
    Begin VB.Menu About 
-      Caption         =   "About"
+      Caption         =   "About(&A)"
       Begin VB.Menu AboutAutolayout 
          Caption         =   "About AutoLayout"
       End
@@ -218,6 +222,10 @@ End Sub
 
 Private Sub DXFCmd_Click()
     DXFForm.Show
+End Sub
+
+Private Sub ExportLayout_Click()
+DXFForm.Show
 End Sub
 
 Private Sub ExportMask_Click()
